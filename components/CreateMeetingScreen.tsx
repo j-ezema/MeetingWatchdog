@@ -16,13 +16,13 @@ import {
 import { Button } from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import SQLite from 'react-native-sqlite-storage';
-import { useNavigation } from '@react-navigation/native';
 
 
 
 
 
-const CreateMeetingScreen = () => {
+export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
+
     const [participants, setParticipants] = useState('');
     const [meetingName, setMeetingName] = useState('');
     const [hourlyRate, setHourlyRate] = useState('');
@@ -37,7 +37,7 @@ const CreateMeetingScreen = () => {
         setDatePickerVisibility(false);
     };
 
-    const handleDateConfirm = (date) => {
+    const handleDateConfirm = (date: React.SetStateAction<Date>) => {
         setSelectedDate(date);
         setDatePickerVisibility(false);
     };
@@ -68,7 +68,7 @@ const CreateMeetingScreen = () => {
         setTimePickerVisibility(false);
     };
 
-    const handleTimeConfirm = (time) => {
+    const handleTimeConfirm = (time: React.SetStateAction<Date>) => {
         setSelectedTime(time);
         hideTimePicker();
     };
@@ -80,7 +80,7 @@ const CreateMeetingScreen = () => {
 
     const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
 
-    const handleHourlyRateChange = (inputValue) => {
+    const handleHourlyRateChange = (inputValue: string) => {
         const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
         if (isNaN(numericValue)) {
             setHourlyRate('');
@@ -92,7 +92,7 @@ const CreateMeetingScreen = () => {
         }
     };
 
-    const navigation = useNavigation();
+    
 
     const handleCancel = () => {
         navigation.navigate('Home');
@@ -103,7 +103,7 @@ const CreateMeetingScreen = () => {
         const db = SQLite.openDatabase({ name: 'meetings.db' });
 
         // Create the table if it doesn't exist
-        db.transaction((tx) => {
+        db.transaction((tx: { executeSql: (arg0: string) => void; }) => {
             tx.executeSql(
                 'CREATE TABLE IF NOT EXISTS watchdog_meetings (' +
                 'id INTEGER PRIMARY KEY AUTOINCREMENT,' +
@@ -117,11 +117,11 @@ const CreateMeetingScreen = () => {
         });
 
         // Insert the data into the table
-        db.transaction((tx) => {
+        db.transaction((tx: { executeSql: (arg0: string, arg1: string[], arg2: (tx: any, results: any) => void) => void; }) => {
             tx.executeSql(
                 'INSERT INTO watchdog_meetings (name, date, time, number_of_participants, average_hourly_rate) VALUES (?, ?, ?, ?, ?);',
                 [meetingName, desiredFormat, formattedTime, participants, hourlyRate],
-                (tx, results) => {
+                (tx: any, results: { rowsAffected: number; }) => {
                     if (results.rowsAffected > 0) {
                         // Data saved successfully
                         console.log('Meeting data saved successfully.');

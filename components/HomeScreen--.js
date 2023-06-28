@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {
     View,
@@ -143,7 +144,7 @@ const HomeScreen = () => {
                                 style={[styles.footerButton, styles.startButton, styles.footerBorder]}
                                 onPress={handleButtonPress}
                             >
-                                <Image source={require('../assets/plus.png')} style={styles.plus} />
+                                {/*<Image source={require('../assets/plus.png')} style={styles.plus} />*/}
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -157,10 +158,10 @@ const HomeScreen = () => {
         <TouchableWithoutFeedback onPress={handleScreenPress}>
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Image source={require('../assets/logo_01.png')} style={styles.logo} />
+                    {/*<Image source={require('../assets/logo_01.png')} style={styles.logo} />*/}
                     <Text style={styles.headerText}>Home</Text>
                     <TouchableOpacity style={styles.cancelButtonContainer}>
-                        <Image source={require('../assets/settings.png')} style={styles.cancelButtonImage} />
+                        {/*<Image source={require('../assets/settings.png')} style={styles.cancelButtonImage} />*/}
                     </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
@@ -202,12 +203,12 @@ const HomeScreen = () => {
                                         <View style={styles.time}>
 
                                             <View style={styles.date}>
-                                                <Image source={require('../assets/calendar.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                                                {/*<Image source={require('../assets/calendar.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
                                                 <Text style={styles.meetingDate}> {item.date}</Text>
                                             </View>
 
                                             <View style={styles.space}>
-                                                <Image source={require('../assets/clock.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                                                {/*<Image source={require('../assets/clock.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
                                                 <Text style={styles.meetingDate}>{item.time}</Text>
 
                                             </View>
