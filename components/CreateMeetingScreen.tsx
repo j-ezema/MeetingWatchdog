@@ -16,6 +16,8 @@ import {
 import { Button } from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import SQLite from 'react-native-sqlite-storage';
+import { getDBConnection, saveMeetingItems } from '../services/db-services';
+import { createNewMeetingItem } from '../models';
 
 
 
@@ -98,42 +100,17 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
         navigation.navigate('Home');
     };
 
-    const saveMeetingData = () => {
-        // Open the database
-        const db = SQLite.openDatabase({ name: 'meetings.db' });
-
-        // Create the table if it doesn't exist
-        db.transaction((tx: { executeSql: (arg0: string) => void; }) => {
-            tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS watchdog_meetings (' +
-                'id INTEGER PRIMARY KEY AUTOINCREMENT,' +
-                'name TEXT,' +
-                'date TEXT,' +
-                'time TEXT,' +
-                'number_of_participants INTEGER,' +
-                'average_hourly_rate REAL' +
-                ');'
-            );
-        });
-
-        // Insert the data into the table
-        db.transaction((tx: { executeSql: (arg0: string, arg1: string[], arg2: (tx: any, results: any) => void) => void; }) => {
-            tx.executeSql(
-                'INSERT INTO watchdog_meetings (name, date, time, number_of_participants, average_hourly_rate) VALUES (?, ?, ?, ?, ?);',
-                [meetingName, desiredFormat, formattedTime, participants, hourlyRate],
-                (tx: any, results: { rowsAffected: number; }) => {
-                    if (results.rowsAffected > 0) {
-                        // Data saved successfully
-                        console.log('Meeting data saved successfully.');
-                    } else {
-                        // Error saving data
-                        console.log('Failed to save meeting data.');
-                    }
-                }
-            );
-        });
-
-        navigation.navigate('Home', { key: Date.now() });
+    const saveMeetingData = async () => {
+        try {
+            const newMeeting = createNewMeetingItem(0, meetingName);
+            //setMeetings(meetings.concat(newMeeting));
+            const db = await getDBConnection();
+            console.log(await saveMeetingItems(db, [newMeeting]));
+            navigation.navigate('Home', { key: Date.now() });
+        } catch (error) {
+        console.error(error);
+        }
+        return;
     };
 
     return (
@@ -145,7 +122,7 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <TouchableOpacity style={styles.cancelButtonContainer} onPress={handleCancel}>
-                        <Image source={require('../assets/close.png')} style={styles.cancelButtonImage} />
+                        {/*<Image source={require('../assets/close.png')} style={styles.cancelButtonImage} />*/}
                     </TouchableOpacity>
                     <Text style={styles.headerText}>Create A Meeting</Text>
                 </View>
@@ -154,7 +131,7 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
 
                 <View style={styles.content}>
                     <ScrollView
-                        contentContainerStyle={styles.scrollContainer}
+                        
                         keyboardShouldPersistTaps="handled"
                     >
                         <View style={styles.buttonsContainer}>
@@ -173,8 +150,8 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
                                 onPress={showDatePicker}
                             >
                                 <View style={styles.dateButtonContent}>
-                                    <Image source={require('../assets/calendar.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
-                                    <View style={styles.dateButtonTitleContainer}>
+                                    {/*<Image source={require('../assets/calendar.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <View >
                                         <Text style={styles.dateButtonTitle}>Meeting Date</Text>
                                         <Text style={styles.dateButtonText}>{formattedDate}</Text>
                                     </View>
@@ -185,8 +162,8 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
                                 onPress={showTimePicker}
                             >
                                 <View style={styles.dateButtonContent}>
-                                    <Image source={require('../assets/clock.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
-                                    <View style={styles.dateButtonTitleContainer}>
+                                    {/*<Image source={require('../assets/clock.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <View>
                                         <Text style={styles.dateButtonTitle}>Meeting Time</Text>
                                         <Text style={styles.dateButtonText}>{formattedTime}</Text>
                                     </View>
@@ -520,10 +497,10 @@ const styles = StyleSheet.create({
         borderColor: '#ffffff', // Sets the border color
         borderWidth: 2, // Sets the border width
     },
-
+    /*
     startButton: {
         backgroundColor: '#0A1128', // Sets the background color of the button
-    },
+    },*/
 
     footerButtonContainerStyle: {
         justifyContent: 'center',

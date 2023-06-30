@@ -5,6 +5,7 @@ import React from "react";
 import { Directions, Gesture, GestureDetector, PanGestureHandler } from "react-native-gesture-handler";
 import { useState } from 'react';
 import { colors, styles } from "../assets/Styles";
+import moment from "moment";
 
 const animationwidth = 100;
 
@@ -80,8 +81,20 @@ export const MeetingItemComponent: React.FC<{meeting: MeetingItem; deleteItem: F
               <View style={styles.meetingItem.sectionContainer}>
                 <View style={styles.meetingItem.thinBlueLine}></View>
                 <View style={{padding:5}} >
-                  <Text style={styles.meetingItem.cardTitle}>{meeting_title}</Text>
-                  <Text style={styles.meetingItem.cardDate}>{meeting_datetime.toDateString()+" "+meeting_datetime.toLocaleTimeString()}</Text>
+                <Text numberOfLines={1} style={styles.meetingItem.cardTitle}>{meeting_title}</Text>
+                  <View style={{flexDirection: 'row',paddingTop:10,}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Icon style={styles.meetingItem.dateText} type="material-community" name="calendar-month"/>
+                      <Text style={styles.meetingItem.dateText}>{moment(meeting_datetime).format("YYYY-MM-DD")}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row',marginLeft:10,}}> 
+                      <Icon style={styles.meetingItem.dateText} type="material-community" name="clock-outline"/>
+                      <Text style={styles.meetingItem.dateText}>{moment(meeting_datetime).format("h:mma")}</Text>
+                    </View>
+                  </View>
+                  <View style={{flexDirection: 'row',}}>
+                    
+                  </View>
                 </View>
               </View>
               

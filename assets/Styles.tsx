@@ -288,10 +288,13 @@ export const styles ={
           color: colors.oxfordBlue,
           //fontWeight: "700",
         },
-        cardDate: {
+        dateText: {
           textAlign: 'left',
+          paddingLeft: 2,
+          verticalAlign: 'middle',
           color: colors.richBlack,
-          fontSize: 15,
+          fontSize: 16,
+          fontFamily: 'OpenSans-Regular'
         },
         sectionTitle: {
           fontSize: 24,
