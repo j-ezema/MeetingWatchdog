@@ -150,7 +150,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
       </Modal>
       { !isButtonClicked &&
         <View style={styles.homeScreen.floatingButton}>
-          <Icon  raised reverse reverseColor='black' type="material" name="add" color="#ffffff" onPressOut={handleButtonPress}/>
+          <Icon raised reverse reverseColor='black' type="material" name="add" color="#ffffff" onPressOut={handleButtonPress}/>
         </View>
       }
     </GestureHandlerRootView>

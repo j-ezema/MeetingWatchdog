@@ -121,10 +121,6 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
 
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity style={styles.cancelButtonContainer} onPress={handleCancel}>
-                        {/*<Image source={require('../assets/close.png')} style={styles.cancelButtonImage} />*/}
-                    </TouchableOpacity>
-                    <Text style={styles.headerText}>Create A Meeting</Text>
                 </View>
 
 
@@ -332,7 +328,7 @@ const styles = StyleSheet.create({
         color: '#152B61',
     },
     header: {
-        paddingTop: 10, // Adds top padding
+        paddingTop: 0, // Adds top padding
         paddingBottom: 30, // Adds bottom padding
         paddingHorizontal: 20,
         height: 70,

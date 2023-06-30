@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { MeetingItem } from '../models/index';
+import { color } from "@rneui/base";
 
 export const colors = {
     'royalBlue': '#152B61',
@@ -10,6 +11,7 @@ export const colors = {
     'richBlack': '#040F21',
     'black': '#000000',
     'alertRed': '#a92b4e',
+    'gray': '#EFEFEF'
     //'alertRed': '#CE2030CC',
 
     
@@ -39,7 +41,9 @@ export const styles ={
         },
         buttonsContainer: {
           marginTop: 20,
-          paddingHorizontal: 16, // Adds horizontal padding
+          //paddingHorizontal: 16, // Adds horizontal padding
+          paddingLeft: 20,
+          paddingRight: 30,
           flexDirection: 'row',
           //backgroundColor: colors.royalBlue,
           marginBottom:20,
@@ -182,6 +186,7 @@ export const styles ={
         menu:{
           marginHorizontal:0,
           flex: 1,
+          //backgroundColor: colors.steelBlue,
           //margin: 0,
         },
     
