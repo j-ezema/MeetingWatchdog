@@ -229,6 +229,7 @@ export const styles = {
     },
     cardsContainer: {
       flex: 1,
+      paddingTop: 20,
 
     },
     menu: {
