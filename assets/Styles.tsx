@@ -75,6 +75,7 @@ export const styles = {
       alignItems: 'center', // Aligns text to the left
       flexDirection: 'row',
       marginBottom: 0.5,
+      position: 'relative',
     },
     buttonsContainer: {
       marginTop: 20,
@@ -125,10 +126,11 @@ export const styles = {
     },
     container: {
       backgroundColor: '#0A1128', // Sets the background color
-      paddingVertical: 20, // Adds vertical padding
+      paddingVertical: 10, // Adds vertical padding
     },
 
     content: {
+      flex: 1,
       borderTopWidth: 0.5, // Adds a top border
       borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
@@ -205,31 +207,44 @@ export const styles = {
       flexDirection: 'row', // Sets the direction of items in the container to horizontal
     },
 
+
+
     footerContainer: {
-      flex: 1,
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      paddingTop: 20,
+      paddingBottom: 20,
     },
 
     optionContainer: {
-      marginTop: 45,
       position: 'absolute',
-      top: 0,
       left: 0,
       right: 0,
-      
+      bottom: -9,
+
+
+
+    },
+    cardsContainer: {
+      flex: 1,
+
     },
     menu: {
       marginHorizontal: 0,
-      
+
       //backgroundColor: colors.steelBlue,
       //margin: 0,
     },
 
 
+
     footerButtonContainer: {
-      flex: 1, // Takes up the available space
+      flex: 1,
       alignItems: 'center', // Centers content horizontally
       marginLeft: 265,
-      marginTop: 60,
+      marginBottom: 20,
 
     },
 
@@ -292,13 +307,41 @@ export const styles = {
     iconWrapper: {
       margin: 0,
       display: "flex",
-      flex: 1,
+      marginLeft: 10,
+      marginTop: 20,
       justifyContent: 'center',
       alignItems: 'center',
 
     },
+    dateButtonIcon: {
+
+      width: 17, // Adjust the width to your preference
+      height: 17,
+      tintColor: '#152B61', // Adjust the height to your preference
+      marginTop: 2,
+    },
+
     icon: {
       fontSize: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+    },
+    space: {
+      flexDirection: 'row',
+      marginLeft: 30,
+      alignItems: 'center',
+    },
+    time: {
+      flexDirection: 'row',
+      marginTop: 22,
+    },
+
+
+    date: {
+      flexDirection: 'row',
+      alignItems: 'center',
+
     },
     iconText: {
       color: colors.white,
@@ -322,12 +365,12 @@ export const styles = {
       marginBottom: 30,
       marginTop: 10,
       backgroundColor: colors.white,
-      height: 100,
+      height: 90,
       overflow: 'hidden',
     },
     cardTitle: {
       textAlign: 'left',
-      fontSize: 25,
+      fontSize: 16,
       fontFamily: 'OpenSans-Bold',
       color: colors.oxfordBlue,
       //fontWeight: "700",
@@ -337,7 +380,7 @@ export const styles = {
       paddingLeft: 2,
       verticalAlign: 'middle',
       color: colors.richBlack,
-      fontSize: 16,
+      fontSize: 13,
       fontFamily: 'OpenSans-Regular'
     },
     sectionTitle: {
@@ -355,14 +398,23 @@ export const styles = {
     container: {
       flex: 1, // Takes up the entire available space
       backgroundColor: '#0A1128', // Sets the background color
-      paddingVertical: 20, // Adds vertical padding
+      paddingVertical: 10, // Adds vertical padding
     },
 
-    content: {
+    scrollContainer: {
       flex: 1,
+      backgroundColor: '#0A1128',
+    
+    },
+
+
+
+
+    content: {
       borderTopWidth: 0.5, // Adds a top border
       borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
+
 
     modalContainer: {
       flex: 1,
@@ -378,6 +430,7 @@ export const styles = {
       alignItems: 'center',
       alignSelf: 'center',
     },
+
     modalButton: {
       flex: 1,
       marginHorizontal: 10,
@@ -453,6 +506,8 @@ export const styles = {
       marginTop: -1,
     },
     button: {
+
+
       marginBottom: 20, // Adds bottom margin (spacing between buttons)
       height: 70,
       width: '100%', // Sets the width to 100% of the container
@@ -510,17 +565,19 @@ export const styles = {
     },
 
     footerContainer: {
-      borderTopWidth: 0.5, // Adds a top border
-      borderTopColor: '#EFEFEF', // Sets the color of the top border
+      flex: 1,
       left: 0,
       right: 0,
       bottom: 0,
-      paddingTop: 20,
+      paddingTop: 60,
     },
+
+
 
     footerButtonContainer: {
       flex: 1, // Takes up the available space
       alignItems: 'center', // Centers content horizontally
+      paddingVertical: 20, // Adds vertical padding
 
     },
 
@@ -544,7 +601,7 @@ export const styles = {
     },
 
     startButton: {
-      backgroundColor: '#152B61', // Sets the background color of the button
+      backgroundColor: '#0A1128', // Sets the background color of the button
     },
     modalButtonsContainer: {
       flexDirection: 'row',
@@ -561,6 +618,181 @@ export const styles = {
       justifyContent: 'center',
       alignItems: 'center',
     },
+  }),
+
+  'outlookMeeting': StyleSheet.create({
+
+    container: {
+      flex: 1, // Takes up the entire available space
+      backgroundColor: '#0A1128', // Sets the background color
+      paddingVertical: 20, // Adds vertical padding
+    },
+
+    content: {
+      flex: 1,
+      borderTopWidth: 0.5, // Adds a top border
+      borderTopColor: '#EFEFEF', // Sets the color of the top border
+    },
+
+    dateBar: {
+      flexDirection: 'row',
+      backgroundColor: '#ffffff', // Add this line to set the background color of the white container
+      borderRadius: 10, // Add this line to set the border radius of the white container
+      padding: 10, // Add this line to provide some spacing around the date
+      width: '100%',
+
+    },
+
+    selectDateContainer: {
+      marginTop: 15,
+    },
+
+    arrowIcon: {
+      width: 20,
+      height: 20,
+      resizeMode: 'contain',
+      tintColor: '#0A1128',
+      marginLeft: -17, // Add this line to push the left arrow slightly away from the date // Add this line to push the right arrow slightly away from the date
+    },
+    arrowIconB: {
+      width: 20,
+      height: 20,
+      resizeMode: 'contain',
+      tintColor: '#0A1128',
+
+      // Add this line to push the right arrow slightly away from the date
+    },
+    dateText: {
+      flex: 1,
+      fontSize: 16,
+      color: '#0A1128',
+      fontFamily: 'OpenSans-Semibold',
+      textAlign: 'center',
+
+    },
+
+    header: {
+      paddingTop: 10, // Adds top padding
+      paddingBottom: 30, // Adds bottom padding
+      paddingHorizontal: 20,
+      height: 70,
+      backgroundColor: '#0A1128', // Sets the background color
+      flexDirection: 'row', // Add this line to make the content align horizontally
+      alignItems: 'center', // Add this line to vertically align the content
+    },
+    headerText: {
+      fontSize: 21, // Sets the font size
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'OpenSans-Bold', // Sets the font family
+    },
+    cancelButtonImage: {
+      width: 40,
+      height: 40,
+      alignSelf: 'center',
+      tintColor: '#ffffff',
+    },
+    cancelButtonContainer: {
+      padding: 10, // Increase the padding to increase the clickable area
+      position: 'absolute',
+      right: 6,
+      top: -5,
+      marginRight: -10,
+    },
+
+    buttonsContainer: {
+      marginTop: 10,
+      paddingHorizontal: 16, // Adds horizontal padding
+      justifyContent: 'center', // Centers content vertically
+    },
+    selectButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    selectButtonTitle: {
+      color: '#0A1128',
+      fontFamily: 'OpenSans-Regular',
+      fontSize: 14,
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginLeft: 10,
+    },
+    button: {
+      height: 40,
+      width: '100%', // Sets the width to 100% of the container
+      borderRadius: 10, // Sets the border radius
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      justifyContent: 'center', // Centers content vertically
+      alignItems: 'flex-start', // Aligns text to the left
+      flexDirection: 'column',
+      paddingLeft: 10, // Adds left padding for text
+    },
+    dateBarContainer: {
+      height: 50,
+      width: '100%', // Sets the width to 100% of the container
+      borderRadius: 10, // Sets the border radius
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      justifyContent: 'center', // Centers content vertically
+      alignItems: 'flex-start', // Aligns text to the left
+      flexDirection: 'column',
+      paddingLeft: 16, // Adds left padding for text
+    },
+
+
+    buttonWithBorder: {
+      borderColor: '#152B61', // Sets the border color
+      borderWidth: 2, // Sets the border width
+    },
+
+    footer: {
+      flexDirection: 'row', // Sets the direction of items in the container to horizontal
+      
+    },
+
+    footerContainer: {
+      borderTopWidth: 0.5, // Adds a top border
+      borderTopColor: '#EFEFEF', // Sets the color of the top border
+      left: 0,
+      right: 0,
+      bottom: 0,
+      paddingTop: 20,
+      paddingBottom: 20,
+      
+    },
+
+    footerButtonContainer: {
+      flex: 1, // Takes up the available space
+      alignItems: 'center', // Centers content horizontally
+     
+
+    },
+
+    footerButton: {
+      height: 62, // Sets the height of the button
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      borderRadius: 10, // Sets the border radius of the button
+      width: 160, // Sets the width of the button
+    },
+
+    footerButtonText: {
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: 17, // Sets the font size
+    },
+
+    footerButtonTextB: {
+      color: '#040F21', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: 17, // Sets the font size
+    },
+
+    startButton: {
+      backgroundColor: '#0A1128', // Sets the background color of the button
+    },
+    footerBorder: {
+      borderColor: '#ffffff', // Sets the border color
+      borderWidth: 2, // Sets the border width
+    }
+
   }),
 
 };
