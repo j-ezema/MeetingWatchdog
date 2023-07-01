@@ -27,6 +27,7 @@ function App(): JSX.Element {
           component={HomeScreen}
           options={{
             title: 'Home',
+            headerShown: false,
             headerStyle: {
               backgroundColor: colors.oxfordBlue,
             },
@@ -51,6 +52,7 @@ function App(): JSX.Element {
           component={CreateMeetingScreen}
           options={{
             title: 'Create Meeting',
+            headerShown: false,
             headerStyle: {
               backgroundColor: colors.oxfordBlue,
             },

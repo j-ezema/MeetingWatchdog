@@ -22,8 +22,7 @@ import { createNewMeetingItem } from '../models';
 
 
 
-
-export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
+export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
 
     const [participants, setParticipants] = useState('');
     const [meetingName, setMeetingName] = useState('');
@@ -94,7 +93,7 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
         }
     };
 
-    
+
 
     const handleCancel = () => {
         navigation.navigate('Home');
@@ -108,7 +107,7 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
             console.log(await saveMeetingItems(db, [newMeeting]));
             navigation.navigate('Home', { key: Date.now() });
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
         return;
     };
@@ -121,13 +120,17 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
 
             <View style={styles.container}>
                 <View style={styles.header}>
+                    <TouchableOpacity style={styles.cancelButtonContainer} onPress={handleCancel}>
+                        <Image source={require('../assets/close.png')} style={styles.cancelButtonImage} />
+                    </TouchableOpacity>
+                    <Text style={styles.headerText}>Create A Meeting</Text>
                 </View>
 
 
 
                 <View style={styles.content}>
                     <ScrollView
-                        
+                        contentContainerStyle={styles.scrollContainer}
                         keyboardShouldPersistTaps="handled"
                     >
                         <View style={styles.buttonsContainer}>
@@ -146,7 +149,7 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
                                 onPress={showDatePicker}
                             >
                                 <View style={styles.dateButtonContent}>
-                                    {/*<Image source={require('../assets/calendar.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <Image source={require('../assets/calendar.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
                                     <View >
                                         <Text style={styles.dateButtonTitle}>Meeting Date</Text>
                                         <Text style={styles.dateButtonText}>{formattedDate}</Text>
@@ -158,8 +161,8 @@ export const CreateMeetingScreen = ({navigation}: {navigation: any}) => {
                                 onPress={showTimePicker}
                             >
                                 <View style={styles.dateButtonContent}>
-                                    {/*<Image source={require('../assets/clock.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                    <View>
+                                    <Image source={require('../assets/clock.png')} style={[styles.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                                    <View >
                                         <Text style={styles.dateButtonTitle}>Meeting Time</Text>
                                         <Text style={styles.dateButtonText}>{formattedTime}</Text>
                                     </View>
@@ -301,6 +304,9 @@ const styles = StyleSheet.create({
         borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
 
+    scrollContainer: {
+        paddingBottom: 200, // Adjust this value based on the height of your footer button
+    },
     modalContainer: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -328,7 +334,7 @@ const styles = StyleSheet.create({
         color: '#152B61',
     },
     header: {
-        paddingTop: 0, // Adds top padding
+        paddingTop: 10, // Adds top padding
         paddingBottom: 30, // Adds bottom padding
         paddingHorizontal: 20,
         height: 70,
@@ -493,10 +499,6 @@ const styles = StyleSheet.create({
         borderColor: '#ffffff', // Sets the border color
         borderWidth: 2, // Sets the border width
     },
-    /*
-    startButton: {
-        backgroundColor: '#0A1128', // Sets the background color of the button
-    },*/
 
     footerButtonContainerStyle: {
         justifyContent: 'center',
