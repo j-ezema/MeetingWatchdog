@@ -321,6 +321,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
     },
+    
     modalButton: {
         flex: 1,
         marginHorizontal: 10,
@@ -487,7 +488,7 @@ const styles = StyleSheet.create({
     },
 
     startButton: {
-        backgroundColor: '#152B61', // Sets the background color of the button
+        backgroundColor: '#0A1128', // Sets the background color of the button
     },
     modalButtonsContainer: {
         flexDirection: 'row',
