@@ -414,6 +414,7 @@ export const styles = {
     content: {
       borderTopWidth: 0.5, // Adds a top border
       borderTopColor: '#EFEFEF', // Sets the color of the top border
+      
     },
 
 
@@ -571,6 +572,7 @@ export const styles = {
       right: 0,
       bottom: 0,
       paddingTop: 60,
+      
     },
 
 
@@ -579,6 +581,8 @@ export const styles = {
       flex: 1, // Takes up the available space
       alignItems: 'center', // Centers content horizontally
       paddingVertical: 20, // Adds vertical padding
+      borderTopWidth: 0.5,
+      borderTopColor: '#EFEFEF',
 
     },
 
