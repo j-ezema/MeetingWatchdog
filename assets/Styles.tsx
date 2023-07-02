@@ -405,7 +405,6 @@ export const styles = {
     scrollContainer: {
       flex: 1,
       backgroundColor: '#0A1128',
-    
     },
 
 
@@ -414,7 +413,6 @@ export const styles = {
     content: {
       borderTopWidth: 0.5, // Adds a top border
       borderTopColor: '#EFEFEF', // Sets the color of the top border
-      
     },
 
 
@@ -508,8 +506,6 @@ export const styles = {
       marginTop: -1,
     },
     button: {
-
-
       marginBottom: 20, // Adds bottom margin (spacing between buttons)
       height: 70,
       width: '100%', // Sets the width to 100% of the container
@@ -572,7 +568,6 @@ export const styles = {
       right: 0,
       bottom: 0,
       paddingTop: 60,
-      
     },
 
 
@@ -750,7 +745,7 @@ export const styles = {
 
     footer: {
       flexDirection: 'row', // Sets the direction of items in the container to horizontal
-      
+
     },
 
     footerContainer: {
@@ -761,13 +756,13 @@ export const styles = {
       bottom: 0,
       paddingTop: 20,
       paddingBottom: 20,
-      
+
     },
 
     footerButtonContainer: {
       flex: 1, // Takes up the available space
       alignItems: 'center', // Centers content horizontally
-     
+
 
     },
 
