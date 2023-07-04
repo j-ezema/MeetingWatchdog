@@ -84,11 +84,13 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
               <Text numberOfLines={1} style={styles.meetingItem.cardTitle}>{meeting_title}</Text>
               <View style={styles.meetingItem.time}>
                 <View style={styles.meetingItem.date}>
-                  <Image source={require('../assets/calendar.png')} style={[styles.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                  {/*<Image source={require('../assets/calendar.png')} style={[styles.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
+                  <Icon style={styles.meetingItem.dateText} type="material-community" name="calendar-month-outline" size={20}/>
                   <Text style={styles.meetingItem.dateText}>{moment(meeting_datetime).format("YYYY-MM-DD")}</Text>
                 </View>
                 <View style={styles.meetingItem.space}>
-                  <Image source={require('../assets/clock.png')} style={[styles.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                  {/*<Image source={require('../assets/clock.png')} style={[styles.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
+                  <Icon style={styles.meetingItem.dateText} type="material-community" name="clock-outline" size={20}/>
                   <Text style={styles.meetingItem.dateText}>{moment(meeting_datetime).format("h:mma")}</Text>
                 </View>
               </View>

@@ -26,7 +26,28 @@ function App(): JSX.Element {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: false }}
+          options={{
+            title: 'Home',
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: colors.oxfordBlue,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerLeft: () => (
+              <Image source={require('./assets/images/logo.png')} style={{width:50,height:50}}/>
+            ),
+            headerRight: () => (
+              <Icon type="material-community" name="dots-vertical" color="white"/>
+            ),
+            contentStyle: {
+              borderTopColor: colors.gray,
+              borderTopWidth: 0.5,
+            },
+          }}
+
         />
         <Stack.Screen
           name="CreateMeeting"

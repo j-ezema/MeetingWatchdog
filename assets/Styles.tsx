@@ -206,9 +206,6 @@ export const styles = {
     footer: {
       flexDirection: 'row', // Sets the direction of items in the container to horizontal
     },
-
-
-
     footerContainer: {
       position: 'absolute',
       left: 0,
@@ -217,15 +214,41 @@ export const styles = {
       paddingTop: 20,
       paddingBottom: 20,
     },
-
     optionContainer: {
-      position: 'absolute',
+      backgroundColor: colors.white,
       left: 0,
       right: 0,
-      bottom: -9,
-
-
-
+      //bottom: -9,
+      bottom:0,
+      margin:0,
+    },
+    optionButton:{
+      height:50,
+      width: '100%', // Sets the width to 100% of the container
+      justifyContent: 'center', // Centers content vertically
+      alignItems: 'center', // Aligns text to the left
+      flexDirection: 'row',
+      //marginBottom: 0.5,
+      backgroundColor: colors.white,
+      
+    },
+    textButton: {
+      width: '100%', // Sets the width to 100% of the container
+      height: 50, // Sets the height of the button
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      justifyContent: 'center', // Centers content vertically
+      alignItems: 'center', // Aligns text to the left
+      borderTopWidth:0.5
+    },
+    optionsText: {
+      color: '#0A1128', // Sets the text color
+      fontFamily: 'OpenSans-Regular', // Sets the font family
+      fontSize: 13, // Sets the font size
+    },
+    optionsTextB: {
+      color: '#0A1128', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: 13, // Sets the font size
     },
     cardsContainer: {
       flex: 1,
@@ -234,7 +257,7 @@ export const styles = {
     },
     menu: {
       marginHorizontal: 0,
-
+      flex:1,
       //backgroundColor: colors.steelBlue,
       //margin: 0,
     },
@@ -260,16 +283,7 @@ export const styles = {
       tintColor: '#0A1128',
     },
 
-    optionsText: {
-      color: '#0A1128', // Sets the text color
-      fontFamily: 'OpenSans-Regular', // Sets the font family
-      fontSize: 13, // Sets the font size
-    },
-    optionsTextB: {
-      color: '#0A1128', // Sets the text color
-      fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 13, // Sets the font size
-    },
+    
 
     footerButton: {
       height: 100, // Sets the height of the button
@@ -287,14 +301,7 @@ export const styles = {
       borderColor: '#ffffff', // Sets the border color
       borderWidth: 2, // Sets the border width
     },
-    textButton: {
-      marginBottom: 20, // Adds bottom margin
-      width: '100%', // Sets the width to 100% of the container
-      height: 50, // Sets the height of the button
-      backgroundColor: '#ffffff', // Sets the background color of the button
-      justifyContent: 'center', // Centers content vertically
-      alignItems: 'center', // Aligns text to the left
-    },
+    
   }),
   'meetingItem': StyleSheet.create({
     //Meeting View Cards
@@ -335,10 +342,8 @@ export const styles = {
     },
     time: {
       flexDirection: 'row',
-      marginTop: 22,
+      marginTop: 10,
     },
-
-
     date: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -371,7 +376,7 @@ export const styles = {
     },
     cardTitle: {
       textAlign: 'left',
-      fontSize: 16,
+      fontSize: 25,
       fontFamily: 'OpenSans-Bold',
       color: colors.oxfordBlue,
       //fontWeight: "700",

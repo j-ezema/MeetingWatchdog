@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   Alert,
@@ -39,6 +39,13 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     loadDataCallback();
   }, [loadDataCallback]);
 
+  //refreshes on navigation
+  useFocusEffect(
+    React.useCallback(() => {
+      // do the stuff you wanna do
+      loadDataCallback();
+    }, [loadDataCallback]));
+
   const deleteItem = async (id: number) => {
     try {
       const pos = meetings.map(e => e.id).indexOf(id);
@@ -50,7 +57,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       console.error(error);
     }
   };
-
+  /*
   const addMeeting = async () => {
     //
     // adds new meeting, will be moved
@@ -66,7 +73,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       console.error(error);
     }
     return;
-  };
+  };//*/
 
   const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -81,75 +88,18 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     }
   };
   const handleCreateMeeting = () => {
-    setActiveButtonIndex(0);
-    navigation.navigate('CreateMeeting');
-
-
+    if(activeButtonIndex == -1){
+      setActiveButtonIndex(0);
+      navigation.navigate('CreateMeeting');
+      setTimeout(() => {setIsButtonClicked(false)}, 300)
+    }  
   };
-
   const handleImportMeeting = () => {
-
-    setActiveButtonIndex(1);
-    navigation.navigate('OutlookMeeting');
-
-  };
-
-  const renderFooterContent = () => {
-    if (isButtonClicked) {
-      return (
-        <View >
-          {/* Render your list of buttons here */}
-          <View style={styles.homeScreen.optionContainer}>
-            <View style={styles.homeScreen.button}>
-              <View style={styles.homeScreen.textButton}>
-                <Text style={styles.homeScreen.optionsText}>How would you like to set up your meeting?</Text>
-              </View>
-            </View>
-
-
-            <TouchableOpacity
-              style={[
-                styles.homeScreen.button
-
-              ]}
-              onPress={handleCreateMeeting}
-            >
-              <View style={[styles.homeScreen.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60' }]}>
-                <Text style={[styles.homeScreen.optionsTextB]}>Create A Meeting</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.homeScreen.button,
-
-              ]}
-              onPress={handleImportMeeting}
-            >
-              <View style={[styles.homeScreen.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60' }]}>
-                <Text style={[styles.homeScreen.optionsTextB]}>Import Meeting From Microsoft Outlook</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.homeScreen.footerContainer}>
-          <View style={styles.homeScreen.footer}>
-            <View style={styles.homeScreen.footerButtonContainer}>
-              <TouchableOpacity
-                style={[styles.homeScreen.footerButton, styles.homeScreen.footerBorder]}
-                onPress={handleButtonPress}
-              >
-                <Image source={require('../assets/plus.png')} style={styles.homeScreen.plus} />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-        </View>
-      );
-    }
+    if(activeButtonIndex == -1){
+      setActiveButtonIndex(1);
+      navigation.navigate('OutlookMeeting');
+      setTimeout(() => {setIsButtonClicked(false)}, 300)
+    } 
   };
 
 
@@ -187,11 +137,52 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                 <WelcomeScreen />
               }
             </View>
-
+            { !isButtonClicked &&
+              <View style={styles.homeScreen.footerContainer}>
+                <View style={styles.homeScreen.footer}>
+                  <View style={styles.homeScreen.footerButtonContainer}>
+                    <TouchableOpacity
+                      style={[styles.homeScreen.footerButton, styles.homeScreen.footerBorder]}
+                      onPress={handleButtonPress}
+                    >
+                      <Image source={require('../assets/plus.png')} style={styles.homeScreen.plus} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            }
           </View>
-          {renderFooterContent()}
         </SafeAreaView>
-
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isButtonClicked}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setIsButtonClicked(!isButtonClicked);
+        }}>
+        <View style={{flex:1, flexDirection:'column-reverse'}}>
+          
+          <View style={styles.homeScreen.optionContainer}>
+            <View style={styles.homeScreen.optionButton}>
+              <View style={styles.homeScreen.textButton}>
+                <Text style={styles.homeScreen.optionsText}>How would you like to set up your meeting?</Text>
+              </View>
+            </View>
+            <TouchableOpacity style={[styles.homeScreen.optionButton]}onPressOut={handleCreateMeeting}>
+              <View style={[styles.homeScreen.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60' }]}>
+                <Text style={[styles.homeScreen.optionsTextB]}>Create A Meeting</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.homeScreen.optionButton,]}onPressOut={handleImportMeeting}>
+              <View style={[styles.homeScreen.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60' }]}>
+                <Text style={[styles.homeScreen.optionsTextB]}>Import Meeting From Microsoft Outlook</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress}/>
+        </View>
+      </Modal>
 
       </GestureHandlerRootView>
     </TouchableWithoutFeedback>

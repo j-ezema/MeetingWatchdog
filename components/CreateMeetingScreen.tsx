@@ -13,7 +13,7 @@ import {
 
 
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import SQLite from 'react-native-sqlite-storage';
 import { getDBConnection, saveMeetingItems } from '../services/db-services';
@@ -151,7 +151,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 onPress={showDatePicker}
                             >
                                 <View style={styles.createMeeting.dateButtonContent}>
-                                    <Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                                    {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30}/>
                                     <View >
                                         <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date</Text>
                                         <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
@@ -163,7 +164,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 onPress={showTimePicker}
                             >
                                 <View style={styles.createMeeting.dateButtonContent}>
-                                    <Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />
+                                    {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30}/>
                                     <View >
                                         <Text style={styles.createMeeting.dateButtonTitle}>Meeting Time</Text>
                                         <Text style={styles.createMeeting.dateButtonText}>{formattedTime}</Text>
