@@ -1,8 +1,9 @@
 import { Card } from "@rneui/base";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { MeetingItem } from "../models";
 import React from "react";
 import { MeetingItemComponent} from './MeetingItem';
+import { View } from "react-native";
 
 export const MeetingView: React.FC<{meetings: MeetingItem[]; deleteItem: Function;}> = ({meetings, deleteItem }) =>{
 
@@ -15,9 +16,7 @@ export const MeetingView: React.FC<{meetings: MeetingItem[]; deleteItem: Functio
     
     return (
       <ScrollView>
-        <View>
-          {arr}
-        </View>
+        {arr}
         <View style={{height:80}}/>
       </ScrollView>
       
