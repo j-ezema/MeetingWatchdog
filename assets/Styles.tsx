@@ -376,7 +376,7 @@ export const styles = {
     },
     cardTitle: {
       textAlign: 'left',
-      fontSize: 25,
+      fontSize: 20,
       fontFamily: 'OpenSans-Bold',
       color: colors.oxfordBlue,
       //fontWeight: "700",
