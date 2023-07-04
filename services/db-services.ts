@@ -10,6 +10,11 @@ const tableNames = {MeetingItems:'meetings',
                     settings:'settings'
                     };
 
+const settings:any[] = new Array(
+  {name:'default_participants', value:5},
+  {name:'default_hourly', value:5},
+)
+
 export const createTable = async (db: SQLiteDatabase) => {
 // create tables if not exists
     const Queries = [
@@ -30,16 +35,43 @@ export const createTable = async (db: SQLiteDatabase) => {
             value TEXT NOT NULL
         );`,
         `CREATE TABLE IF NOT EXISTS ${tableNames.settings}(
-            value TEXT NOT NULL
+            setting_name TEXT NOT NULL UNIQUE,
+            setting_value INT NOT NULL
         );`,
-
         ];
 
     Queries.forEach(async query => {
         await db.executeSql(query);
     });
-    
+    initializeSettings(db);
 };
+
+const initializeSettings = async (db: SQLiteDatabase) => {
+  const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
+  settings.forEach(async setting => {
+    let tains:Boolean = false;
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        if(result.rows.item(index)['setting_name'] == setting.name){
+            tains = true 
+        }
+      }
+    });
+    if(!tains){
+      try {
+        const query = `INSERT INTO ${tableNames.settings} (setting_name, setting_value) VALUES ('${setting.name}', ${setting.value}); `;
+        await db.executeSql(query);
+      } catch (error) {
+        
+      }
+      
+    }
+    console.log(setting.name+": "+tains);
+
+  });
+
+  
+}
 
 export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]> => {
   try {
@@ -48,7 +80,7 @@ export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         var temp = result.rows.item(index);
-        console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
+        //console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
         temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
         MeetingItems.push(temp);
         
