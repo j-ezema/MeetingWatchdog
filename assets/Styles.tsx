@@ -131,7 +131,7 @@ export const styles = {
 
     content: {
       flex: 1,
-      borderTopWidth: 0.5, // Adds a top border
+      borderTopWidth: 0.8, // Adds a top border
       borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
     pastText: {
