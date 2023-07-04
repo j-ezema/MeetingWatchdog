@@ -34,11 +34,12 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       console.error(error);
     }
   }, []);
-
+  /*
   useEffect(() => {
     loadDataCallback();
   }, [loadDataCallback]);
-
+  //*/
+  
   //refreshes on navigation
   useFocusEffect(
     React.useCallback(() => {
