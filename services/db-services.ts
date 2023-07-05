@@ -49,15 +49,15 @@ export const createTable = async (db: SQLiteDatabase) => {
 const initializeSettings = async (db: SQLiteDatabase) => {
   const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
   settings.forEach(async setting => {
-    let tains:Boolean = false;
+    let contains:Boolean = false;
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         if(result.rows.item(index)['setting_name'] == setting.name){
-            tains = true 
+            contains = true 
         }
       }
     });
-    if(!tains){
+    if(!contains){
       try {
         const query = `INSERT INTO ${tableNames.settings} (setting_name, setting_value) VALUES ('${setting.name}', ${setting.value}); `;
         await db.executeSql(query);
@@ -66,11 +66,26 @@ const initializeSettings = async (db: SQLiteDatabase) => {
       }
       
     }
-    console.log(setting.name+": "+tains);
+    //console.log(setting.name+": "+contains);
 
   });
 
   
+}
+
+export const retrieveSettings = async (db: SQLiteDatabase): Promise<object> => {
+  const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
+  let savedSettings:{[k: string]: any} = {};
+  settings.forEach(async setting => {
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        if(result.rows.item(index)['setting_name'] == setting.name){
+          savedSettings[setting.name] = result.rows.item(index)['setting_value']} ;
+        }
+      }
+    );
+  });
+  return savedSettings;
 }
 
 export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]> => {
