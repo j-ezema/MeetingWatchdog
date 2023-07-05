@@ -17,7 +17,7 @@ import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveM
 import { MeetingItem, createNewMeetingItem } from '../models';
 import { MeetingView } from './MeetingView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { styles } from '../assets/Styles';
+import { colors, styles } from '../assets/Styles';
 
 
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
@@ -139,6 +139,13 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               }
             </View>
             { !isButtonClicked &&
+            <TouchableOpacity style={styles.homeScreen.floatingButtonContainer} onPressOut={handleButtonPress}>
+              <Icon style={styles.homeScreen.floatingButton}
+                size={35} raised reverseColor='black' type="material" name="add" color="#000000" 
+              />
+            </TouchableOpacity>
+            
+              /*
               <View style={styles.homeScreen.footerContainer}>
                 <View style={styles.homeScreen.footer}>
                   <View style={styles.homeScreen.footerButtonContainer}>
@@ -150,7 +157,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-              </View>
+              </View>*/
             }
           </View>
         </SafeAreaView>

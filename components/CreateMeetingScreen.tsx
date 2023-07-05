@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -16,9 +16,10 @@ import {
 import { Button, Icon } from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 import SQLite from 'react-native-sqlite-storage';
-import { getDBConnection, saveMeetingItems } from '../services/db-services';
+import { getDBConnection, retrieveSettings, saveMeetingItems } from '../services/db-services';
 import { createNewMeetingItem } from '../models';
 import { colors, styles } from "../assets/Styles";
+import moment from 'moment';
 
 
 
@@ -30,6 +31,22 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const [hourlyRate, setHourlyRate] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
+
+    //grab settings
+    const loadDataCallback = useCallback(async () => {
+        try {
+            const db = await getDBConnection();
+            const settings:{[k: string]: any} = await retrieveSettings(db);
+            setParticipants(""+settings.default_participants);
+            setHourlyRate(""+settings.default_hourly);
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+    
+    useEffect(() => {
+    loadDataCallback();
+    }, [loadDataCallback]);
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -80,7 +97,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
         minute: 'numeric',
     });
 
-    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
+    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(true);
 
     const handleHourlyRateChange = (inputValue: string) => {
         const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
@@ -102,7 +119,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
 
     const saveMeetingData = async () => {
         try {
-            const newMeeting = createNewMeetingItem(0, meetingName);
+            var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
             console.log(await saveMeetingItems(db, [newMeeting]));
@@ -153,7 +171,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 <View style={styles.createMeeting.dateButtonContent}>
                                     {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
                                     <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30}/>
-                                    <View >
+                                    <View>
                                         <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date</Text>
                                         <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
                                     </View>
@@ -187,7 +205,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 <TextInput
                                     style={styles.createMeeting.inputText}
                                     placeholder="Enter rate"
-                                    value={isHourlyRateEntered ? hourlyRate : ''}
+                                    value={hourlyRate}
                                     onChangeText={handleHourlyRateChange}
                                     keyboardType="numeric"
                                 />
