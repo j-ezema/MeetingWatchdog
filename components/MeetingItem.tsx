@@ -2,7 +2,7 @@ import { Card, Icon, Text } from "@rneui/base";
 import { Animated, StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import { MeetingItem } from "../models";
 import React from "react";
-import { Directions, Gesture, GestureDetector, PanGestureHandler } from "react-native-gesture-handler";
+import { Directions, Gesture, GestureDetector, PanGestureHandler, ScrollView } from "react-native-gesture-handler";
 import { useState } from 'react';
 import { colors, styles } from "../assets/Styles";
 import moment from "moment";

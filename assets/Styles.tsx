@@ -20,12 +20,17 @@ export const colors = {
 
 export const styles = {
   'homeScreen': StyleSheet.create({
-    floatingButton: {
+    floatingButtonContainer: {
       position: 'absolute',
-      right: 40,
-      bottom: 40,
+      right: 20,
+      bottom: 20,
     },
-
+    floatingButton:{
+      borderWidth:0.5, 
+      borderRadius:100, 
+      backgroundColor:"#FFFFFF", 
+      borderColor:colors.oxfordBlue
+    },
 
     header: {
       paddingTop: 10, // Adds top padding
@@ -269,7 +274,9 @@ export const styles = {
       alignItems: 'center', // Centers content horizontally
       marginLeft: 265,
       marginBottom: 20,
-
+      borderRadius: 20,
+      borderWidth: 2,
+      borderColor: 'green',
     },
 
     plus: {
@@ -290,6 +297,8 @@ export const styles = {
       backgroundColor: colors.white, // Sets the background color of the button
       borderRadius: 50, // Sets the border radius of the button
       width: 100, // Sets the width of the button
+      borderWidth: 2,
+      borderColor: 'red',
     },
     footerButtonText: {
       color: '#ffffff', // Sets the text color
@@ -300,6 +309,7 @@ export const styles = {
     footerBorder: {
       borderColor: '#ffffff', // Sets the border color
       borderWidth: 2, // Sets the border width
+      
     },
     
   }),
