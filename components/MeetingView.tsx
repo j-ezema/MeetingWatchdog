@@ -15,7 +15,7 @@ export const MeetingView: React.FC<{meetings: MeetingItem[]; deleteItem: Functio
     });
     
     return (
-      <ScrollView>
+      <ScrollView style={{flexGrow:1}} >
         {arr}
         <View style={{height:80}}/>
       </ScrollView>

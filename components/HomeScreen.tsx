@@ -105,95 +105,93 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
 
 
   return (
-    <TouchableWithoutFeedback onPress={handleScreenPress}>
-      <GestureHandlerRootView>
-        <SafeAreaView style={styles.homeScreen.background}>
-          <View style={styles.homeScreen.container}>
-            <View style={styles.homeScreen.header}>
-              <Image source={require('../assets/logo_01.png')} style={styles.homeScreen.logo} />
-              <Text style={styles.homeScreen.headerText}>Home</Text>
-              <TouchableOpacity style={styles.homeScreen.cancelButtonContainer}>
-                <Image source={require('../assets/settings.png')} style={styles.homeScreen.cancelButtonImage} />
+    <GestureHandlerRootView>
+      <SafeAreaView style={styles.homeScreen.background}>
+        <View style={styles.homeScreen.container}>
+          <View style={styles.homeScreen.header}>
+            <Image source={require('../assets/logo_01.png')} style={styles.homeScreen.logo} />
+            <Text style={styles.homeScreen.headerText}>Home</Text>
+            <TouchableOpacity style={styles.homeScreen.cancelButtonContainer}>
+              <Image source={require('../assets/settings.png')} style={styles.homeScreen.cancelButtonImage} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.homeScreen.content}>
+          <View style={styles.homeScreen.buttonsContainer}>
+            <View style={[styles.homeScreen.button, styles.homeScreen.buttonWithBorder]}>
+              <TouchableOpacity style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.leftInnerButton]}>
+                <Text style={styles.homeScreen.upcomingText}>Upcoming</Text>
+                <View style={styles.homeScreen.textBorder}><Text style={styles.homeScreen.count}>{meetings.length}</Text></View>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.homeScreen.innerButton, styles.homeScreen.rightInnerButton]}>
+                <Text style={styles.homeScreen.pastText}>Past</Text>
+                <View style={styles.homeScreen.pastTextBorder}><Text style={styles.homeScreen.pastCount}>0</Text></View>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.homeScreen.content}>
-            <View style={styles.homeScreen.buttonsContainer}>
-              <View style={[styles.homeScreen.button, styles.homeScreen.buttonWithBorder]}>
-                <TouchableOpacity style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.leftInnerButton]}>
-                  <Text style={styles.homeScreen.upcomingText}>Upcoming</Text>
-                  <View style={styles.homeScreen.textBorder}><Text style={styles.homeScreen.count}>{meetings.length}</Text></View>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.homeScreen.innerButton, styles.homeScreen.rightInnerButton]}>
-                  <Text style={styles.homeScreen.pastText}>Past</Text>
-                  <View style={styles.homeScreen.pastTextBorder}><Text style={styles.homeScreen.pastCount}>0</Text></View>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.homeScreen.cardsContainer}>
-              {meetings.length > 0 &&
-                <MeetingView meetings={meetings} deleteItem={deleteItem} />
-              }
-              {meetings.length == 0 &&
-                <WelcomeScreen />
-              }
-            </View>
-            { !isButtonClicked &&
-            <TouchableOpacity style={styles.homeScreen.floatingButtonContainer} onPressOut={handleButtonPress}>
-              <Icon style={styles.homeScreen.floatingButton}
-                size={35} raised reverseColor='black' type="material" name="add" color="#000000" 
-              />
-            </TouchableOpacity>
-            
-              /*
-              <View style={styles.homeScreen.footerContainer}>
-                <View style={styles.homeScreen.footer}>
-                  <View style={styles.homeScreen.footerButtonContainer}>
-                    <TouchableOpacity
-                      style={[styles.homeScreen.footerButton, styles.homeScreen.footerBorder]}
-                      onPress={handleButtonPress}
-                    >
-                      <Image source={require('../assets/plus.png')} style={styles.homeScreen.plus} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>*/
+          <View style={styles.homeScreen.cardsContainer}>
+            {meetings.length > 0 &&
+              <MeetingView meetings={meetings} deleteItem={deleteItem} />
+            }
+            {meetings.length == 0 &&
+              <WelcomeScreen />
             }
           </View>
-        </SafeAreaView>
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isButtonClicked}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setIsButtonClicked(!isButtonClicked);
-        }}>
-        <View style={{flex:1, flexDirection:'column-reverse'}}>
+          { !isButtonClicked &&
+          <TouchableOpacity style={styles.homeScreen.floatingButtonContainer} onPressOut={handleButtonPress}>
+            <Icon style={styles.homeScreen.floatingButton}
+              size={35} raised reverseColor='black' type="material" name="add" color="#000000" 
+            />
+          </TouchableOpacity>
           
-          <View style={styles.homeScreen.optionContainer}>
-            <View style={styles.homeScreen.optionButton}>
-              <View style={styles.homeScreen.textButton}>
-                <Text style={styles.homeScreen.optionsText}>How would you like to set up your meeting?</Text>
+            /*
+            <View style={styles.homeScreen.footerContainer}>
+              <View style={styles.homeScreen.footer}>
+                <View style={styles.homeScreen.footerButtonContainer}>
+                  <TouchableOpacity
+                    style={[styles.homeScreen.footerButton, styles.homeScreen.footerBorder]}
+                    onPress={handleButtonPress}
+                  >
+                    <Image source={require('../assets/plus.png')} style={styles.homeScreen.plus} />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <TouchableOpacity style={[styles.homeScreen.optionButton]}onPressOut={handleCreateMeeting}>
-              <View style={[styles.homeScreen.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60' }]}>
-                <Text style={[styles.homeScreen.optionsTextB]}>Create A Meeting</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.homeScreen.optionButton,]}onPressOut={handleImportMeeting}>
-              <View style={[styles.homeScreen.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60' }]}>
-                <Text style={[styles.homeScreen.optionsTextB]}>Import Meeting From Microsoft Outlook</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress}/>
+            </View>*/
+          }
         </View>
-      </Modal>
+      </SafeAreaView>
+      <Modal
+      animationType="slide"
+      transparent={true}
+      visible={isButtonClicked}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+        setIsButtonClicked(!isButtonClicked);
+      }}>
+      <View style={{flex:1, flexDirection:'column-reverse'}}>
+        
+        <View style={styles.homeScreen.optionContainer}>
+          <View style={styles.homeScreen.optionButton}>
+            <View style={styles.homeScreen.textButton}>
+              <Text style={styles.homeScreen.optionsText}>How would you like to set up your meeting?</Text>
+            </View>
+          </View>
+          <TouchableOpacity style={[styles.homeScreen.optionButton]}onPressOut={handleCreateMeeting}>
+            <View style={[styles.homeScreen.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60' }]}>
+              <Text style={[styles.homeScreen.optionsTextB]}>Create A Meeting</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.homeScreen.optionButton,]}onPressOut={handleImportMeeting}>
+            <View style={[styles.homeScreen.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60' }]}>
+              <Text style={[styles.homeScreen.optionsTextB]}>Import Meeting From Microsoft Outlook</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress}/>
+      </View>
+    </Modal>
 
-      </GestureHandlerRootView>
-    </TouchableWithoutFeedback>
+    </GestureHandlerRootView>
   )
 }
 
