@@ -1,19 +1,23 @@
 import {SQLiteDatabase, enablePromise, openDatabase} from 'react-native-sqlite-storage';
 import { MeetingItem } from '../models';
 import moment from 'moment';
+
 enablePromise(true);
+
 export const getDBConnection = async () => {
   return openDatabase({name: 'meeting-watchdog.db', location: 'default'});
 };
-const tableNames = {MeetingItems:'meetings',
-                    MailClientConfiguration:'MailClientConfiguration',
-                    settings:'settings'
-                    };
+
+const tableNames = {
+  MeetingItems:'meetings',
+  MailClientConfiguration:'MailClientConfiguration',
+  settings:'settings'
+};
 
 const settings:any[] = new Array(
   {name:'default_participants', value:5},
-  {name:'default_hourly', value:5},
-)
+  {name:'default_hourly', value:100},
+);
 
 export const createTable = async (db: SQLiteDatabase) => {
 // create tables if not exists

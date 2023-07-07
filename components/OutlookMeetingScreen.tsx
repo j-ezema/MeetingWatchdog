@@ -15,7 +15,7 @@ import { styles } from '../assets/Styles';
 
 
 
-const OutlookMeetingScreen = () => {
+const OutlookMeetingScreen = ({ navigation }: { navigation: any })=> {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -27,7 +27,6 @@ const OutlookMeetingScreen = () => {
         setSelectedDate(prevDate);
     };
 
-    const navigation = useNavigation();
 
     const handleCancel = () => {
         navigation.navigate('Home');

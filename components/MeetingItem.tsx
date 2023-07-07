@@ -1,8 +1,8 @@
-import { Card, Icon, Text } from "@rneui/base";
-import { Animated, StyleSheet, TouchableOpacity, View, Image } from "react-native";
+import { Icon, Text } from "@rneui/base";
+import { Animated, TouchableOpacity, View, Image } from "react-native";
 import { MeetingItem } from "../models";
 import React from "react";
-import { Directions, Gesture, GestureDetector, PanGestureHandler, ScrollView } from "react-native-gesture-handler";
+import { Directions, Gesture, GestureDetector} from "react-native-gesture-handler";
 import { useState } from 'react';
 import { colors, styles } from "../assets/Styles";
 import moment from "moment";
@@ -23,7 +23,6 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
       toValue: 0,
       useNativeDriver: false,
     }).start();
-    console.log(meeting_title + " was swiped left " + state.visible);
   };
   const swipeRight = () => {
     setState({ visible: false, x: state.x, xx: state.xx });
@@ -39,15 +38,12 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
       restSpeedThreshold: 50, //makes animation finish quicker removing delay on hiding
       restDisplacementThreshold: 40 //^^^^
     }).start(/*() =>setState({visible:false,x:new Animated.Value(0)})*/);
-
-    //setState({visible: true,});
-    console.log(meeting_title + " was swiped right " + state.visible);
   };
   const tapMeeting = () => {
-    console.log(meeting_title + " was selected");
+    //replace with navigation to meeting details
+    //console.log(meeting_title + " was selected");
   }
   const tapDeleteMeeting = () => {
-    console.log(meeting_title + " was deleted");
     deleteItem(id);
   }
 
@@ -55,7 +51,6 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
   const flingGestureRight = Gesture.Fling().direction(Directions.LEFT).onEnd((e) => swipeLeft());
   const tapSelectGesture = Gesture.Tap().onEnd((e) => { if (!state.visible) { tapMeeting() } });
   const composed = Gesture.Simultaneous(flingGestureLeft, flingGestureRight, tapSelectGesture)
-  //const flingGestureLeft = Gesture.Fling().direction(Directions.LEFT | Directions.RIGHT).onEnd((e) => console.log(meeting_title+" was swiped "+e.x));
 
 
   return (
