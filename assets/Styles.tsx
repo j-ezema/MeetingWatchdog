@@ -575,6 +575,7 @@ export const styles = {
 
     footer: {
       flexDirection: 'row', // Sets the direction of items in the container to horizontal
+
     },
 
     footerContainer: {
@@ -582,7 +583,8 @@ export const styles = {
       left: 0,
       right: 0,
       bottom: 0,
-      paddingTop: 60,
+      flexDirection: 'column-reverse',
+
     },
 
 
@@ -764,7 +766,7 @@ export const styles = {
     },
 
     footerContainer: {
-      borderTopWidth: 0.5, // Adds a top border
+      borderTopWidth: 0.2, // Adds a top border
       borderTopColor: '#EFEFEF', // Sets the color of the top border
       left: 0,
       right: 0,

@@ -238,6 +238,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 </View>
+                    
 
                 {
                     isDatePickerVisible && (
