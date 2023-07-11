@@ -96,15 +96,32 @@ export const styles = {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-      backgroundColor: '#D6AD60',
+      //backgroundColor: colors.oxfordBlue,
+    },
+    
+    container: {
+      backgroundColor: '#0A1128', // Sets the background color
+      paddingVertical: 10, // Adds vertical padding
+    },
+
+    content: {
+      flex: 1,
+      borderTopWidth: 0.8, // Adds a top border
+      borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
     upcomingText: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
       fontSize: 14, // Sets the font size
     },
+    pastText: {
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'OpenSans-Bold', // Sets the font family
+      fontSize: 14, // Sets the font size
+      //alignItems: 'center', // Aligns text to the left
+      marginLeft: 15,
+    },
     textBorder: {
-
       borderColor: '#0A1128',
       borderWidth: 1.3,
       borderRadius: 8, // Sets the border radius
@@ -113,8 +130,21 @@ export const styles = {
       height: 30,
       alignItems: 'center',
     },
+    count: {
+      color: '#0A1128', // Sets the text color
+      fontFamily: 'OpenSans-Bold', // Sets the font family
+      fontSize: 14, // Sets the font size
+      marginTop: 3.5,
+    },
+    viewingColor:{
+      borderColor:colors.oxfordBlue,
+      color:colors.oxfordBlue,
+    },
+    notViewingColor:{
+      borderColor:colors.white,
+      color:colors.white,
+    },
     pastTextBorder: {
-
       borderColor: '#ffffff',
       borderWidth: 1.3,
       borderRadius: 8, // Sets the border radius
@@ -129,38 +159,24 @@ export const styles = {
       fontSize: 14, // Sets the font size
       marginTop: 3.5,
     },
-    container: {
-      backgroundColor: '#0A1128', // Sets the background color
-      paddingVertical: 10, // Adds vertical padding
-    },
-
-    content: {
-      flex: 1,
-      borderTopWidth: 0.8, // Adds a top border
-      borderTopColor: '#EFEFEF', // Sets the color of the top border
-    },
-    pastText: {
-      color: '#ffffff', // Sets the text color
-      fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: 14, // Sets the font size
-      alignItems: 'center', // Aligns text to the left
-      marginLeft: 15,
-    },
+    
     rightInnerButton: {
       borderTopRightRadius: 10,
       borderBottomRightRadius: 10,
-      backgroundColor: '#0A1128',
-      borderColor: '#efefef',
+      marginBottom: -1,
+      marginRight: -1,
+      marginTop: -1,
     },
     leftInnerButton: {
       borderTopLeftRadius: 10,
       borderBottomLeftRadius: 10,
+      marginBottom: -1,
+      marginLeft: -1,
+      marginTop: -1,
     },
-    count: {
-      color: '#0A1128', // Sets the text color
-      fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: 14, // Sets the font size
-      marginTop: 3.5,
+    viewingInnerButton:{
+      backgroundColor: colors.gold,
+      //color: '#0A1128', // Sets the text color
     },
     message: {
       flex: 1,

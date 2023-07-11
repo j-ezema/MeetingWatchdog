@@ -78,6 +78,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
 
   const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [viewingUpcomingMeetings, setViewingUpcomingMeetings] = useState(true);
 
   const handleButtonPress = () => {
     setIsButtonClicked(!isButtonClicked);
@@ -102,6 +103,14 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       setTimeout(() => {setIsButtonClicked(false)}, 300)
     } 
   };
+  const handlePastUpcomingPress = (incoming:String) => {
+    if(incoming == "past" && viewingUpcomingMeetings){
+      setViewingUpcomingMeetings(false);
+    }
+    if(incoming == "upcoming" && !viewingUpcomingMeetings){
+      setViewingUpcomingMeetings(true);
+    }
+  };
 
 
   return (
@@ -119,13 +128,23 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
         <View style={styles.homeScreen.content}>
           <View style={styles.homeScreen.buttonsContainer}>
             <View style={[styles.homeScreen.button, styles.homeScreen.buttonWithBorder]}>
-              <TouchableOpacity style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.leftInnerButton]}>
-                <Text style={styles.homeScreen.upcomingText}>Upcoming</Text>
-                <View style={styles.homeScreen.textBorder}><Text style={styles.homeScreen.count}>{meetings.length}</Text></View>
+              <TouchableOpacity 
+                style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.leftInnerButton, viewingUpcomingMeetings && styles.homeScreen.viewingInnerButton]}
+                onPress={() => handlePastUpcomingPress('upcoming')}
+                >
+                <Text style={[styles.homeScreen.upcomingText, viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>Upcoming</Text>
+                <View style={[styles.homeScreen.textBorder, viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>
+                  <Text style={[styles.homeScreen.count, viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>{meetings.length}</Text>
+                </View>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.homeScreen.innerButton, styles.homeScreen.rightInnerButton]}>
-                <Text style={styles.homeScreen.pastText}>Past</Text>
-                <View style={styles.homeScreen.pastTextBorder}><Text style={styles.homeScreen.pastCount}>0</Text></View>
+              <TouchableOpacity 
+                style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.rightInnerButton, !viewingUpcomingMeetings && styles.homeScreen.viewingInnerButton]}
+                onPress={() => handlePastUpcomingPress('past')}
+                >
+                <Text style={[styles.homeScreen.pastText, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>Past</Text>
+                <View style={[styles.homeScreen.textBorder, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>
+                  <Text style={[styles.homeScreen.count, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>0</Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
