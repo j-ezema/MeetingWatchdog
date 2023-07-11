@@ -14,6 +14,8 @@ import CreateMeetingScreen from './components/CreateMeetingScreen';
 import { Icon, Image } from 'react-native-elements';
 import OutlookMeetingScreen from './components/OutlookMeetingScreen';
 import { SplashScreen } from './components/SplashScreen';
+import { SettingsScreen } from './components/SettingsScreen';
+
 
 
 
@@ -67,6 +69,11 @@ function App(): JSX.Element {
           <Stack.Screen
             name="OutlookMeeting"
             component={OutlookMeetingScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={SettingsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
