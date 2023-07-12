@@ -18,12 +18,7 @@ export const MeetingDetailsScreen = ({ navigation }: { navigation: any }) => {
 
     return (
         <View style={{flex:1,backgroundColor:colors.oxfordBlue}}>
-            <View style={styles.createMeeting.header}>
-                <TouchableOpacity style={styles.createMeeting.cancelButtonContainer} onPress={handleCancel}>
-                    <Image source={require('../assets/close.png')} style={styles.createMeeting.cancelButtonImage} />
-                </TouchableOpacity>
-                <Text style={styles.createMeeting.headerText}>Create A Meeting</Text>
-            </View>
+            
         </View>
     );
 }
