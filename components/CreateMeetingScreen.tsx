@@ -21,6 +21,7 @@ import { createNewMeetingItem } from '../models';
 import { colors, styles } from "../assets/Styles";
 import moment from 'moment';
 import CurrencyInput from 'react-native-currency-input';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -39,15 +40,17 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             const db = await getDBConnection();
             const settings: { [k: string]: any } = await retrieveSettings(db);
             setParticipants("" + settings.default_participants);
-            setHourlyRate(settings.default_hourly);
+            setHourlyRate("$"+settings.default_hourly);
         } catch (error) {
             console.error(error);
         }
     }, []);
 
-    useEffect(() => {
+    
+    useFocusEffect(
+    React.useCallback(() => {
         loadDataCallback();
-    }, [loadDataCallback]);
+    }, [loadDataCallback]));
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -62,17 +65,13 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
         setDatePickerVisibility(false);
     };
 
-    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
-
     const handleHourlyRateChange = (inputValue: string) => {
         const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
         if (isNaN(numericValue)) {
             setHourlyRate('');
-            setIsHourlyRateEntered(false);
         } else {
             const formattedRate = inputValue.startsWith('$') ? inputValue : `$${inputValue}`;
             setHourlyRate(formattedRate);
-            setIsHourlyRateEntered(true);
         }
     };
 
@@ -89,7 +88,6 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const day = String(selectedDate.getDate()).padStart(2, "0");
 
     const desiredFormat = `${year}-${month}-${day}`;
-    console.log(desiredFormat); // Output: 2023-06-27
 
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
     const [selectedTime, setSelectedTime] = useState(new Date());
@@ -113,10 +111,10 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     });
 
 
-
+    /*
     const handleCancel = () => {
         navigation.navigate('Home');
-    };
+    };//*/
 
     const saveMeetingData = async () => {
         try {
@@ -159,75 +157,70 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             >
 
                 <View style={styles.createMeeting.container}>
+                    {/*
                     <View style={styles.createMeeting.header}>
                         <TouchableOpacity style={styles.createMeeting.cancelButtonContainer} onPress={handleCancel}>
                             <Image source={require('../assets/close.png')} style={styles.createMeeting.cancelButtonImage} />
                         </TouchableOpacity>
                         <Text style={styles.createMeeting.headerText}>Create A Meeting</Text>
                     </View>
+                    */}
+                    <View style={styles.createMeeting.buttonsContainer}>
+                        <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
+                            <Text style={styles.createMeeting.buttonText}>Meeting Name</Text>
+                            <TextInput
+                                style={styles.createMeeting.inputText}
+                                placeholder="Enter meeting name"
+                                value={meetingName}
+                                onChangeText={setMeetingName}
 
-
-
-                    <View style={styles.createMeeting.content}>
-
-                        <View style={styles.createMeeting.buttonsContainer}>
-                            <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
-                                <Text style={styles.createMeeting.buttonText}>Meeting Name</Text>
-                                <TextInput
-                                    style={styles.createMeeting.inputText}
-                                    placeholder="Enter meeting name"
-                                    value={meetingName}
-                                    onChangeText={setMeetingName}
-
-                                />
-                            </View>
-                            <TouchableOpacity
-                                style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
-                                onPress={showDatePicker}
-                            >
-                                <View style={styles.createMeeting.dateButtonContent}>
-                                    {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30} />
-                                    <View>
-                                        <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date</Text>
-                                        <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
-                                    </View>
+                            />
+                        </View>
+                        <TouchableOpacity
+                            style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
+                            onPress={showDatePicker}
+                        >
+                            <View style={styles.createMeeting.dateButtonContent}>
+                                {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30} />
+                                <View>
+                                    <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date</Text>
+                                    <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
                                 </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
-                                onPress={showTimePicker}
-                            >
-                                <View style={styles.createMeeting.dateButtonContent}>
-                                    {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30} />
-                                    <View >
-                                        <Text style={styles.createMeeting.dateButtonTitle}>Meeting Time</Text>
-                                        <Text style={styles.createMeeting.dateButtonText}>{formattedTime}</Text>
-                                    </View>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
+                            onPress={showTimePicker}
+                        >
+                            <View style={styles.createMeeting.dateButtonContent}>
+                                {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30} />
+                                <View >
+                                    <Text style={styles.createMeeting.dateButtonTitle}>Meeting Time</Text>
+                                    <Text style={styles.createMeeting.dateButtonText}>{formattedTime}</Text>
                                 </View>
-                            </TouchableOpacity>
-                            <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
-                                <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
-                                <TextInput
-                                    style={styles.createMeeting.inputText}
-                                    placeholder="Enter number"
-                                    value={participants}
-                                    onChangeText={setParticipants}
-                                    keyboardType="numeric"
-                                />
                             </View>
-                            <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
-                                <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
-                                <TextInput
-                                    style={styles.createMeeting.inputText}
-                                    placeholder="Enter rate"
-                                    value={isHourlyRateEntered ? hourlyRate : ''}
-                                    onChangeText={handleHourlyRateChange}
-                                    keyboardType="numeric"
-                                />
-                            </View>
-
+                        </TouchableOpacity>
+                        <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
+                            <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
+                            <TextInput
+                                style={styles.createMeeting.inputText}
+                                placeholder="Enter number"
+                                value={participants}
+                                onChangeText={setParticipants}
+                                keyboardType="numeric"
+                            />
+                        </View>
+                        <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
+                            <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
+                            <TextInput
+                                style={styles.createMeeting.inputText}
+                                placeholder="Enter rate"
+                                value={hourlyRate}
+                                onChangeText={handleHourlyRateChange}
+                                keyboardType="numeric"
+                            />
                         </View>
 
                     </View>

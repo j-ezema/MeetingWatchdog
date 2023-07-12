@@ -148,8 +148,8 @@ export const styles = {
 
     content: {
       flex: 1,
-      borderTopWidth: 0.8, // Adds a top border
-      borderTopColor: '#EFEFEF', // Sets the color of the top border
+      //borderTopWidth: 0.8, // Adds a top border
+      //borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
     upcomingText: {
       color: '#0A1128', // Sets the text color
@@ -735,8 +735,6 @@ export const styles = {
 
     content: {
       flex: 1,
-      borderTopWidth: 0.5, // Adds a top border
-      borderTopColor: '#EFEFEF', // Sets the color of the top border
     },
 
     dateBar: {
@@ -749,7 +747,7 @@ export const styles = {
     },
 
     selectDateContainer: {
-      marginTop: 15,
+      marginTop: 0,
     },
 
     arrowIcon: {
@@ -984,15 +982,21 @@ export const styles = {
     },
     titleText:{
       color: colors.white,
-      fontSize: 18, // Sets the font size
+      fontSize: 20, // Sets the font size
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
       marginLeft: 8,
     },
     overallView:{
       flexDirection:'row',
       alignContent:'center',
-      height:60,
+      height:90,
       alignItems:'center'
+    },
+    contentStyle:{
+      borderTopColor: colors.gray,
+      borderTopWidth: 0.25,
+      margin:0,
+      padding:0,
     },
   }),
 

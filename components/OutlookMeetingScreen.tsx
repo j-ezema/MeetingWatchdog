@@ -50,19 +50,17 @@ const OutlookMeetingScreen = ({ navigation }: { navigation: any })=> {
     return (
 
         <View style={styles.outlookMeeting.container}>
+            {/*
             <View style={styles.outlookMeeting.header}>
                 <TouchableOpacity style={styles.outlookMeeting.cancelButtonContainer} onPress={handleCancel}>
                     <Image source={require('../assets/close.png')} style={styles.outlookMeeting.cancelButtonImage} />
                 </TouchableOpacity>
                 <Text style={styles.outlookMeeting.headerText}>Outlook Meetings</Text>
-            </View>
+            </View>*/}
             <View style={styles.outlookMeeting.content}>
                 <View style={styles.outlookMeeting.selectDateContainer}>
                     <View style={styles.outlookMeeting.buttonsContainer}>
-                        <View
-                            style={[styles.outlookMeeting.dateBarContainer]}
-
-                        >
+                        <View style={[styles.outlookMeeting.dateBarContainer]}>
                             <View style={styles.outlookMeeting.dateBar}>
                                 <TouchableOpacity onPress={handlePrevDate}>
                                     <Image source={require('../assets/prev_arrow.png')} style={styles.outlookMeeting.arrowIcon} />

@@ -8,7 +8,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { colors} from './assets/Styles';
+import { colors, styles } from './assets/Styles';
 import { HomeScreen } from './components/HomeScreen';
 import CreateMeetingScreen from './components/CreateMeetingScreen';
 import { Icon, Image, Text } from 'react-native-elements';
@@ -17,7 +17,7 @@ import { SplashScreen } from './components/SplashScreen';
 import { MeetingDetailsScreen } from './components/MeetingDetailsScreen';
 import { View } from 'react-native';
 import { SettingsScreen } from './components/SettingsScreen';
-import { DetailsHeaderLeft, HomeHeaderLeft } from './components/Headers';
+import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight } from './components/Headers';
 
 
 
@@ -52,50 +52,73 @@ function App(): JSX.Element {
               headerRight: () => (
                 <Icon type="material-community" name="dots-vertical" color="white"/>
               ),
-              contentStyle: {
-                borderTopColor: colors.gray,
-                borderTopWidth: 0.5,
-              },
+              contentStyle: styles.Headers.contentStyle,
             }}
 
           />
           <Stack.Screen
             name="CreateMeeting"
             component={CreateMeetingScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="OutlookMeeting"
-            component={OutlookMeetingScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="meetingDetails"
-            component={MeetingDetailsScreen}
-            options={({ navigation, route }) => ({
+            options={({ navigation }) => ({
               title: '',
               headerStyle: {
                 backgroundColor: colors.oxfordBlue,
               },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                
+              headerLeft: () => (
+                <CancelHeaderLeft name="Create A Meeting"/>
+              ),
+              headerRight: () => (
+                <CancelHeaderRight navigation={navigation}/>
+              ),
+              contentStyle: styles.Headers.contentStyle,
+            })}
+          />
+          <Stack.Screen
+            name="OutlookMeeting"
+            component={OutlookMeetingScreen}
+            options={({ navigation }) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <DetailsHeaderLeft navigation={navigation}/>
+                <CancelHeaderLeft name="Outlook Meetings"/>
               ),
-              contentStyle: {
-                borderTopColor: colors.gray,
-                borderTopWidth: 0.5,
+              headerRight: () => (
+                <CancelHeaderRight navigation={navigation}/>
+              ),
+              contentStyle: styles.Headers.contentStyle,
+
+            })}
+          />
+          <Stack.Screen
+            name="meetingDetails"
+            component={MeetingDetailsScreen}
+            options={({ navigation }) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
               },
+              headerLeft: () => (
+                <LogoReturnHeaderLeft name="Meeting Details" navigation={navigation}/>
+              ),
+              contentStyle: styles.Headers.contentStyle,
             })}
 
           />
           <Stack.Screen
             name="Settings"
             component={SettingsScreen}
-            options={{ headerShown: false }}
+            options={({ navigation }) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
+              },
+              headerLeft: () => (
+                <LogoReturnHeaderLeft name="Settings" navigation={navigation}/>
+              ),
+              contentStyle: styles.Headers.contentStyle,
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
