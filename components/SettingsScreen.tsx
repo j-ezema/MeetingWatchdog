@@ -2,31 +2,42 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     TextInput,
     TouchableOpacity,
     Image,
-    ScrollView,
-    KeyboardAvoidingView,
-    Platform,
-    Modal,
+
 
 
 } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
-import DatePicker from 'react-native-date-picker';
-import SQLite from 'react-native-sqlite-storage';
-import { getDBConnection, retrieveSettings, saveMeetingItems } from '../services/db-services';
-import { createNewMeetingItem } from '../models';
-import { colors, styles } from "../assets/Styles";
-import moment from 'moment';
-import CurrencyInput from 'react-native-currency-input';
+import { styles } from "../assets/Styles";
 
 export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
-    const handleBack = () => { 
-        navigation.navigate('Home');
+    const [hourlyRate, setHourlyRate] = useState('');
+
+    const [participants, setParticipants] = useState('');
+
+    const handleBack = () => {
+        navigation.navigate('Home', {
+            participants: participants,
+            hourlyRate: hourlyRate
+        });
     }
+
+    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
+
+    const handleHourlyRateChange = (inputValue: string) => {
+        const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
+        if (isNaN(numericValue)) {
+            setHourlyRate('');
+            setIsHourlyRateEntered(false);
+        } else {
+            const formattedRate = inputValue.startsWith('$') ? inputValue : `$${inputValue}`;
+            setHourlyRate(formattedRate);
+            setIsHourlyRateEntered(true);
+        }
+    };
+
     return (
         <View style={styles.settings.container}>
             <View style={styles.settings.header}>
@@ -48,20 +59,18 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
                         <TextInput
                             style={styles.createMeeting.inputText}
                             placeholder="Enter number"
-
+                            value={participants}
+                            onChangeText={setParticipants}
                             keyboardType="numeric"
                         />
                     </View>
                     <View style={styles.createMeeting.textButton}>
                         <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
-                        <CurrencyInput
+                        <TextInput
                             style={styles.createMeeting.inputText}
                             placeholder="Enter rate"
-                            prefix="$"
-                            delimiter=","
-                            separator="."
-                            precision={2}
-                            value={100}
+                            value={isHourlyRateEntered ? hourlyRate : ''}
+                            onChangeText={handleHourlyRateChange}
                             keyboardType="numeric"
                         />
                     </View>

@@ -29,7 +29,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
 
     const [participants, setParticipants] = useState('');
     const [meetingName, setMeetingName] = useState('');
-    const [hourlyRate, setHourlyRate] = useState<number | null>(0);
+    const [hourlyRate, setHourlyRate] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -37,16 +37,16 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const loadDataCallback = useCallback(async () => {
         try {
             const db = await getDBConnection();
-            const settings:{[k: string]: any} = await retrieveSettings(db);
-            setParticipants(""+settings.default_participants);
+            const settings: { [k: string]: any } = await retrieveSettings(db);
+            setParticipants("" + settings.default_participants);
             setHourlyRate(settings.default_hourly);
         } catch (error) {
             console.error(error);
         }
     }, []);
-    
+
     useEffect(() => {
-    loadDataCallback();
+        loadDataCallback();
     }, [loadDataCallback]);
 
     const showDatePicker = () => {
@@ -60,6 +60,20 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const handleDateConfirm = (date: React.SetStateAction<Date>) => {
         setSelectedDate(date);
         setDatePickerVisibility(false);
+    };
+
+    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
+
+    const handleHourlyRateChange = (inputValue: string) => {
+        const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
+        if (isNaN(numericValue)) {
+            setHourlyRate('');
+            setIsHourlyRateEntered(false);
+        } else {
+            const formattedRate = inputValue.startsWith('$') ? inputValue : `$${inputValue}`;
+            setHourlyRate(formattedRate);
+            setIsHourlyRateEntered(true);
+        }
     };
 
 
@@ -118,6 +132,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
         return;
     };
 
+
     return (
         <ScrollView
             contentContainerStyle={styles.createMeeting.scrollContainer}
@@ -157,7 +172,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             >
                                 <View style={styles.createMeeting.dateButtonContent}>
                                     {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30}/>
+                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30} />
                                     <View>
                                         <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date</Text>
                                         <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
@@ -170,7 +185,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             >
                                 <View style={styles.createMeeting.dateButtonContent}>
                                     {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30}/>
+                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30} />
                                     <View >
                                         <Text style={styles.createMeeting.dateButtonTitle}>Meeting Time</Text>
                                         <Text style={styles.createMeeting.dateButtonText}>{formattedTime}</Text>
@@ -189,15 +204,11 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             </View>
                             <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
                                 <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
-                                <CurrencyInput
+                                <TextInput
                                     style={styles.createMeeting.inputText}
                                     placeholder="Enter rate"
-                                    prefix="$"
-                                    delimiter=","
-                                    separator="."
-                                    precision={2}
-                                    value={hourlyRate}
-                                    onChangeValue={setHourlyRate}
+                                    value={isHourlyRateEntered ? hourlyRate : ''}
+                                    onChangeText={handleHourlyRateChange}
                                     keyboardType="numeric"
                                 />
                             </View>
@@ -229,7 +240,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                         </View>
                     </View>
                 </View>
-                    
+
 
                 {
                     isDatePickerVisible && (
