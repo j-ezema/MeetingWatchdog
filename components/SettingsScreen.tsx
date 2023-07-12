@@ -40,6 +40,7 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
     return (
         <View style={styles.settings.container}>
+            {/*
             <View style={styles.settings.header}>
                 <TouchableOpacity style={styles.settings.back} onPress={handleBack}>
                     <Image source={require('../assets/back.png')} style={styles.settings.back} />
@@ -47,49 +48,43 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
                 <Image source={require('../assets/logo_01.png')} style={styles.settings.logo} />
                 <Text style={styles.settings.headerText}>Settings</Text>
             </View>
+            */}
+            <View style={styles.createMeeting.buttonsContainer}>
 
-            <View style={styles.createMeeting.content}>
+                <Text style={styles.settings.subHeader}>Meeting Defaults</Text>
 
-                <View style={styles.createMeeting.buttonsContainer}>
-
-                    <Text style={styles.settings.subHeader}>Meeting Defaults</Text>
-
-                    <View style={styles.createMeeting.textButton}>
-                        <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
-                        <TextInput
-                            style={styles.createMeeting.inputText}
-                            placeholder="Enter number"
-                            value={participants}
-                            onChangeText={setParticipants}
-                            keyboardType="numeric"
-                        />
-                    </View>
-                    <View style={styles.createMeeting.textButton}>
-                        <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
-                        <TextInput
-                            style={styles.createMeeting.inputText}
-                            placeholder="Enter rate"
-                            value={isHourlyRateEntered ? hourlyRate : ''}
-                            onChangeText={handleHourlyRateChange}
-                            keyboardType="numeric"
-                        />
-                    </View>
-
-                    <TouchableOpacity
-                        style={[styles.createMeeting.textButton]}
-
-                    >
-
-                        <View style={styles.settings.accessibility}>
-                            <Text style={styles.settings.title}>Accessibilty & Display</Text>
-                            <Image source={require('../assets/next_arrow.png')} style={styles.settings.nextArrow} />
-                        </View>
-
-                    </TouchableOpacity>
-
+                <View style={styles.createMeeting.textButton}>
+                    <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
+                    <TextInput
+                        style={styles.createMeeting.inputText}
+                        placeholder="Enter number"
+                        value={participants}
+                        onChangeText={setParticipants}
+                        keyboardType="numeric"
+                    />
+                </View>
+                <View style={styles.createMeeting.textButton}>
+                    <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
+                    <TextInput
+                        style={styles.createMeeting.inputText}
+                        placeholder="Enter rate"
+                        value={isHourlyRateEntered ? hourlyRate : ''}
+                        onChangeText={handleHourlyRateChange}
+                        keyboardType="numeric"
+                    />
                 </View>
 
+                <TouchableOpacity
+                    style={[styles.createMeeting.textButton]}
 
+                >
+
+                    <View style={styles.settings.accessibility}>
+                        <Text style={styles.settings.title}>Accessibilty & Display</Text>
+                        <Image source={require('../assets/next_arrow.png')} style={styles.settings.nextArrow} />
+                    </View>
+
+                </TouchableOpacity>
 
             </View>
         </View>

@@ -511,14 +511,6 @@ export const styles = {
     },
 
 
-
-
-    content: {
-      borderTopWidth: 0.5, // Adds a top border
-      borderTopColor: '#EFEFEF', // Sets the color of the top border
-    },
-
-
     modalContainer: {
       flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -979,6 +971,12 @@ export const styles = {
       width:50,
       height:50, 
       paddingRight:40,
+    },
+    logoImageRighter: {
+      width:50,
+      height:50, 
+      paddingRight:40,
+      marginLeft:30,
     },
     titleText:{
       color: colors.white,
