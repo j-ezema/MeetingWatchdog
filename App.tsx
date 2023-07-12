@@ -16,6 +16,8 @@ import OutlookMeetingScreen from './components/OutlookMeetingScreen';
 import { SplashScreen } from './components/SplashScreen';
 import { MeetingDetailsScreen } from './components/MeetingDetailsScreen';
 import { View } from 'react-native';
+import { SettingsScreen } from './components/SettingsScreen';
+
 
 
 
@@ -99,6 +101,40 @@ function App(): JSX.Element {
               },
             }}
 
+          />
+          <Stack.Screen
+            name="meetingDetails"
+            component={MeetingDetailsScreen}
+            options={{
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                
+              },
+              headerLeft: () => (
+                <View style={{flexDirection:'row',alignContent:'center',alignItems:'center'}}>
+                  <Icon type="material" name="arrow-back" color="white" style={{ paddingRight:10}} />
+                  <Image source={require('./assets/images/logo.png')} style={{width:50,height:50, paddingRight:40}}/>
+                  <View style={{paddingLeft:40}}>
+                    <Text style={{color:"white"}}>Meeting Details</Text>
+                  </View>
+                </View>
+              ),
+              contentStyle: {
+                borderTopColor: colors.gray,
+                borderTopWidth: 0.5,
+              },
+            }}
+
+          />
+          <Stack.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

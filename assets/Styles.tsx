@@ -25,11 +25,11 @@ export const styles = {
       right: 20,
       bottom: 20,
     },
-    floatingButton:{
-      borderWidth:0.5, 
-      borderRadius:100, 
-      backgroundColor:"#FFFFFF", 
-      borderColor:colors.oxfordBlue
+    floatingButton: {
+      borderWidth: 0.5,
+      borderRadius: 100,
+      backgroundColor: "#FFFFFF",
+      borderColor: colors.oxfordBlue
     },
 
     header: {
@@ -52,21 +52,63 @@ export const styles = {
       width: 60,
       height: 60,
     },
-    cancelButtonImage: {
+    settings: {
       width: 40,
       height: 40,
       alignSelf: 'center',
       tintColor: '#ffffff',
       marginTop: 17,
+
     },
-    cancelButtonContainer: {
+    settingContent: {
+      flexDirection: 'row',
+      justifyContent: 'center', // Centers content vertically
+      alignItems: 'center', // Aligns text to the left
+      borderRadius: 10,
+    },
+    settingsContainer: {
       padding: 10, // Increase the padding to increase the clickable area
       position: 'absolute',
       right: 6,
       top: -5,
       marginRight: -10,
+
+
+    },
+    icon: {
+      fontSize: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 62,
+
+    },
+    iconB: {
+      fontSize: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 50,
+
     },
 
+    iconC: {
+      fontSize: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 2,
+
+    },
+
+
+    settingsContainerB: {
+      flex: 1,
+      padding: 10, // Increase the padding to increase the clickable area
+      position: 'absolute',
+      right: 30,
+      top: 70,
+      marginRight: -10,
+
+
+    },
     background: {
       height: "100%",
       backgroundColor: colors.oxfordBlue,
@@ -98,7 +140,7 @@ export const styles = {
       flexDirection: 'row',
       //backgroundColor: colors.oxfordBlue,
     },
-    
+
     container: {
       backgroundColor: '#0A1128', // Sets the background color
       paddingVertical: 10, // Adds vertical padding
@@ -136,13 +178,13 @@ export const styles = {
       fontSize: 14, // Sets the font size
       marginTop: 3.5,
     },
-    viewingColor:{
-      borderColor:colors.oxfordBlue,
-      color:colors.oxfordBlue,
+    viewingColor: {
+      borderColor: colors.oxfordBlue,
+      color: colors.oxfordBlue,
     },
-    notViewingColor:{
-      borderColor:colors.white,
-      color:colors.white,
+    notViewingColor: {
+      borderColor: colors.white,
+      color: colors.white,
     },
     pastTextBorder: {
       borderColor: '#ffffff',
@@ -159,7 +201,7 @@ export const styles = {
       fontSize: 14, // Sets the font size
       marginTop: 3.5,
     },
-    
+
     rightInnerButton: {
       borderTopRightRadius: 10,
       borderBottomRightRadius: 10,
@@ -174,7 +216,7 @@ export const styles = {
       marginLeft: -1,
       marginTop: -1,
     },
-    viewingInnerButton:{
+    viewingInnerButton: {
       backgroundColor: colors.gold,
       //color: '#0A1128', // Sets the text color
     },
@@ -240,18 +282,30 @@ export const styles = {
       left: 0,
       right: 0,
       //bottom: -9,
-      bottom:0,
-      margin:0,
+      bottom: 0,
+      margin: 0,
     },
-    optionButton:{
-      height:50,
+    optionButton: {
+      height: 50,
       width: '100%', // Sets the width to 100% of the container
       justifyContent: 'center', // Centers content vertically
       alignItems: 'center', // Aligns text to the left
       flexDirection: 'row',
       //marginBottom: 0.5,
       backgroundColor: colors.white,
-      
+
+    },
+    settingsButton: {
+      height: 35,
+      width: 170, // Sets the width to 100% of the container
+      justifyContent: 'flex-start', // Centers content vertically
+      alignItems: 'flex-start', // Aligns text to the left
+      flexDirection: 'row',
+      //marginBottom: 0.5,
+      backgroundColor: colors.white,
+
+
+
     },
     textButton: {
       width: '100%', // Sets the width to 100% of the container
@@ -259,7 +313,18 @@ export const styles = {
       backgroundColor: '#ffffff', // Sets the background color of the button
       justifyContent: 'center', // Centers content vertically
       alignItems: 'center', // Aligns text to the left
-      borderTopWidth:0.5
+      borderTopWidth: 0.5
+    },
+    settingsTextButton: {
+      width: '100%', // Sets the width to 100% of the container
+      height: 35, // Sets the height of the button
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      justifyContent: 'flex-start', // Centers content vertically
+      alignItems: 'flex-start', // Aligns text to the left
+
+
+      borderTopWidth: 0.5,
+
     },
     optionsText: {
       color: '#0A1128', // Sets the text color
@@ -271,6 +336,13 @@ export const styles = {
       fontFamily: 'OpenSans-Semibold', // Sets the font family
       fontSize: 13, // Sets the font size
     },
+
+    settingsText: {
+      color: '#0A1128', // Sets the text color
+      fontFamily: 'OpenSans-Regular', // Sets the font family
+      fontSize: 14, // Sets the font size
+      marginLeft: 20,
+    },
     cardsContainer: {
       flex: 1,
       paddingTop: 20,
@@ -278,7 +350,7 @@ export const styles = {
     },
     menu: {
       marginHorizontal: 0,
-      flex:1,
+      flex: 1,
       //backgroundColor: colors.steelBlue,
       //margin: 0,
     },
@@ -306,7 +378,7 @@ export const styles = {
       tintColor: '#0A1128',
     },
 
-    
+
 
     footerButton: {
       height: 100, // Sets the height of the button
@@ -325,9 +397,9 @@ export const styles = {
     footerBorder: {
       borderColor: '#ffffff', // Sets the border color
       borderWidth: 2, // Sets the border width
-      
+
     },
-    
+
   }),
   'meetingItem': StyleSheet.create({
     //Meeting View Cards
@@ -825,6 +897,80 @@ export const styles = {
       borderColor: '#ffffff', // Sets the border color
       borderWidth: 2, // Sets the border width
     }
+
+  }),
+
+  'settings': StyleSheet.create({
+
+    back: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      tintColor: colors.white
+
+
+    },
+
+    container: {
+      flex: 1,
+      backgroundColor: '#0A1128', // Sets the background color
+      paddingVertical: 10, // Adds vertical padding
+    },
+
+    header: {
+      paddingTop: 10, // Adds top padding
+      paddingHorizontal: 20,
+      height: 70,
+      backgroundColor: '#0A1128', // Sets the background color
+      flexDirection: 'row', // Add this line to make the content align horizontally
+      alignItems: 'center', // Add this line to vertically align the content
+    },
+
+
+    logo: {
+      resizeMode: 'contain',
+      width: 60,
+      height: 60,
+      marginLeft: 25,
+    },
+
+    headerText: {
+      fontSize: 18, // Sets the font size
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'Montserrat-ExtraBold', // Sets the font family
+      marginLeft: 8,
+    },
+
+    subHeader: {
+      fontSize: 18, // Sets the font size
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'OpenSans-Bold', // Sets the font family
+      marginLeft: 8,
+      paddingBottom: 25,
+    },
+
+    nextArrow: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: 140,
+
+    },
+
+    accessibility: {
+      flexDirection: 'row',
+    },
+    title: {
+      color: '#040F21',
+      fontFamily: 'OpenSans-Bold',
+      fontSize: 15,
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginLeft: 10,
+      marginTop: 7,
+    },
+
 
   }),
 
