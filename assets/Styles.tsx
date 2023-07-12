@@ -103,8 +103,8 @@ export const styles = {
       flex: 1,
       padding: 10, // Increase the padding to increase the clickable area
       position: 'absolute',
-      right: 30,
-      top: 70,
+      right: 40,
+      top: 5,
       marginRight: -10,
 
 
@@ -972,6 +972,28 @@ export const styles = {
     },
 
 
+  }),
+  'meetingDetails': StyleSheet.create({
+
+  }),
+  'Headers': StyleSheet.create({
+    logoImage: {
+      width:50,
+      height:50, 
+      paddingRight:40,
+    },
+    titleText:{
+      color: colors.white,
+      fontSize: 18, // Sets the font size
+      fontFamily: 'Montserrat-ExtraBold', // Sets the font family
+      marginLeft: 8,
+    },
+    overallView:{
+      flexDirection:'row',
+      alignContent:'center',
+      height:60,
+      alignItems:'center'
+    },
   }),
 
 };

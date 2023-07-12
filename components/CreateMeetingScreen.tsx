@@ -131,6 +131,21 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
         }
         return;
     };
+    const startMeetingData = async () => {
+        try {
+            var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime);
+            //setMeetings(meetings.concat(newMeeting));
+            const db = await getDBConnection();
+            console.log(await saveMeetingItems(db, [newMeeting]));
+            //navigation.navigate('Home', { key: Date.now() });
+            navigation.navigate('meetingDetails', { key: Date.now() });
+        } catch (error) {
+            console.error(error);
+        }
+        return;
+    };
+    
 
 
     return (
@@ -235,6 +250,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                     titleStyle={styles.createMeeting.footerButtonText}
                                     buttonStyle={[styles.createMeeting.footerButton, styles.createMeeting.startButton, styles.createMeeting.footerBorder]}
                                     containerStyle={styles.createMeeting.footerButtonContainerStyle}
+                                    onPress={startMeetingData}
                                 />
                             </View>
                         </View>
