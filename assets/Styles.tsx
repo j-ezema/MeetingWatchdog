@@ -94,7 +94,7 @@ export const styles = {
       fontSize: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: 5,
+      marginLeft: 2,
 
     },
 
