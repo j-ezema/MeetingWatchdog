@@ -107,8 +107,12 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }
   const handleSetting = () => {
     setActiveButtonIndex(3);
-    navigation.navigate('Settings');
+    if (isModalVisible) {
+      setIsModalVisible(false);
+    }
     setTimeout(() => { setIsButtonClicked(false) }, 300)
+    navigation.navigate('Settings');
+    
   }
   const handleFeedback = () => {
     setActiveButtonIndex(4);
