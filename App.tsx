@@ -19,7 +19,7 @@ import { SplashScreen } from './components/SplashScreen';
 import { MeetingDetailsScreen } from './components/MeetingDetailsScreen';
 import { View } from 'react-native';
 import { SettingsScreen } from './components/SettingsScreen';
-import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight } from './components/Headers';
+import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight, SettingsHeaderLeft } from './components/Headers';
 
 
 
@@ -132,7 +132,7 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <LogoReturnHeaderLeft name="Settings" navigation={navigation} />
+                <SettingsHeaderLeft name="Settings" navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
             })}
@@ -147,7 +147,7 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <LogoReturnHeaderLeft name="Settings" navigation={navigation} />
+                <SettingsHeaderLeft name="Settings" navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
             })}

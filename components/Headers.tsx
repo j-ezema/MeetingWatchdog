@@ -21,6 +21,21 @@ export const LogoReturnHeaderLeft = (props:{ name:String, navigation: any }) => 
     );
 }
 
+export const SettingsHeaderLeft = (props:{ name:String, navigation: any }) => {
+
+    const returnSettings = () => {
+        props.navigation.navigate('Settings')
+    };
+
+    return (
+    <View style={styles.Headers.overallView}>
+        <Icon type="material" name="arrow-back" color="white" onPress={returnSettings} size={30} />
+        <Image source={require('../assets/images/logo.png')} style={styles.Headers.logoImageRighter}/>
+        <Text style={styles.Headers.titleText}>{props.name}</Text>
+    </View>
+    );
+}
+
 export const CancelHeaderLeft = (props:{ name:String}) => {
     return (
     <View style={styles.Headers.overallView}>
