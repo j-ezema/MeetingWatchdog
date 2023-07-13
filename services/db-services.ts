@@ -1,31 +1,31 @@
-import {SQLiteDatabase, enablePromise, openDatabase} from 'react-native-sqlite-storage';
+import { SQLiteDatabase, enablePromise, openDatabase } from 'react-native-sqlite-storage';
 import { MeetingItem } from '../models';
 import moment from 'moment';
 
 enablePromise(true);
 
 export const getDBConnection = async () => {
-  return openDatabase({name: 'meeting-watchdog.db', location: 'default'});
+  return openDatabase({ name: 'meeting-watchdog.db', location: 'default' });
 };
 
 const tableNames = {
-  MeetingItems:'meetings',
-  MailClientConfiguration:'MailClientConfiguration',
-  settings:'settings'
+  MeetingItems: 'meetings',
+  MailClientConfiguration: 'MailClientConfiguration',
+  settings: 'settings'
 };
 
-const settings:any[] = new Array(
-  {name:'default_participants', value:5},
-  {name:'default_hourly', value:100},
+const settings: any[] = new Array(
+  { name: 'default_participants', value: 5 },
+  { name: 'default_hourly', value: 100 },
 );
 
 export const createTable = async (db: SQLiteDatabase) => {
-// create tables if not exists
-    const Queries = [
-        //`DROP TABLE ${tableNames.MeetingItems};`,
-        //`DROP TABLE ${tableNames.MailClientConfiguration};`,
-        //`DROP TABLE ${tableNames.settings};`,
-        `CREATE TABLE IF NOT EXISTS ${tableNames.MeetingItems}(
+  // create tables if not exists
+  const Queries = [
+    //`DROP TABLE ${tableNames.MeetingItems};`,
+    //`DROP TABLE ${tableNames.MailClientConfiguration};`,
+    //`DROP TABLE ${tableNames.settings};`,
+    `CREATE TABLE IF NOT EXISTS ${tableNames.MeetingItems}(
             meeting_title TEXT NOT NULL,
             number_of_participants INT NOT NULL,
             average_hourly_cost REAL NOT NULL,
@@ -35,58 +35,59 @@ export const createTable = async (db: SQLiteDatabase) => {
             total_meeting_cost REAL ,
             meeting_datetime REAL NOT NULL
         );`,
-        `CREATE TABLE IF NOT EXISTS ${tableNames.MailClientConfiguration}(
+    `CREATE TABLE IF NOT EXISTS ${tableNames.MailClientConfiguration}(
             value TEXT NOT NULL
         );`,
-        `CREATE TABLE IF NOT EXISTS ${tableNames.settings}(
+    `CREATE TABLE IF NOT EXISTS ${tableNames.settings}(
             setting_name TEXT NOT NULL UNIQUE,
             setting_value INT NOT NULL
         );`,
-        ];
+  ];
 
-    Queries.forEach(async query => {
-        await db.executeSql(query);
-    });
-    initializeSettings(db);
+  Queries.forEach(async query => {
+    await db.executeSql(query);
+  });
+  initializeSettings(db);
 };
 
 const initializeSettings = async (db: SQLiteDatabase) => {
   const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
   settings.forEach(async setting => {
-    let contains:Boolean = false;
+    let contains: Boolean = false;
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
-        if(result.rows.item(index)['setting_name'] == setting.name){
-            contains = true 
+        if (result.rows.item(index)['setting_name'] == setting.name) {
+          contains = true
         }
       }
     });
-    if(!contains){
+    if (!contains) {
       try {
         const query = `INSERT INTO ${tableNames.settings} (setting_name, setting_value) VALUES ('${setting.name}', ${setting.value}); `;
         await db.executeSql(query);
       } catch (error) {
-        
+
       }
-      
+
     }
     //console.log(setting.name+": "+contains);
 
   });
 
-  
+
 }
 
 export const retrieveSettings = async (db: SQLiteDatabase): Promise<object> => {
   const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
-  let savedSettings:{[k: string]: any} = {};
+  let savedSettings: { [k: string]: any } = {};
   settings.forEach(async setting => {
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
-        if(result.rows.item(index)['setting_name'] == setting.name){
-          savedSettings[setting.name] = result.rows.item(index)['setting_value']} ;
-        }
+        if (result.rows.item(index)['setting_name'] == setting.name) {
+          savedSettings[setting.name] = result.rows.item(index)['setting_value']
+        };
       }
+    }
     );
   });
   return savedSettings;
@@ -100,9 +101,9 @@ export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]
       for (let index = 0; index < result.rows.length; index++) {
         var temp = result.rows.item(index);
         //console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
-        temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
+        temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date'] + " " + result.rows.item(index)['meeting_time']);
         MeetingItems.push(temp);
-        
+
       }
     });
     return MeetingItems;
@@ -122,7 +123,7 @@ export const saveMeetingItems = async (db: SQLiteDatabase, MeetingItems: Meeting
   const insertQuery =
     `INSERT INTO ${tableNames.MeetingItems}(meeting_title, number_of_participants, average_hourly_cost, meeting_datetime) values` +
     MeetingItems.map(i => `('${i.meeting_title}', 2, 2, julianday('${moment(i.meeting_datetime).format('YYYY-MM-DD HH:mm:ss')}'))`).join(',');
-    console.log(insertQuery);
+  console.log(insertQuery);
   return db.executeSql(insertQuery);
 };
 
@@ -136,6 +137,12 @@ export const deleteTable = async (db: SQLiteDatabase) => {
   const query = `drop table ${tableNames.MeetingItems}`;
 
   await db.executeSql(query);
-  
+
 };
-  
+
+export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants: string): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_participants'`, [participants]);
+};
+export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: string): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_hourly'`, [hourlyRate]);
+}

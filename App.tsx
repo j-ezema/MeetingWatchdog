@@ -13,6 +13,8 @@ import { HomeScreen } from './components/HomeScreen';
 import CreateMeetingScreen from './components/CreateMeetingScreen';
 import { Icon, Image, Text } from 'react-native-elements';
 import OutlookMeetingScreen from './components/OutlookMeetingScreen';
+import { NumberofParticipantsScreen } from './components/NumberOfParticipantsScreen';
+import { AverageHourlyRateScreen } from './components/AverageHourlyRateScreen';
 import { SplashScreen } from './components/SplashScreen';
 import { MeetingDetailsScreen } from './components/MeetingDetailsScreen';
 import { View } from 'react-native';
@@ -32,7 +34,7 @@ function App(): JSX.Element {
   }, []);
 
   if (loading) {
-    return (<SplashScreen/>)
+    return (<SplashScreen />)
   }
   else {
     return (
@@ -47,10 +49,10 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <HomeHeaderLeft/>
+                <HomeHeaderLeft />
               ),
               headerRight: () => (
-                <Icon type="material-community" name="dots-vertical" color="white"/>
+                <Icon type="material-community" name="dots-vertical" color="white" />
               ),
               contentStyle: styles.Headers.contentStyle,
             }}
@@ -65,10 +67,10 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <CancelHeaderLeft name="Create A Meeting"/>
+                <CancelHeaderLeft name="Create A Meeting" />
               ),
               headerRight: () => (
-                <CancelHeaderRight navigation={navigation}/>
+                <CancelHeaderRight navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
             })}
@@ -82,10 +84,10 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <CancelHeaderLeft name="Outlook Meetings"/>
+                <CancelHeaderLeft name="Outlook Meetings" />
               ),
               headerRight: () => (
-                <CancelHeaderRight navigation={navigation}/>
+                <CancelHeaderRight navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
 
@@ -100,7 +102,7 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <LogoReturnHeaderLeft name="Meeting Details" navigation={navigation}/>
+                <LogoReturnHeaderLeft name="Meeting Details" navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
             })}
@@ -115,7 +117,37 @@ function App(): JSX.Element {
                 backgroundColor: colors.oxfordBlue,
               },
               headerLeft: () => (
-                <LogoReturnHeaderLeft name="Settings" navigation={navigation}/>
+                <LogoReturnHeaderLeft name="Settings" navigation={navigation} />
+              ),
+              contentStyle: styles.Headers.contentStyle,
+            })}
+          />
+
+          <Stack.Screen
+            name="NumberOfParticipants"
+            component={NumberofParticipantsScreen}
+            options={({ navigation }) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
+              },
+              headerLeft: () => (
+                <LogoReturnHeaderLeft name="Settings" navigation={navigation} />
+              ),
+              contentStyle: styles.Headers.contentStyle,
+            })}
+          />
+
+          <Stack.Screen
+            name="AverageHourlyRate"
+            component={AverageHourlyRateScreen}
+            options={({ navigation }) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
+              },
+              headerLeft: () => (
+                <LogoReturnHeaderLeft name="Settings" navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
             })}

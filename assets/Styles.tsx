@@ -961,6 +961,32 @@ export const styles = {
       marginTop: 7,
     },
 
+    textButton: {
+      marginBottom: 20, // Adds bottom margin
+      width: '100%', // Sets the width to 100% of the container
+      height: 70, // Sets the height of the button
+      borderRadius: 10, // Sets the border radius
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      alignItems: 'flex-start', // Aligns text to the left
+      paddingLeft: 16, // Adds left padding for text
+    },
+    buttonText: {
+      color: '#040F21', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: 13, // Sets the font size
+      textAlign: 'left', // Aligns text to the left
+      alignSelf: 'flex-start', // Aligns text to the left within the button
+      marginLeft: 10, // Adds left margin
+      marginTop: 15, // Adds top margin
+    },
+    inputText: {
+      color: '#040F21', // Sets the text color
+      fontFamily: 'OpenSans', // Sets the font family
+      fontSize: 17, // Sets the font size
+      paddingHorizontal: 10, // Adds horizontal padding
+      marginTop: 5, // Adjusts the position
+    },
+
 
   }),
   'meetingDetails': StyleSheet.create({
@@ -968,33 +994,33 @@ export const styles = {
   }),
   'Headers': StyleSheet.create({
     logoImage: {
-      width:50,
-      height:50, 
-      paddingRight:40,
+      width: 50,
+      height: 50,
+      paddingRight: 40,
     },
     logoImageRighter: {
-      width:50,
-      height:50, 
-      paddingRight:40,
-      marginLeft:30,
+      width: 50,
+      height: 50,
+      paddingRight: 40,
+      marginLeft: 30,
     },
-    titleText:{
+    titleText: {
       color: colors.white,
       fontSize: 20, // Sets the font size
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
       marginLeft: 8,
     },
-    overallView:{
-      flexDirection:'row',
-      alignContent:'center',
-      height:90,
-      alignItems:'center'
+    overallView: {
+      flexDirection: 'row',
+      alignContent: 'center',
+      height: 90,
+      alignItems: 'center'
     },
-    contentStyle:{
+    contentStyle: {
       borderTopColor: colors.gray,
       borderTopWidth: 0.25,
-      margin:0,
-      padding:0,
+      margin: 0,
+      padding: 0,
     },
   }),
 

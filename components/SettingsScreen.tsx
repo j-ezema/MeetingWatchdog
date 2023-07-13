@@ -10,6 +10,8 @@ import {
 
 } from 'react-native';
 import { styles } from "../assets/Styles";
+import { getDBConnection, retrieveSettings } from '../services/db-services';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
@@ -17,26 +19,35 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
     const [participants, setParticipants] = useState('');
 
-    const handleBack = () => {
-        navigation.navigate('Home', {
-            participants: participants,
-            hourlyRate: hourlyRate
-        });
-    }
-
-    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
-
-    const handleHourlyRateChange = (inputValue: string) => {
-        const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
-        if (isNaN(numericValue)) {
-            setHourlyRate('');
-            setIsHourlyRateEntered(false);
-        } else {
-            const formattedRate = inputValue.startsWith('$') ? inputValue : `$${inputValue}`;
-            setHourlyRate(formattedRate);
-            setIsHourlyRateEntered(true);
+    const loadDataCallback = useCallback(async () => {
+        try {
+            const db = await getDBConnection();
+            const settings: { [k: string]: any } = await retrieveSettings(db);
+            setParticipants("" + settings.default_participants);
+            setHourlyRate("" + settings.default_hourly);
+        } catch (error) {
+            console.error(error);
         }
+    }, []);
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            loadDataCallback();
+        }, [loadDataCallback]));
+
+
+
+
+    const handleNumber = () => {
+        navigation.navigate('NumberOfParticipants')
     };
+
+    const handleHourlyRate = () => {
+        navigation.navigate('AverageHourlyRate')
+    };
+
+
 
     return (
         <View style={styles.settings.container}>
@@ -50,33 +61,19 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
             </View>
             */}
             <View style={styles.createMeeting.buttonsContainer}>
-
                 <Text style={styles.settings.subHeader}>Meeting Defaults</Text>
 
-                <View style={styles.createMeeting.textButton}>
-                    <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
-                    <TextInput
-                        style={styles.createMeeting.inputText}
-                        placeholder="Enter number"
-                        value={participants}
-                        onChangeText={setParticipants}
-                        keyboardType="numeric"
-                    />
-                </View>
-                <View style={styles.createMeeting.textButton}>
-                    <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
-                    <TextInput
-                        style={styles.createMeeting.inputText}
-                        placeholder="Enter rate"
-                        value={isHourlyRateEntered ? hourlyRate : ''}
-                        onChangeText={handleHourlyRateChange}
-                        keyboardType="numeric"
-                    />
-                </View>
+                <TouchableOpacity style={styles.settings.textButton} onPress={handleNumber}>
+                    <Text style={styles.settings.buttonText}>Number of Participants</Text>
+                    <Text style={styles.settings.inputText}>{participants}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.settings.textButton} onPress={handleHourlyRate}>
+                    <Text style={styles.settings.buttonText}>Average Hourly Rate</Text>
+                    <Text style={styles.settings.inputText}>{hourlyRate}</Text>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     style={[styles.createMeeting.textButton]}
-
                 >
 
                     <View style={styles.settings.accessibility}>
