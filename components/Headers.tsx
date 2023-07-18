@@ -65,3 +65,18 @@ export const HomeHeaderLeft = () => {
     </View>
     );
 }
+
+export const AboutHeaderLeft = (props:{ name:String, navigation: any }) => {
+
+    const returnAbout = () => {
+        props.navigation.navigate('Home')
+    };
+
+    return (
+    <View style={styles.Headers.overallView}>
+        <Icon type="material" name="arrow-back" color="white" onPress={returnAbout} size={30} />
+        <Image source={require('../assets/images/logo.png')} style={styles.Headers.logoImageRighter}/>
+        <Text style={styles.Headers.titleText}>{props.name}</Text>
+    </View>
+    );
+}

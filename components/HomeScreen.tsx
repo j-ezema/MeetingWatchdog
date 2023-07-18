@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { NavigationContainer, useFocusEffect, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import {
   Alert,
   Modal,
   SafeAreaView,
-  StyleSheet,
+
   Text,
   TouchableOpacity,
   View,
-  Image,
+
 } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems } from '../services/db-services';
 import { MeetingItem, createNewMeetingItem } from '../models';
 import { MeetingView } from './MeetingView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { colors, styles } from '../assets/Styles';
+import { styles } from '../assets/Styles';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
@@ -43,7 +43,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Icon type="material-community" name="dots-vertical" color="white" size={30} onPress={handleSettings}/>
+        <Icon type="material-community" name="dots-vertical" color="white" size={30} onPress={handleSettings} />
       ),
     });
   }, [navigation]);
@@ -104,6 +104,13 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }
   const handleAbout = () => {
     setActiveButtonIndex(2);
+    if (isModalVisible) {
+      setIsModalVisible(false);
+    }
+    setTimeout(() => { setIsButtonClicked(false) }, 300)
+    navigation.navigate('About');
+
+    setTimeout(() => { setIsButtonClicked(false) }, 300)
   }
   const handleSetting = () => {
     setActiveButtonIndex(3);
@@ -112,12 +119,12 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     }
     setTimeout(() => { setIsButtonClicked(false) }, 300)
     navigation.navigate('Settings');
-    
+
+    setTimeout(() => { setIsButtonClicked(false) }, 300)
   }
   const handleFeedback = () => {
     setActiveButtonIndex(4);
   }
-
 
   return (
     <GestureHandlerRootView>
@@ -218,51 +225,51 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
         </View>
       </Modal>
       <Modal
-          animationType="fade"
-          transparent={true}
-          visible={isModalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setIsModalVisible(!isModalVisible);
-          }}>
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setIsModalVisible(!isModalVisible);
+        }}>
 
-          <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
-            <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress} />
+        <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
+          <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress} />
 
-            <View style={styles.homeScreen.settingsContainerB}>
-              <View style={{borderWidth:1, borderRadius: 10, overflow: 'hidden' }}>
+          <View style={styles.homeScreen.settingsContainerB}>
+            <View style={{ borderWidth: 1, borderRadius: 10, overflow: 'hidden' }}>
 
-                <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleAbout}>
-                  <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60' }]}>
-                    <View style={styles.homeScreen.settingContent}>
-                      <Text style={[styles.homeScreen.settingsText]}>About</Text>
-                      <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
-                    </View>
+              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleAbout}>
+                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={styles.homeScreen.settingContent}>
+                    <Text style={[styles.homeScreen.settingsText]}>About</Text>
+                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                   </View>
-                </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleSetting}>
-                  <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 3 && { backgroundColor: '#D6AD60' }]}>
-                    <View style={styles.homeScreen.settingContent}>
-                      <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
-                      <Icon iconStyle={styles.homeScreen.iconB} type="material" name="chevron-right" color="black" />
-                    </View>
+              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleSetting}>
+                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 3 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={styles.homeScreen.settingContent}>
+                    <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
+                    <Icon iconStyle={styles.homeScreen.iconB} type="material" name="chevron-right" color="black" />
                   </View>
-                </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleFeedback}>
-                  <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 4 && { backgroundColor: '#D6AD60' }]}>
-                    <View style={styles.homeScreen.settingContent}>
-                      <Text style={[styles.homeScreen.settingsText]}>Send Feedback</Text>
-                      <Icon iconStyle={styles.homeScreen.iconC} type="material" name="chevron-right" color="black" />
-                    </View>
+              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleFeedback}>
+                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 4 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={styles.homeScreen.settingContent}>
+                    <Text style={[styles.homeScreen.settingsText]}>Send Feedback</Text>
+                    <Icon iconStyle={styles.homeScreen.iconC} type="material" name="chevron-right" color="black" />
                   </View>
-                </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
 
-              </View>
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
     </GestureHandlerRootView>
   )
 }

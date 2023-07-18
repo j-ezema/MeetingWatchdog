@@ -13,13 +13,14 @@ import { HomeScreen } from './components/HomeScreen';
 import CreateMeetingScreen from './components/CreateMeetingScreen';
 import { Icon, Image, Text } from 'react-native-elements';
 import OutlookMeetingScreen from './components/OutlookMeetingScreen';
+import AboutScreen from './components/AboutScreen';
 import { NumberofParticipantsScreen } from './components/NumberOfParticipantsScreen';
 import { AverageHourlyRateScreen } from './components/AverageHourlyRateScreen';
 import { SplashScreen } from './components/SplashScreen';
 import { MeetingDetailsScreen } from './components/MeetingDetailsScreen';
 import { View } from 'react-native';
 import { SettingsScreen } from './components/SettingsScreen';
-import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight, SettingsHeaderLeft } from './components/Headers';
+import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight, SettingsHeaderLeft, AboutHeaderLeft } from './components/Headers';
 
 
 
@@ -148,6 +149,22 @@ function App(): JSX.Element {
               },
               headerLeft: () => (
                 <SettingsHeaderLeft name="Settings" navigation={navigation} />
+              ),
+              contentStyle: styles.Headers.contentStyle,
+            })}
+          />
+
+
+          <Stack.Screen
+            name="About"
+            component={AboutScreen}
+            options={({ navigation }) => ({
+              title: '',
+              headerStyle: {
+                backgroundColor: colors.oxfordBlue,
+              },
+              headerLeft: () => (
+                <AboutHeaderLeft name="About" navigation={navigation} />
               ),
               contentStyle: styles.Headers.contentStyle,
             })}

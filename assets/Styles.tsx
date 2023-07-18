@@ -1023,5 +1023,133 @@ export const styles = {
       padding: 0,
     },
   }),
+  'about': StyleSheet.create({
+
+    back: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      tintColor: colors.white
+
+
+    },
+
+    container: {
+      flex: 1,
+      backgroundColor: '#0A1128', // Sets the background color
+      paddingVertical: 10, // Adds vertical padding
+    },
+
+    header: {
+      paddingTop: 10, // Adds top padding
+      paddingHorizontal: 20,
+      height: 70,
+      backgroundColor: '#0A1128', // Sets the background color
+      flexDirection: 'row', // Add this line to make the content align horizontally
+      alignItems: 'center', // Add this line to vertically align the content
+    },
+
+
+    logo: {
+      resizeMode: 'contain',
+      width: 60,
+      height: 60,
+      marginLeft: 25,
+    },
+
+    headerText: {
+      fontSize: 18, // Sets the font size
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'Montserrat-ExtraBold', // Sets the font family
+      marginLeft: 8,
+    },
+
+    subHeader: {
+      fontSize: 18, // Sets the font size
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'OpenSans-Bold', // Sets the font family
+      marginLeft: 8,
+      paddingBottom: 25,
+    },
+
+    privacy: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: 202,
+
+    },
+
+    terms: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: 140,
+
+    },
+
+    copyright: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: 230,
+
+    },
+
+    developer: {
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginLeft: -45,
+      marginTop: 22,
+    },
+    accessibility: {
+      flexDirection: 'row',
+    },
+    title: {
+      color: '#040F21',
+      fontFamily: 'OpenSans-Bold',
+      fontSize: 15,
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginLeft: 10,
+      marginTop: 7,
+    },
+
+    textButton: {
+      marginBottom: 20, // Adds bottom margin
+      width: '100%', // Sets the width to 100% of the container
+      height: 70, // Sets the height of the button
+      borderRadius: 10, // Sets the border radius
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      alignItems: 'flex-start', // Aligns text to the left
+      paddingLeft: 16, // Adds left padding for text
+    },
+
+    textButtonContainer: {
+      flexDirection: 'row',
+    },
+    buttonText: {
+      color: '#040F21', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: 13, // Sets the font size
+      textAlign: 'left', // Aligns text to the left
+      alignSelf: 'flex-start', // Aligns text to the left within the button
+      marginLeft: 10, // Adds left margin
+      marginTop: 15, // Adds top margin
+    },
+    inputText: {
+      color: '#040F21', // Sets the text color
+      fontFamily: 'OpenSans', // Sets the font family
+      fontSize: 17, // Sets the font size
+      paddingHorizontal: 10, // Adds horizontal padding
+      marginTop: 5, // Adjusts the position
+    },
+
+
+  }),
 
 };
