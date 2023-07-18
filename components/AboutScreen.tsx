@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -10,34 +10,8 @@ import {
 
 } from 'react-native';
 import { styles } from "../assets/Styles";
-import { getDBConnection, retrieveSettings } from '../services/db-services';
-import { useFocusEffect } from '@react-navigation/native';
 
 export const AboutScreen = ({ navigation }: { navigation: any }) => {
-
-    const [hourlyRate, setHourlyRate] = useState('');
-
-    const [participants, setParticipants] = useState('');
-
-    const loadDataCallback = useCallback(async () => {
-        try {
-            const db = await getDBConnection();
-            const settings: { [k: string]: any } = await retrieveSettings(db);
-            setParticipants("" + settings.default_participants);
-            setHourlyRate("" + settings.default_hourly);
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
-
-
-    useFocusEffect(
-        React.useCallback(() => {
-            loadDataCallback();
-        }, [loadDataCallback]));
-
-
-
 
     const handleDeveloper = () => {
         Linking.openURL('https://www.carbonedge.com/meeting-watchdog');
