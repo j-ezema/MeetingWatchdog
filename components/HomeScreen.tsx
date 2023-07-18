@@ -61,12 +61,21 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }, [navigation]);
 
   const deleteItem = async (id: number) => {
+    
     try {
-      const pos = meetings.map(e => e.id).indexOf(id);
+      const pastArr:Boolean = !viewingUpcomingMeetings;
       const db = await getDBConnection();
       await deleteMeetingItem(db, id);
-      meetings.splice(pos, 1);
-      setMeetings(meetings.slice(0));
+      if(pastArr){
+        const pos = pastMeetings.map(e => e.id).indexOf(id);
+        pastMeetings.splice(pos, 1);
+        setPastMeetings(pastMeetings.slice(0));
+      }else{
+        const pos = meetings.map(e => e.id).indexOf(id);
+        meetings.splice(pos, 1);
+        setMeetings(meetings.slice(0));
+      }
+      
     } catch (error) {
       console.error(error);
     }
