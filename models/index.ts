@@ -6,9 +6,11 @@ export type MeetingItem = {
     total_wait_cost: number;
     total_meeting_cost: number;
     meeting_datetime: Date;
+    number_of_participants : number;
+    average_hourly_cost : number;//average employee hourly
   };
 
-export function createNewMeetingItem(id:number = -1,meeting_title:string = 'new meeting', meeting_datetime:Date = new Date()): MeetingItem{
+export function createNewMeetingItem(id:number = -1,meeting_title:string = 'new meeting', meeting_datetime:Date = new Date(), rate = 100, participants = 5): MeetingItem{
   var idnum;
   if(id >= 0){
     idnum = id;
@@ -24,6 +26,8 @@ export function createNewMeetingItem(id:number = -1,meeting_title:string = 'new 
                                 total_wait_cost:0, 
                                 meeting_title: meeting_title, 
                                 meeting_datetime: meeting_datetime,  
+                                average_hourly_cost: rate,
+                                number_of_participants: participants,
                               };
     return meeting;
 }

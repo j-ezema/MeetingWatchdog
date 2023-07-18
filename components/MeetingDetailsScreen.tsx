@@ -17,7 +17,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     const { meetingID, otherParam } = route.params;
     const [meeting, setMeeting] = useState(createNewMeetingItem());
     const [rate, setRate] = useState(100);// idle time
-    const [participants, setparticipants] = useState(5);// total time
+    const [participants, setParticipants] = useState(5);// total time
     const [timerA, setTimerA] = useState(0);// idle time
     const [timerB, setTimerB] = useState(0);// total time
     const [TimerValueA, setTimerValueA] = useState(moment("2015-01-01").startOf('day').seconds(timerA).format('HH:mm:ss'));
@@ -36,9 +36,10 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
         let meetingTemp = await getMeetingItem(db, meetingID);
         setMeeting(meetingTemp)
         
-        //console.log(">>>>");
-        //console.log(meetingTemp);
-        //setRate(meeting.)
+        console.log(">>>>");
+        console.log(meetingTemp);
+        setRate(meetingTemp.average_hourly_cost);
+        setParticipants(meetingTemp.number_of_participants);
         if(meetingTemp.id != -1 ){
             if(meetingTemp.total_meeting_time == null){
                 setIsPastMeeting(false);
@@ -193,6 +194,24 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                         </Text>
                         <Text style={styles.meetingDetails.timeValue}>
                             {TimerValueB}
+                        </Text>
+                    </View>
+                </View>
+                <View style={{flexDirection:"row",flex:1,}}>
+                    <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerLeft]}>
+                        <Text numberOfLines={1} style={styles.meetingDetails.statTitle}>
+                            Participants
+                        </Text>
+                        <Text style={styles.meetingDetails.statValue}>
+                            {participants}
+                        </Text>
+                    </View>
+                    <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerRight]}>
+                        <Text style={styles.meetingDetails.statTitle}>
+                            Average Hourly Rate
+                        </Text>
+                        <Text style={styles.meetingDetails.statValue}>
+                            ${rate}
                         </Text>
                     </View>
                 </View>

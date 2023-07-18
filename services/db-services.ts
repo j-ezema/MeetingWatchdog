@@ -102,10 +102,12 @@ export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]
         meeting_title as meeting_title, 
         date(meeting_datetime) as meeting_date, 
         time(meeting_datetime) as meeting_time,
-        total_wait_time,
-        total_meeting_time,
-        total_wait_cost,
-        total_meeting_cost
+        total_wait_time as total_wait_time,
+        total_meeting_time as total_meeting_time,
+        total_wait_cost as total_wait_cost,
+        total_meeting_cost as total_meeting_cost,
+        number_of_participants as number_of_participants,
+        average_hourly_cost as average_hourly_cost
       FROM ${tableNames.MeetingItems}
     `);
 
@@ -137,7 +139,9 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
         total_wait_time as total_wait_time,
         total_meeting_time as total_meeting_time,
         total_wait_cost as total_wait_cost,
-        total_meeting_cost as total_meeting_cost
+        total_meeting_cost as total_meeting_cost,
+        number_of_participants as number_of_participants,
+        average_hourly_cost as average_hourly_cost
       FROM ${tableNames.MeetingItems}
       WHERE rowid = ${id}
     `);
@@ -185,7 +189,7 @@ export const saveMeetingItems = async (db: SQLiteDatabase, MeetingItems: Meeting
   */
   const insertQuery =
     `INSERT INTO ${tableNames.MeetingItems}(meeting_title, number_of_participants, average_hourly_cost, meeting_datetime) values` +
-    MeetingItems.map(i => `('${i.meeting_title}', 2, 2, julianday('${moment(i.meeting_datetime).format('YYYY-MM-DD HH:mm:ss')}'))`).join(',');
+    MeetingItems.map(i => `('${i.meeting_title}', ${i.number_of_participants} , ${i.average_hourly_cost}, julianday('${moment(i.meeting_datetime).format('YYYY-MM-DD HH:mm:ss')}'))`).join(',');
   console.log(insertQuery);
   return db.executeSql(insertQuery);
 };
