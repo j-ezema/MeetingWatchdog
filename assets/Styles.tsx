@@ -954,7 +954,7 @@ export const styles = {
       width: 30,
       height: 30,
       marginTop: 2,
-      marginLeft: 140,
+      marginLeft: '37%',
 
     },
 
