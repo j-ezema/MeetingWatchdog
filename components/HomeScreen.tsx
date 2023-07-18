@@ -144,15 +144,15 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     setActiveButtonIndex(5);
   }
   let meetingPanel;
-    if (viewingUpcomingMeetings) {
-      meetingPanel = (
-        <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
-        );
-    } else {
-      meetingPanel = (
-        <MeetingView meetings={pastMeetings} deleteItem={deleteItem} toDetails={toDetails} />
-        );
-    }
+  if (viewingUpcomingMeetings) {
+    meetingPanel = (
+      <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
+      );
+  } else {
+    meetingPanel = (
+      <MeetingView meetings={pastMeetings} deleteItem={deleteItem} toDetails={toDetails} />
+      );
+  }
 
   return (
     <GestureHandlerRootView>

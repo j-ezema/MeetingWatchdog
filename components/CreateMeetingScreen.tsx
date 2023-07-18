@@ -132,12 +132,13 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const startMeetingData = async () => {
         try {
             var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime,+hourlyRate,+participants);
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime,+hourlyRate.replace(/\D/g,''),+participants);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
-            console.log(await saveMeetingItems(db, [newMeeting]));
-            //navigation.navigate('Home', { key: Date.now() });
-            navigation.navigate('meetingDetails', { key: Date.now() });
+            await saveMeetingItems(db, [newMeeting]);
+            const tfdiji = `SELECT last_insert_rowid()`;
+            const result = await db.executeSql(tfdiji);
+            navigation.navigate('meetingDetails', {meetingID: result[0].rows.item(0)["last_insert_rowid()"]});
         } catch (error) {
             console.error(error);
         }
