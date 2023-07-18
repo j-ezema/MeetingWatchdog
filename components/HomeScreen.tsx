@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems } from '../services/db-services';
-import { MeetingItem, createNewMeetingItem } from '../models';
+import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { styles } from '../assets/Styles';
@@ -20,6 +20,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
+  const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
 
   ///loads in data
   const loadDataCallback = useCallback(async () => {
@@ -27,7 +28,19 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       const db = await getDBConnection();
       await createTable(db);
       const storedMeetingItems = await getMeetingItems(db);
-      setMeetings(storedMeetingItems);
+      let pastMeetingsTemp:MeetingItem[] = [];
+      let futureMeetingsTemp:MeetingItem[] = [];
+      storedMeetingItems.forEach(meeting => {
+        if(meeting.total_meeting_time != null && meeting.total_meeting_time > 0){
+          pastMeetingsTemp.push(meeting);
+        }else{
+          futureMeetingsTemp.push(meeting);
+        }
+      });
+      futureMeetingsTemp.sort(sortMeetingFN)
+      pastMeetingsTemp.sort(sortMeetingFN)
+      setMeetings(futureMeetingsTemp);
+      setPastMeetings(pastMeetingsTemp);
     } catch (error) {
       console.error(error);
     }
@@ -124,9 +137,22 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const handleFeedback = () => {
     setActiveButtonIndex(4);
   }
+  const toDetails = (id:number) => {
+    navigation.navigate('meetingDetails', {meetingID: id});
+  }
   const handleRateApp = () => {
     setActiveButtonIndex(5);
   }
+  let meetingPanel;
+    if (viewingUpcomingMeetings) {
+      meetingPanel = (
+        <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
+        );
+    } else {
+      meetingPanel = (
+        <MeetingView meetings={pastMeetings} deleteItem={deleteItem} toDetails={toDetails} />
+        );
+    }
 
   return (
     <GestureHandlerRootView>
@@ -160,16 +186,18 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               >
                 <Text style={[styles.homeScreen.pastText, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>Past</Text>
                 <View style={[styles.homeScreen.textBorder, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>
-                  <Text style={[styles.homeScreen.count, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>0</Text>
+                  <Text style={[styles.homeScreen.count, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>{pastMeetings.length}</Text>
                 </View>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.homeScreen.cardsContainer}>
-            {meetings.length > 0 &&
-              <MeetingView meetings={meetings} deleteItem={deleteItem} />
+            {meetings.length+pastMeetings.length > 0 &&
+              <View>
+                {meetingPanel}
+              </View>
             }
-            {meetings.length == 0 &&
+            {meetings.length+pastMeetings.length == 0 &&
               <WelcomeScreen />
             }
           </View>

@@ -5,12 +5,12 @@ import React from "react";
 import { MeetingItemComponent} from './MeetingItem';
 import { View } from "react-native";
 
-export const MeetingView: React.FC<{meetings: MeetingItem[]; deleteItem: Function;}> = ({meetings, deleteItem }) =>{
+export const MeetingView: React.FC<{meetings: MeetingItem[]; deleteItem: Function; toDetails: Function;}> = ({meetings, deleteItem, toDetails }) =>{
 
     var arr: JSX.Element[] = [];
     meetings.forEach(meeting => {
       arr.push(
-        <MeetingItemComponent key={meeting.id} meeting={meeting} deleteItem={deleteItem}/>
+        <MeetingItemComponent key={meeting.id} meeting={meeting} deleteItem={deleteItem} toDetails={toDetails}/>
       )
     });
     

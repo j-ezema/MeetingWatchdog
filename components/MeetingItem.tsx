@@ -9,7 +9,7 @@ import moment from "moment";
 
 const animationwidth = 100;
 
-export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: Function; }> = ({ meeting: { id, meeting_title, meeting_datetime }, deleteItem }) => {
+export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: Function; toDetails: Function;}> = ({ meeting: { id, meeting_title, meeting_datetime }, deleteItem, toDetails }) => {
 
   const [state, setState] = useState({ visible: false, x: new Animated.Value(0), xx: new Animated.Value(animationwidth) });
 
@@ -42,6 +42,8 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
   const tapMeeting = () => {
     //replace with navigation to meeting details
     //console.log(meeting_title + " was selected");
+    //navigation.navigate('MeetingDetailsScreen');
+    toDetails(id);
   }
   const tapDeleteMeeting = () => {
     deleteItem(id);
