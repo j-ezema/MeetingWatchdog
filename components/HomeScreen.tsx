@@ -4,7 +4,6 @@ import {
   Alert,
   Modal,
   SafeAreaView,
-
   Text,
   TouchableOpacity,
   View,
@@ -124,6 +123,9 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }
   const handleFeedback = () => {
     setActiveButtonIndex(4);
+  }
+  const handleRateApp = () => {
+    setActiveButtonIndex(5);
   }
 
   return (
@@ -253,6 +255,15 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <View style={styles.homeScreen.settingContent}>
                     <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
                     <Icon iconStyle={styles.homeScreen.iconB} type="material" name="chevron-right" color="black" />
+                  </View>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleRateApp}>
+                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 5 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={styles.homeScreen.settingContent}>
+                    <Text style={[styles.homeScreen.settingsText]}>Rate App</Text>
+                    <Icon iconStyle={styles.homeScreen.iconD} type="material" name="chevron-right" color="black" />
                   </View>
                 </View>
               </TouchableOpacity>

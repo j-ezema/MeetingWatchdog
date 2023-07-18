@@ -98,6 +98,14 @@ export const styles = {
 
     },
 
+    iconD: {
+      fontSize: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 42,
+
+    },
+
 
     settingsContainerB: {
       flex: 1,
