@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 
 } from 'react-native';
 import { Icon } from '@rneui/themed';
@@ -123,6 +124,13 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }
   const handleFeedback = () => {
     setActiveButtonIndex(4);
+    if (isModalVisible) {
+      setIsModalVisible(false);
+    }
+    setTimeout(() => { setIsButtonClicked(false) }, 300)
+    Linking.openURL('https://www.carbonedge.com/meeting-watchdog#feedback-form');
+
+    setTimeout(() => { setIsButtonClicked(false) }, 300)
   }
   const handleRateApp = () => {
     setActiveButtonIndex(5);
