@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems } from '../services/db-services';
-import { MeetingItem, createNewMeetingItem } from '../models';
+import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { colors, styles } from '../assets/Styles';
@@ -38,6 +38,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
           futureMeetingsTemp.push(meeting);
         }
       });
+      futureMeetingsTemp.sort(sortMeetingFN)
+      pastMeetingsTemp.sort(sortMeetingFN)
       setMeetings(futureMeetingsTemp);
       setPastMeetings(pastMeetingsTemp);
     } catch (error) {

@@ -32,3 +32,7 @@ export function createNewMeetingItem(id:number = -1,meeting_title:string = 'new 
     return meeting;
 }
 
+export function sortMeetingFN(a:MeetingItem,b:MeetingItem){
+  return a.meeting_datetime.getTime() - b.meeting_datetime.getTime();
+}
+
