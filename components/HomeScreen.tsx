@@ -21,6 +21,7 @@ import { colors, styles } from '../assets/Styles';
 
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
+  const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
 
   ///loads in data
   const loadDataCallback = useCallback(async () => {
@@ -28,7 +29,17 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       const db = await getDBConnection();
       await createTable(db);
       const storedMeetingItems = await getMeetingItems(db);
-      setMeetings(storedMeetingItems);
+      let pastMeetingsTemp:MeetingItem[] = [];
+      let futureMeetingsTemp:MeetingItem[] = [];
+      storedMeetingItems.forEach(meeting => {
+        if(meeting.total_meeting_time != null && meeting.total_meeting_time > 0){
+          pastMeetingsTemp.push(meeting);
+        }else{
+          futureMeetingsTemp.push(meeting);
+        }
+      });
+      setMeetings(futureMeetingsTemp);
+      setPastMeetings(pastMeetingsTemp);
     } catch (error) {
       console.error(error);
     }
@@ -121,6 +132,16 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     navigation.navigate('meetingDetails', {meetingID: id});
   }
 
+  let meetingPanel;
+    if (viewingUpcomingMeetings) {
+      meetingPanel = (
+        <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
+        );
+    } else {
+      meetingPanel = (
+        <MeetingView meetings={pastMeetings} deleteItem={deleteItem} toDetails={toDetails} />
+        );
+    }
 
   return (
     <GestureHandlerRootView>
@@ -154,14 +175,16 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               >
                 <Text style={[styles.homeScreen.pastText, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>Past</Text>
                 <View style={[styles.homeScreen.textBorder, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>
-                  <Text style={[styles.homeScreen.count, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>0</Text>
+                  <Text style={[styles.homeScreen.count, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>{pastMeetings.length}</Text>
                 </View>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.homeScreen.cardsContainer}>
             {meetings.length > 0 &&
-              <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
+              <View>
+                {meetingPanel}
+              </View>
             }
             {meetings.length == 0 &&
               <WelcomeScreen />
