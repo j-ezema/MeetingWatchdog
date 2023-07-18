@@ -40,7 +40,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             const db = await getDBConnection();
             const settings: { [k: string]: any } = await retrieveSettings(db);
             setParticipants("" + settings.default_participants);
-            setHourlyRate("$"+settings.default_hourly);
+            setHourlyRate("$"+settings.default_hourly.replace(/\D/g,''));
         } catch (error) {
             console.error(error);
         }

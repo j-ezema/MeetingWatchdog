@@ -70,7 +70,6 @@ const initializeSettings = async (db: SQLiteDatabase) => {
       }
 
     }
-    //console.log(setting.name+": "+contains);
 
   });
 
@@ -152,7 +151,6 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
         //console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
         temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date'] + " " + result.rows.item(index)['meeting_time']);
         MeetingItems.push(temp);
-
       }
     });
     console.log(MeetingItems[0]);
@@ -165,14 +163,12 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
 
 export const updateMeetingItem = async (db: SQLiteDatabase, meeting:MeetingItem) => {
   try {
-    console.log("<<<<")
-    console.log(meeting);
-    console.log(await db.executeSql(`UPDATE ${tableNames.MeetingItems} SET 
+    await db.executeSql(`UPDATE ${tableNames.MeetingItems} SET 
       total_wait_time = ?,
       total_meeting_time = ?,
       total_wait_cost = ?,
       total_meeting_cost = ?
-      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost]));
+      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost]);
       
   } catch (error) {
     console.error(error);
@@ -202,9 +198,7 @@ export const deleteMeetingItem = async (db: SQLiteDatabase, id: number) => {
 
 export const deleteTable = async (db: SQLiteDatabase) => {
   const query = `drop table ${tableNames.MeetingItems}`;
-
   await db.executeSql(query);
-
 };
 
 export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants: string): Promise<void> => {

@@ -36,8 +36,8 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
         let meetingTemp = await getMeetingItem(db, meetingID);
         setMeeting(meetingTemp)
         
-        console.log(">>>>");
-        console.log(meetingTemp);
+        //console.log(">>>>");
+        //console.log(meetingTemp);
         setRate(meetingTemp.average_hourly_cost);
         setParticipants(meetingTemp.number_of_participants);
         if(meetingTemp.id != -1 ){
@@ -52,8 +52,6 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                 setTimerValueA(moment("2015-01-01").startOf('day').seconds(meetingTemp.total_wait_time).format('HH:mm:ss'))
                 setTimerValueB(moment("2015-01-01").startOf('day').seconds(meetingTemp.total_meeting_time).format('HH:mm:ss'))
             }
-        }else{
-            console.log("WHYYYYYY");
         }
     }, []);
 
@@ -79,7 +77,6 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                     setTimerA((sync-pointResume)+baseIdle);
                 }
                 setTimerB((sync-pointInitial));
-                //console.log(moment("2023-01-01").startOf('day').milliseconds(timerA).format('HH:mm:ss'));
             }
         }, 1000);
         return () => clearInterval(intervalID);
