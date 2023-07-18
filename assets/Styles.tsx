@@ -1035,20 +1035,24 @@ export const styles = {
     overViewView: {
       marginBottom: 20, // Adds bottom margin
       marginHorizontal:20,
-      height: 70, // Sets the height of the button
+      height: 90, // Sets the height of the button
       borderRadius: 10, // Sets the border radius
       backgroundColor: '#ffffff', // Sets the background color of the button
       alignItems: 'flex-start', // Aligns text to the left
-      flexDirection:'row',
+      flexDirection:'column',
       overflow:"hidden",
       paddingTop:5,
+    },
+    interiorRow:{
+      flex:1, 
+      flexDirection:"row",
+      margin:0,
+      padding:0,
     },
     costContainer:{
       
       flex:1,
       height:'100%',
-      //flexDirection:'row',
-      //backgroundColor:colors.royalBlue,
       borderWidth:1,
       borderColor:colors.white,
       marginRight:40,
@@ -1063,9 +1067,6 @@ export const styles = {
     timeContainer:{
       marginLeft:40,
       flex:1,
-      height:'100%',
-      //flexDirection:'row',
-      //backgroundColor:colors.steelBlue,
       borderWidth:1,
       borderColor:colors.white,
       paddingRight:15,

@@ -183,12 +183,12 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
             </View>
           </View>
           <View style={styles.homeScreen.cardsContainer}>
-            {meetings.length > 0 &&
+            {meetings.length+pastMeetings.length > 0 &&
               <View>
                 {meetingPanel}
               </View>
             }
-            {meetings.length == 0 &&
+            {meetings.length+pastMeetings.length == 0 &&
               <WelcomeScreen />
             }
           </View>

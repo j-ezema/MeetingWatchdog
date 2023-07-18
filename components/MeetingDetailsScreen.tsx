@@ -159,39 +159,55 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                     </View>
                 </View>
                 <View style={styles.meetingDetails.overViewView}>
-                    <View style={styles.meetingDetails.costContainer}>
-                        <Text style={styles.meetingDetails.costTitle}>
-                            Idle Time Cost
-                        </Text>
-                        <Text style={styles.meetingDetails.timeValue}>
-                            {costA}
-                        </Text>
+                <View style={{flex:1, flexDirection:"row"}}>
+                        <View style={styles.meetingDetails.costContainer}>
+                            <Text style={styles.meetingDetails.costTitle}>
+                                Idle Time Cost
+                            </Text>
+                        </View>
+                        <View style={styles.meetingDetails.timeContainer}>
+                            <Text style={styles.meetingDetails.timeTitle}>
+                                Idle Time Spent 
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.meetingDetails.timeContainer}>
-                        <Text style={styles.meetingDetails.timeTitle}>
-                            Idle Time Spent
-                        </Text>
-                        <Text style={styles.meetingDetails.timeValue}>
-                            {TimerValueA}
-                        </Text>
+                    <View style={styles.meetingDetails.interiorRow}>
+                        <View style={styles.meetingDetails.costContainer}>
+                            <Text style={styles.meetingDetails.timeValue}>
+                                {costA}
+                            </Text>
+                        </View>
+                        <View style={styles.meetingDetails.timeContainer}>
+                            <Text style={styles.meetingDetails.timeValue}>
+                                {TimerValueA}
+                            </Text>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.meetingDetails.overViewView}>
-                    <View style={styles.meetingDetails.costContainer}>
-                        <Text style={styles.meetingDetails.costTitle}>
-                            Total Time Cost
-                        </Text>
-                        <Text style={styles.meetingDetails.timeValue}>
-                            {costB}
-                        </Text>
+                    <View style={{flex:1, flexDirection:"row"}}>
+                        <View style={styles.meetingDetails.costContainer}>
+                            <Text style={styles.meetingDetails.costTitle}>
+                                Total Time Cost
+                            </Text>
+                        </View>
+                        <View style={styles.meetingDetails.timeContainer}>
+                            <Text style={styles.meetingDetails.timeTitle}>
+                                Total Time Spent 
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.meetingDetails.timeContainer}>
-                        <Text style={styles.meetingDetails.timeTitle}>
-                            Total Time Spent
-                        </Text>
-                        <Text style={styles.meetingDetails.timeValue}>
-                            {TimerValueB}
-                        </Text>
+                    <View style={styles.meetingDetails.interiorRow}>
+                        <View style={styles.meetingDetails.costContainer}>
+                            <Text style={styles.meetingDetails.timeValue}>
+                                {costB}
+                            </Text>
+                        </View>
+                        <View style={styles.meetingDetails.timeContainer}>
+                            <Text style={styles.meetingDetails.timeValue}>
+                                {TimerValueB}
+                            </Text>
+                        </View>
                     </View>
                 </View>
                 <View style={{flexDirection:"row",flex:1,}}>
@@ -204,7 +220,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                         </Text>
                     </View>
                     <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerRight]}>
-                        <Text style={styles.meetingDetails.statTitle}>
+                        <Text numberOfLines={1} style={styles.meetingDetails.statTitle}>
                             Average Hourly Rate
                         </Text>
                         <Text style={styles.meetingDetails.statValue}>
