@@ -117,6 +117,9 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const handleFeedback = () => {
     setActiveButtonIndex(4);
   }
+  const toDetails = (id:number) => {
+    navigation.navigate('meetingDetails', {meetingID: id});
+  }
 
 
   return (
@@ -158,7 +161,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
           </View>
           <View style={styles.homeScreen.cardsContainer}>
             {meetings.length > 0 &&
-              <MeetingView meetings={meetings} deleteItem={deleteItem} />
+              <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
             }
             {meetings.length == 0 &&
               <WelcomeScreen />

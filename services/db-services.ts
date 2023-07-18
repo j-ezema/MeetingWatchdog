@@ -1,5 +1,5 @@
 import { SQLiteDatabase, enablePromise, openDatabase } from 'react-native-sqlite-storage';
-import { MeetingItem } from '../models';
+import { MeetingItem, createNewMeetingItem } from '../models';
 import moment from 'moment';
 
 enablePromise(true);
@@ -96,7 +96,19 @@ export const retrieveSettings = async (db: SQLiteDatabase): Promise<object> => {
 export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]> => {
   try {
     const MeetingItems: MeetingItem[] = [];
-    const results = await db.executeSql(`SELECT rowid as id,meeting_title as meeting_title, date(meeting_datetime) as meeting_date, time(meeting_datetime) as meeting_time FROM ${tableNames.MeetingItems}`);
+    const results = await db.executeSql(`
+      SELECT 
+        rowid as id,
+        meeting_title as meeting_title, 
+        date(meeting_datetime) as meeting_date, 
+        time(meeting_datetime) as meeting_time,
+        total_wait_time,
+        total_meeting_time,
+        total_wait_cost,
+        total_meeting_cost
+      FROM ${tableNames.MeetingItems}
+    `);
+
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         var temp = result.rows.item(index);
@@ -110,6 +122,57 @@ export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]
   } catch (error) {
     console.error(error);
     throw Error('Failed to get MeetingItems !!!');
+  }
+};
+
+export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<MeetingItem> => {
+  try {
+    const MeetingItems: MeetingItem[] = [];
+    const results = await db.executeSql(`
+      SELECT 
+        rowid as id,
+        meeting_title as meeting_title, 
+        date(meeting_datetime) as meeting_date, 
+        time(meeting_datetime) as meeting_time,
+        total_wait_time as total_wait_time,
+        total_meeting_time as total_meeting_time,
+        total_wait_cost as total_wait_cost,
+        total_meeting_cost as total_meeting_cost
+      FROM ${tableNames.MeetingItems}
+      WHERE rowid = ${id}
+    `);
+    
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        var temp = result.rows.item(index);
+        //console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
+        temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date'] + " " + result.rows.item(index)['meeting_time']);
+        MeetingItems.push(temp);
+
+      }
+    });
+    console.log(MeetingItems[0]);
+    return MeetingItems[0];
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to get MeetingItem !!!');
+  }
+};
+
+export const updateMeetingItem = async (db: SQLiteDatabase, meeting:MeetingItem) => {
+  try {
+    console.log("<<<<")
+    console.log(meeting);
+    console.log(await db.executeSql(`UPDATE ${tableNames.MeetingItems} SET 
+      total_wait_time = ?,
+      total_meeting_time = ?,
+      total_wait_cost = ?,
+      total_meeting_cost = ?
+      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost]));
+      
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to update MeetingItem '+meeting.id);
   }
 };
 

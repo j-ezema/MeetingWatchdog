@@ -12,7 +12,9 @@ export const colors = {
   'richBlack': '#040F21',
   'black': '#000000',
   'alertRed': '#a92b4e',
-  'gray': '#EFEFEF'
+  'buttonRed': '#B01D2D',
+  'gray': '#EFEFEF',
+  'disabled': '#CCCCCC'
   //'alertRed': '#CE2030CC',
 
 
@@ -990,7 +992,129 @@ export const styles = {
 
   }),
   'meetingDetails': StyleSheet.create({
-
+    detailTitle: {
+      marginBottom: 20, // Adds bottom margin
+      marginHorizontal:20,
+      height: 70, // Sets the height of the button
+      alignItems: 'flex-start', // Aligns text to the left
+      alignContent:"center",
+      
+    },
+    Title: {
+      //textAlign: 'center',
+      fontFamily: 'OpenSans-Bold',
+      color:colors.white,
+      fontSize:25,
+      alignSelf:"center",
+    },
+    detailDateTime: {
+      marginHorizontal:20,
+      //height: 70, // Sets the height of the button
+      alignContent:"center",
+      flexDirection:'row',
+    },
+    dateText: {
+      textAlign: 'center',
+      paddingLeft: 4,
+      verticalAlign: 'middle',
+      color: colors.white,
+      fontSize: 13,
+      fontFamily: 'OpenSans-Regular',
+      alignSelf:"center",
+    },
+    splitItem:{
+      
+      flex:1,
+      marginLeft:10,
+      padding:10,
+      flexDirection:'row',
+      //backgroundColor:colors.black,
+      //borderWidth:1,
+      //borderColor:colors.white,
+    },
+    overViewView: {
+      marginBottom: 20, // Adds bottom margin
+      marginHorizontal:20,
+      height: 70, // Sets the height of the button
+      borderRadius: 10, // Sets the border radius
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      alignItems: 'flex-start', // Aligns text to the left
+      flexDirection:'row',
+      overflow:"hidden",
+      paddingTop:5,
+    },
+    costContainer:{
+      
+      flex:1,
+      height:'100%',
+      //flexDirection:'row',
+      //backgroundColor:colors.royalBlue,
+      borderWidth:1,
+      borderColor:colors.white,
+      marginRight:40,
+      paddingLeft:15,
+    },
+    costTitle:{
+      textAlign:'center',
+      fontFamily: 'OpenSans-Regular',
+      fontSize:15,
+      color: colors.richBlack,
+    },
+    timeContainer:{
+      marginLeft:40,
+      flex:1,
+      height:'100%',
+      //flexDirection:'row',
+      //backgroundColor:colors.steelBlue,
+      borderWidth:1,
+      borderColor:colors.white,
+      paddingRight:15,
+    },
+    timeTitle:{
+      textAlign:'center',
+      fontFamily: 'OpenSans-Regular',
+      fontSize:15,
+      color: colors.richBlack,
+    },
+    timeValue:{
+      textAlign:'center',
+      fontFamily: 'OpenSans-Bold',
+      fontSize:20,
+      color: colors.richBlack,
+    },
+    button:{
+      overflow:"hidden",
+      flex:0,
+      justifyContent:'center',
+      marginBottom: 20, // Adds bottom margin
+      marginHorizontal:30,
+      height: 60, // Sets the height of the button
+      borderRadius: 10, // Sets the border radius
+    },
+    endMeetingButton: {
+      backgroundColor: colors.buttonRed, // Sets the background color of the button
+    },
+    pauseIdleButton: {
+      backgroundColor: colors.white, // Sets the background color of the button
+    },
+    startButton: {
+      borderWidth:1,
+      borderColor:colors.white,
+    },
+    disabled: {
+      color: colors.disabled,
+      borderColor:colors.disabled,
+    },
+    TextWhite:{
+      color: colors.white,
+    },
+    buttonText:{
+      marginTop: -10,
+      textAlign:'center',
+      fontFamily: 'OpenSans-SemiBold',
+      fontSize:20,
+      color: colors.richBlack,
+    },
   }),
   'Headers': StyleSheet.create({
     logoImage: {

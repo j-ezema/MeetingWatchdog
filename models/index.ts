@@ -27,3 +27,4 @@ export function createNewMeetingItem(id:number = -1,meeting_title:string = 'new 
                               };
     return meeting;
 }
+
