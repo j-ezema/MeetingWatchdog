@@ -81,14 +81,14 @@ export const styles = {
       fontSize: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: 62,
-
+      marginLeft: '51%',
     },
+
     iconB: {
       fontSize: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: 50,
+      marginLeft: '45%',
 
     },
 
@@ -96,7 +96,7 @@ export const styles = {
       fontSize: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: 2,
+      marginLeft: '12%',
 
     },
 
@@ -104,7 +104,7 @@ export const styles = {
       fontSize: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: 42,
+      marginLeft: '40%',
 
     },
 
@@ -351,7 +351,7 @@ export const styles = {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Regular', // Sets the font family
       fontSize: 14, // Sets the font size
-      marginLeft: 20,
+      marginLeft: 15,
     },
     cardsContainer: {
       flex: 1,
@@ -952,7 +952,7 @@ export const styles = {
       width: 30,
       height: 30,
       marginTop: 2,
-      marginLeft: 140,
+      marginLeft: '37%',
 
     },
 
@@ -1243,7 +1243,7 @@ export const styles = {
       width: 30,
       height: 30,
       marginTop: 2,
-      marginLeft: 202,
+      marginLeft: '55%',
 
     },
 
@@ -1252,7 +1252,7 @@ export const styles = {
       width: 30,
       height: 30,
       marginTop: 2,
-      marginLeft: 140,
+      marginLeft: '38%',
 
     },
 
@@ -1261,7 +1261,7 @@ export const styles = {
       width: 30,
       height: 30,
       marginTop: 2,
-      marginLeft: 230,
+      marginLeft: '63%',
 
     },
 
@@ -1269,7 +1269,7 @@ export const styles = {
       resizeMode: 'contain',
       width: 30,
       height: 30,
-      marginLeft: -45,
+      marginLeft: '-12.5%',
       marginTop: 22,
     },
     accessibility: {
