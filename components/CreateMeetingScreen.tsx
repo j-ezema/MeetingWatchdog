@@ -153,7 +153,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             keyboardShouldPersistTaps="handled"
         >
             <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                //behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.createMeeting.container}
             >
 
