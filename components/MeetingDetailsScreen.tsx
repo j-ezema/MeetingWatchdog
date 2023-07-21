@@ -1,12 +1,13 @@
 import { useCallback, useState } from "react";
 import { MeetingItem, createNewMeetingItem } from "../models";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { colors, styles } from "../assets/Styles";
 import { Icon } from "react-native-elements";
 import moment from "moment";
 import React from "react";
 import { getDBConnection, getMeetingItem, updateMeetingItem } from "../services/db-services";
 import { useFocusEffect } from "@react-navigation/native";
+import { TextInput } from "react-native";
 
 
 
@@ -120,6 +121,8 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
         setBaseIdle(0);
     }
 
+    const windowHeight = Dimensions.get('window').height-100;
+    
     let startButton;
     if (isPastMeeting ) {
         startButton = (
@@ -141,120 +144,126 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     //
 
     return (
-        <View style={{flex:1,backgroundColor:colors.oxfordBlue, paddingTop:30}}>
-            <View style={{flex:1}}>
-                <View style={styles.meetingDetails.detailTitle}>
-                    <Text style={styles.meetingDetails.Title}>
-                        {meeting.meeting_title}
-                    </Text> 
-                    <View style={styles.meetingDetails.detailDateTime}>
-                        <View style={styles.meetingDetails.splitItem}>
-                            <Icon color={colors.white} type="material-community" name="calendar-month-outline" size={20}/>
-                            <Text style={styles.meetingDetails.dateText}>{moment(meeting.meeting_datetime).format("YYYY-MM-DD")}</Text>
-                        </View>
-                        <View style={styles.meetingDetails.splitItem}>
-                            <Icon color={colors.white} type="material-community" name="clock-outline" size={20}/>
-                            <Text style={styles.meetingDetails.dateText}>{moment(meeting.meeting_datetime).format("h:mma")}</Text>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.meetingDetails.overViewView}>
-                <View style={{flex:1, flexDirection:"row"}}>
-                        <View style={styles.meetingDetails.costContainer}>
-                            <Text style={styles.meetingDetails.costTitle}>
-                                Idle Time Cost
-                            </Text>
-                        </View>
-                        <View style={styles.meetingDetails.timeContainer}>
-                            <Text style={styles.meetingDetails.timeTitle}>
-                                Idle Time Spent 
-                            </Text>
+        <ScrollView style={{flex:1,backgroundColor:colors.oxfordBlue}}>
+            <View style={{width:'100%', height:windowHeight }}>
+                <KeyboardAvoidingView style={{flex:1, paddingTop:30}}>
+                    <View style={styles.meetingDetails.detailTitle}>
+                        <Text style={styles.meetingDetails.Title}>
+                            {meeting.meeting_title}
+                        </Text> 
+                        <View style={styles.meetingDetails.detailDateTime}>
+                            <View style={styles.meetingDetails.splitItem}>
+                                <Icon color={colors.white} type="material-community" name="calendar-month-outline" size={20}/>
+                                <Text style={styles.meetingDetails.dateText}>{moment(meeting.meeting_datetime).format("YYYY-MM-DD")}</Text>
+                            </View>
+                            <View style={styles.meetingDetails.splitItem}>
+                                <Icon color={colors.white} type="material-community" name="clock-outline" size={20}/>
+                                <Text style={styles.meetingDetails.dateText}>{moment(meeting.meeting_datetime).format("h:mma")}</Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.meetingDetails.interiorRow}>
-                        <View style={styles.meetingDetails.costContainer}>
-                            <Text style={styles.meetingDetails.timeValue}>
-                                {costA}
-                            </Text>
-                        </View>
-                        <View style={styles.meetingDetails.timeContainer}>
-                            <Text style={styles.meetingDetails.timeValue}>
-                                {TimerValueA}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.meetingDetails.overViewView}>
+                    <View style={styles.meetingDetails.overViewView}>
                     <View style={{flex:1, flexDirection:"row"}}>
-                        <View style={styles.meetingDetails.costContainer}>
-                            <Text style={styles.meetingDetails.costTitle}>
-                                Total Time Cost
-                            </Text>
+                            <View style={styles.meetingDetails.costContainer}>
+                                <Text style={styles.meetingDetails.costTitle}>
+                                    Idle Time Cost
+                                </Text>
+                            </View>
+                            <View style={styles.meetingDetails.timeContainer}>
+                                <Text style={styles.meetingDetails.timeTitle}>
+                                    Idle Time Spent 
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.meetingDetails.timeContainer}>
-                            <Text style={styles.meetingDetails.timeTitle}>
-                                Total Time Spent 
+                        <View style={styles.meetingDetails.interiorRow}>
+                            <View style={styles.meetingDetails.costContainer}>
+                                <Text style={styles.meetingDetails.timeValue}>
+                                    {costA}
+                                </Text>
+                            </View>
+                            <View style={styles.meetingDetails.timeContainer}>
+                                <Text style={styles.meetingDetails.timeValue}>
+                                    {TimerValueA}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.meetingDetails.overViewView}>
+                        <View style={{flex:1, flexDirection:"row"}}>
+                            <View style={styles.meetingDetails.costContainer}>
+                                <Text style={styles.meetingDetails.costTitle}>
+                                    Total Time Cost
+                                </Text>
+                            </View>
+                            <View style={styles.meetingDetails.timeContainer}>
+                                <Text style={styles.meetingDetails.timeTitle}>
+                                    Total Time Spent 
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={styles.meetingDetails.interiorRow}>
+                            <View style={styles.meetingDetails.costContainer}>
+                                <Text style={styles.meetingDetails.timeValue}>
+                                    {costB}
+                                </Text>
+                            </View>
+                            <View style={styles.meetingDetails.timeContainer}>
+                                <Text style={styles.meetingDetails.timeValue}>
+                                    {TimerValueB}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{flexDirection:"row",flex:1,}}>
+                        <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerLeft]}>
+                            <Text numberOfLines={1} style={styles.meetingDetails.statTitle}>
+                                Number Of Participants
+                            </Text>
+                            <Text style={styles.meetingDetails.statValue}>
+                                {participants}
+                            </Text>
+                            <TextInput
+                                    style={styles.createMeeting.inputText}
+                                    placeholder="Enter rate"
+                                    value={""+participants}
+                                    onChangeText={(x)=>{}}
+                                    keyboardType="numeric"
+                            />
+                        </View>
+                        <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerRight]}>
+                            <Text numberOfLines={1} style={styles.meetingDetails.statTitle}>
+                                Average Hourly Rate
+                            </Text>
+                            <Text style={styles.meetingDetails.statValue}>
+                                ${rate}
                             </Text>
                         </View>
                     </View>
-                    <View style={styles.meetingDetails.interiorRow}>
-                        <View style={styles.meetingDetails.costContainer}>
-                            <Text style={styles.meetingDetails.timeValue}>
-                                {costB}
+                </KeyboardAvoidingView>
+                <View style={{flex:1, flexDirection:"column-reverse", marginBottom:0,}}>
+                    {
+                    !isCounting ? 
+                    <View>
+                        {startButton}
+                    </View>
+                    :
+                    <View>
+                        <TouchableOpacity style={[styles.meetingDetails.button, styles.meetingDetails.pauseIdleButton]} onPress={handleIdlePause}>
+                            <Text style={styles.meetingDetails.buttonText}>
+                                {isIdle ? 'Pause Idle Time': 'Resume Idle Time'}
                             </Text>
-                        </View>
-                        <View style={styles.meetingDetails.timeContainer}>
-                            <Text style={styles.meetingDetails.timeValue}>
-                                {TimerValueB}
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.meetingDetails.button, styles.meetingDetails.endMeetingButton]} onPress={handleEndMeeting}>
+                            <Text style={[styles.meetingDetails.buttonText, styles.meetingDetails.TextWhite]}>
+                                End Meeting
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
-                </View>
-                <View style={{flexDirection:"row",flex:1,}}>
-                    <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerLeft]}>
-                        <Text numberOfLines={1} style={styles.meetingDetails.statTitle}>
-                            Participants
-                        </Text>
-                        <Text style={styles.meetingDetails.statValue}>
-                            {participants}
-                        </Text>
-                    </View>
-                    <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerRight]}>
-                        <Text numberOfLines={1} style={styles.meetingDetails.statTitle}>
-                            Average Hourly Rate
-                        </Text>
-                        <Text style={styles.meetingDetails.statValue}>
-                            ${rate}
-                        </Text>
-                    </View>
+                    }
+                    
                 </View>
             </View>
-            <View style={{flex:1, flexDirection:"column-reverse"}}>
-                {
-                !isCounting ? 
-                <View>
-                    {startButton}
-                </View>
-                :
-                <View>
-                    <TouchableOpacity style={[styles.meetingDetails.button, styles.meetingDetails.pauseIdleButton]} onPress={handleIdlePause}>
-                        <Text style={styles.meetingDetails.buttonText}>
-                            {isIdle ? 'Pause Idle Time': 'Resume Idle Time'}
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.meetingDetails.button, styles.meetingDetails.endMeetingButton]} onPress={handleEndMeeting}>
-                        <Text style={[styles.meetingDetails.buttonText, styles.meetingDetails.TextWhite]}>
-                            End Meeting
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                }
-                
-            </View>
-            
-            
-
-        </View>
+        </ScrollView>
     );
 }
 

@@ -11,12 +11,14 @@ import {
 
 } from 'react-native';
 import { Icon } from '@rneui/themed';
-import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems } from '../services/db-services';
+import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems, termsAgreed, updateTermsAgreement } from '../services/db-services';
 import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { styles } from '../assets/Styles';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { styles, colors } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
+import { BackHandler } from 'react-native';
+import { TermsScreen } from './TermsScreen';
 
 
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
@@ -241,6 +243,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
           }
         </View>
       </SafeAreaView>
+      <TermsScreen />
       <Modal
         animationType="slide"
         transparent={true}
@@ -346,3 +349,5 @@ function WelcomeScreen() {
     </View>
   )
 }
+
+

@@ -409,7 +409,6 @@ export const styles = {
       borderWidth: 2, // Sets the border width
 
     },
-
   }),
   'meetingItem': StyleSheet.create({
     //Meeting View Cards
@@ -899,7 +898,6 @@ export const styles = {
     }
 
   }),
-
   'settings': StyleSheet.create({
 
     back: {
@@ -1318,6 +1316,80 @@ export const styles = {
     },
 
 
+  }),
+  'terms': StyleSheet.create({
+
+    fineprint: {
+      fontFamily: 'OpenSans-Regular', 
+      fontSize:10, 
+      color:"#000000"
+    },
+    fineprintBold: {
+      fontFamily: 'OpenSans-Bold', 
+      fontSize:10, 
+      color:"#000000"
+    },
+    title:{
+      fontFamily: 'OpenSans-Bold', 
+      fontSize:20, 
+      color:"#000000"
+    },
+    titleView:{
+      flex: 0, 
+      margin:20 
+    },
+    MainView:{ 
+      flex: 1, 
+      backgroundColor:"#FFFFFF", 
+      margin:40,
+      borderRadius:20, 
+    },
+    semiTransparentRange:{
+      flex: 1,
+      backgroundColor: "#000000AA"
+    },
+    termsContainer:{
+      flex: 1,
+      borderWidth: 1,
+      borderColor:"#000000", 
+      margin:20, 
+      marginTop:-10 
+    },
+    accept:{
+      flex:1,
+      padding:5,
+      borderRadius:15,
+      margin:10, 
+      marginHorizontal:20, 
+      height:50, 
+      backgroundColor:colors.oxfordBlue
+    },
+    decline:{
+      flex:1,
+      padding:5,
+      borderRadius:15,
+      margin:10, 
+      marginHorizontal:20, 
+      height:50, 
+      backgroundColor:colors.gray,
+      alignContent:"center",
+      alignItems:"center",
+      
+    },
+    acceptText:{
+      color:colors.white,
+      textAlign:'center',
+      textAlignVertical:'center',
+      flex:1,
+      paddingBottom:3,
+    },
+    declineText:{
+      color:colors.black,
+      textAlign:'center',
+      textAlignVertical:'center',
+      flex:1,
+      paddingBottom:3,
+    },
   }),
 
 };

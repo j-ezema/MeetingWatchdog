@@ -17,6 +17,7 @@ const tableNames = {
 const settings: any[] = new Array(
   { name: 'default_participants', value: 5 },
   { name: 'default_hourly', value: 100 },
+  { name: 'termsOfService', value: 0 },
 );
 
 export const createTable = async (db: SQLiteDatabase) => {
@@ -206,4 +207,14 @@ export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants:
 };
 export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: string): Promise<void> => {
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_hourly'`, [hourlyRate]);
+}
+
+export const termsAgreed = async (db: SQLiteDatabase): Promise<boolean> => {
+  await initializeSettings(db);
+  const results = await db.executeSql(`SELECT setting_name,setting_value FROM ${tableNames.settings} WHERE setting_name = "termsOfService"`);
+  return results[0].rows.item(0)['setting_value'] > 0;
+}
+
+export const updateTermsAgreement = async (db: SQLiteDatabase, newValue:number): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = "termsOfService"`, [newValue]);
 }
