@@ -164,12 +164,15 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
 
 export const updateMeetingItem = async (db: SQLiteDatabase, meeting:MeetingItem) => {
   try {
+    console.log(meeting);
     await db.executeSql(`UPDATE ${tableNames.MeetingItems} SET 
       total_wait_time = ?,
       total_meeting_time = ?,
       total_wait_cost = ?,
-      total_meeting_cost = ?
-      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost]);
+      total_meeting_cost = ?,
+      average_hourly_cost = ?,
+      number_of_participants = ?
+      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost,meeting.average_hourly_cost, meeting.number_of_participants]);
       
   } catch (error) {
     console.error(error);

@@ -70,7 +70,7 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
           <Animated.View style={[styles.meetingItem.slideView, { width: state.xx, backgroundColor: colors.white }]}>
             <View style={styles.meetingItem.thinBlueLine}></View>
             {!state.visible &&
-              <View style={styles.meetingItem.iconWrapper}>
+              <View style={styles.meetingItem.iconWrapperChevron}>
                 <Icon iconStyle={styles.meetingItem.icon} type="material" name="chevron-right" color="black" />
               </View>
             }
