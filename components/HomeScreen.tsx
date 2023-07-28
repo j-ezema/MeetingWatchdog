@@ -53,6 +53,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   useFocusEffect(
     React.useCallback(() => {
       loadDataCallback();
+      setActiveButtonIndex(-1);
     }, [loadDataCallback]));
 
   React.useEffect(() => {
@@ -292,8 +293,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleAbout}>
                 <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60' }]}>
                   <View style={styles.homeScreen.settingContent}>
-                    <Text style={[styles.homeScreen.settingsText]}>About</Text>
                     <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
+                    <Text style={[styles.homeScreen.settingsText]}>About test asdasdsadasdasdasdsasad</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -301,8 +302,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleSetting}>
                 <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 3 && { backgroundColor: '#D6AD60' }]}>
                   <View style={styles.homeScreen.settingContent}>
+                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                     <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
-                    <Icon iconStyle={styles.homeScreen.iconB} type="material" name="chevron-right" color="black" />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -310,8 +311,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleRateApp}>
                 <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 5 && { backgroundColor: '#D6AD60' }]}>
                   <View style={styles.homeScreen.settingContent}>
+                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                     <Text style={[styles.homeScreen.settingsText]}>Rate App</Text>
-                    <Icon iconStyle={styles.homeScreen.iconD} type="material" name="chevron-right" color="black" />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -319,8 +320,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
               <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleFeedback}>
                 <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 4 && { backgroundColor: '#D6AD60' }]}>
                   <View style={styles.homeScreen.settingContent}>
+                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                     <Text style={[styles.homeScreen.settingsText]}>Send Feedback</Text>
-                    <Icon iconStyle={styles.homeScreen.iconC} type="material" name="chevron-right" color="black" />
                   </View>
                 </View>
               </TouchableOpacity>

@@ -63,10 +63,11 @@ export const styles = {
 
     },
     settingContent: {
-      flexDirection: 'row',
-      justifyContent: 'center', // Centers content vertically
+      flexDirection:'row-reverse',
+      //justifyContent: 'center', // Centers content vertically
       alignItems: 'center', // Aligns text to the left
       borderRadius: 10,
+      //backgroundColor:colors.alertRed,
     },
     settingsContainer: {
       padding: 10, // Increase the padding to increase the clickable area
@@ -81,31 +82,7 @@ export const styles = {
       fontSize: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: '51%',
-    },
-
-    iconB: {
-      fontSize: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginLeft: '45%',
-
-    },
-
-    iconC: {
-      fontSize: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginLeft: '12%',
-
-    },
-
-    iconD: {
-      fontSize: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginLeft: '40%',
-
+      marginRight:5,
     },
 
 
@@ -307,13 +284,14 @@ export const styles = {
     },
     settingsButton: {
       height: 35,
-      width: 170, // Sets the width to 100% of the container
+      minWidth: 40,
+      // Sets the width to 100% of the container
       justifyContent: 'flex-start', // Centers content vertically
       alignItems: 'flex-start', // Aligns text to the left
-      flexDirection: 'row',
+      flexDirection: 'row-reverse',
       //marginBottom: 0.5,
       backgroundColor: colors.white,
-
+      borderTopWidth: 0.5,
 
 
     },
@@ -326,14 +304,14 @@ export const styles = {
       borderTopWidth: 0.5
     },
     settingsTextButton: {
-      width: '100%', // Sets the width to 100% of the container
+       // Sets the width to 100% of the container
       height: 35, // Sets the height of the button
       backgroundColor: '#ffffff', // Sets the background color of the button
       justifyContent: 'flex-start', // Centers content vertically
       alignItems: 'flex-start', // Aligns text to the left
+      flexDirection:'row-reverse',
 
-
-      borderTopWidth: 0.5,
+      
 
     },
     optionsText: {
@@ -352,6 +330,7 @@ export const styles = {
       fontFamily: 'OpenSans-Regular', // Sets the font family
       fontSize: 14, // Sets the font size
       marginLeft: 15,
+      marginVertical:2,
     },
     cardsContainer: {
       flex: 1,
