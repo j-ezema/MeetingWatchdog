@@ -1056,7 +1056,7 @@ export const styles = {
     costValue:{
       textAlign:'left',
       fontFamily: 'OpenSans-Bold',
-      fontSize:20,
+      fontSize:24,
       color: colors.richBlack,
     },
     timeContainer:{
@@ -1075,7 +1075,7 @@ export const styles = {
     timeValue:{
       textAlign:'right',
       fontFamily: 'OpenSans-Bold',
-      fontSize:20,
+      fontSize:24,
       color: colors.richBlack,
     },
     statContainerRight:{
