@@ -294,7 +294,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                 <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60' }]}>
                   <View style={styles.homeScreen.settingContent}>
                     <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
-                    <Text style={[styles.homeScreen.settingsText]}>About test asdasdsadasdasdasdsasad</Text>
+                    <Text style={[styles.homeScreen.settingsText]}>About</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -304,6 +304,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <View style={styles.homeScreen.settingContent}>
                     <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                     <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
+                    
                   </View>
                 </View>
               </TouchableOpacity>

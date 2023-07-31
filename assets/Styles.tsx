@@ -62,13 +62,6 @@ export const styles = {
       marginTop: 17,
 
     },
-    settingContent: {
-      flexDirection:'row-reverse',
-      //justifyContent: 'center', // Centers content vertically
-      alignItems: 'center', // Aligns text to the left
-      borderRadius: 10,
-      //backgroundColor:colors.alertRed,
-    },
     settingsContainer: {
       padding: 10, // Increase the padding to increase the clickable area
       position: 'absolute',
@@ -284,16 +277,19 @@ export const styles = {
     },
     settingsButton: {
       height: 35,
-      minWidth: 40,
+      minWidth: 130,
       // Sets the width to 100% of the container
-      justifyContent: 'flex-start', // Centers content vertically
-      alignItems: 'flex-start', // Aligns text to the left
-      flexDirection: 'row-reverse',
       //marginBottom: 0.5,
-      backgroundColor: colors.white,
+      backgroundColor: colors.steelBlue,
       borderTopWidth: 0.5,
 
 
+    },
+    settingContent: {
+      flexDirection:'row-reverse',
+      //justifyContent: 'center', // Centers content vertically
+      alignItems: 'stretch', // Aligns text to the left
+      justifyContent: 'space-between', // Centers content vertically
     },
     textButton: {
       width: '100%', // Sets the width to 100% of the container
@@ -303,16 +299,9 @@ export const styles = {
       alignItems: 'center', // Aligns text to the left
       borderTopWidth: 0.5
     },
-    settingsTextButton: {
-       // Sets the width to 100% of the container
+    settingsTextButton: { 
       height: 35, // Sets the height of the button
       backgroundColor: '#ffffff', // Sets the background color of the button
-      justifyContent: 'flex-start', // Centers content vertically
-      alignItems: 'flex-start', // Aligns text to the left
-      flexDirection:'row-reverse',
-
-      
-
     },
     optionsText: {
       color: '#0A1128', // Sets the text color
@@ -330,7 +319,10 @@ export const styles = {
       fontFamily: 'OpenSans-Regular', // Sets the font family
       fontSize: 14, // Sets the font size
       marginLeft: 15,
-      marginVertical:2,
+      textAlign:'left',
+      marginBottom:5,
+      //backgroundColor:colors.alertRed,
+      alignSelf:'flex-end',
     },
     cardsContainer: {
       flex: 1,
