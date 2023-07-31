@@ -161,7 +161,8 @@ export function TermsScreen() {
                       By using the App, you acknowledge that you have read, understood, and agree to be bound by this Agreement.
                   </Text>
                 </View>
-                <View style={{flexDirection:"row"}}>
+              </ScrollView>
+              <View style={{flexDirection:"row"}}>
                   <TouchableOpacity  onPressOut={BackHandler.exitApp} style={styles.terms.decline }>
                     <Text style={styles.terms.declineText}>
                       Decline
@@ -174,10 +175,6 @@ export function TermsScreen() {
                   </TouchableOpacity>
                   
                 </View>
-                
-  
-                
-              </ScrollView>
             </View>
             
           </View>

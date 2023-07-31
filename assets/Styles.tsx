@@ -1401,6 +1401,7 @@ export const styles = {
       borderWidth: 1,
       borderColor:"#000000", 
       margin:20, 
+      padding:5,
       marginTop:-10 
     },
     accept:{
