@@ -10,6 +10,7 @@ import {
 
 } from 'react-native';
 import { styles } from "../assets/Styles";
+import { Icon } from 'react-native-elements';
 
 export const AboutScreen = ({ navigation }: { navigation: any }) => {
 
@@ -43,12 +44,14 @@ export const AboutScreen = ({ navigation }: { navigation: any }) => {
             </View>
             */}
             <View style={styles.createMeeting.buttonsContainer}>
-                <TouchableOpacity style={styles.about.textButtonContainer} onPress={handleDeveloper}>
-                    <View style={styles.about.textButton}>
-                        <Text style={styles.about.buttonText}>Developer</Text>
-                        <Text style={styles.about.inputText}>2023 Carbon Edge Corporation</Text>
+                <TouchableOpacity style={styles.about.textButton} onPress={handleDeveloper}>
+                    <View style={styles.about.accessibility}>
+                        <Icon iconStyle={styles.about.icon} type="material" name="chevron-right" color="black" />
+                        <View style={{flex:1,flexDirection:'column'}}>
+                            <Text style={styles.about.buttonText}>Developer</Text>
+                            <Text style={styles.about.inputText}>2023 Carbon Edge Corporation</Text>
+                        </View>
                     </View>
-                    <Image source={require('../assets/next_arrow.png')} style={styles.about.developer} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.about.textButton}>
                     <Text style={styles.about.buttonText}>App Version</Text>
@@ -56,32 +59,32 @@ export const AboutScreen = ({ navigation }: { navigation: any }) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[styles.createMeeting.textButton]}
+                    style={[styles.about.textButton]}
                     onPress={handlePrivacy}
                 >
                     <View style={styles.about.accessibility}>
+                        <Icon iconStyle={styles.about.icon} type="material" name="chevron-right" color="black" />
                         <Text style={styles.about.title}>Privacy Policy</Text>
-                        <Image source={require('../assets/next_arrow.png')} style={styles.about.privacy} />
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[styles.createMeeting.textButton]}
+                    style={[styles.about.textButton]}
                     onPress={handleTerms}
                 >
                     <View style={styles.about.accessibility}>
+                        <Icon iconStyle={styles.about.icon} type="material" name="chevron-right" color="black" />
                         <Text style={styles.about.title}>Terms And Conditions</Text>
-                        <Image source={require('../assets/next_arrow.png')} style={styles.about.terms} />
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[styles.createMeeting.textButton]}
+                    style={[styles.about.textButton]}
                     onPress={handleCopyright}
                 >
                     <View style={styles.about.accessibility}>
+                        <Icon iconStyle={styles.about.icon} type="material" name="chevron-right" color="black" />
                         <Text style={styles.about.title}>Copyright</Text>
-                        <Image source={require('../assets/next_arrow.png')} style={styles.about.copyright} />
                     </View>
                 </TouchableOpacity>
 

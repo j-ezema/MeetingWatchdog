@@ -1309,26 +1309,38 @@ export const styles = {
       marginTop: 22,
     },
     accessibility: {
-      flexDirection: 'row',
+      flexDirection: 'row-reverse',
+      marginHorizontal:0,
+      flex:1,
+      justifyContent:'space-between',
+      verticalAlign:'center',
+      alignItems:'center',
+      alignContent:'center',
     },
+    
     title: {
       color: '#040F21',
       fontFamily: 'OpenSans-Bold',
       fontSize: 15,
       textAlign: 'left',
-      alignSelf: 'flex-start',
-      marginLeft: 10,
-      marginTop: 7,
+      flex:1,
+      
     },
-
+    icon: {
+      fontSize: 32,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight:15,
+    },
     textButton: {
       marginBottom: 20, // Adds bottom margin
       width: '100%', // Sets the width to 100% of the container
       height: 70, // Sets the height of the button
       borderRadius: 10, // Sets the border radius
-      backgroundColor: '#ffffff', // Sets the background color of the button
+      backgroundColor: colors.white, // Sets the background color of the button
       alignItems: 'flex-start', // Aligns text to the left
       paddingLeft: 16, // Adds left padding for text
+      overflow:'hidden',
     },
 
     textButtonContainer: {
