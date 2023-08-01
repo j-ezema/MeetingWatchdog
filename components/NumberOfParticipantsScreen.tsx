@@ -7,6 +7,7 @@ import {
 import { Button } from 'react-native-elements';
 import { styles } from "../assets/Styles";
 import { getDBConnection, saveNumberOfParticipants } from '../services/db-services';
+import { NumericTextEntry } from './NumericTextEntry';
 
 export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) => {
 
@@ -45,19 +46,8 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
         <View style={styles.settings.container}>
 
             <View style={styles.createMeeting.buttonsContainer}>
-
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
-
-                <View style={styles.createMeeting.textButton}>
-                    <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
-                    <TextInput
-                        style={styles.createMeeting.inputText}
-                        placeholder="Enter number"
-                        value={participants}
-                        onChangeText={enterParticipants}
-                        keyboardType="numeric"
-                    />
-                </View>
+                <NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/>
             </View>
             <View style={styles.createMeeting.footerContainer}>
 

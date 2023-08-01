@@ -22,6 +22,7 @@ import { colors, styles } from "../assets/Styles";
 import moment from 'moment';
 import CurrencyInput from 'react-native-currency-input';
 import { useFocusEffect } from '@react-navigation/native';
+import { NumericTextEntry } from './NumericTextEntry';
 
 
 
@@ -33,20 +34,6 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const [hourlyRate, setHourlyRate] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
-
-    const enterParticipants = (x:string) =>{
-        const parsed = parseInt(x);
-        if(parsed){
-            if(parsed > 1000){
-                setParticipants(""+1000);
-            }else if(parsed < 1){
-                setParticipants(""+1);
-            }else{
-                setParticipants(""+parsed);
-            }
-        }
-        
-    }
 
     //grab settings
     const loadDataCallback = useCallback(async () => {
@@ -217,16 +204,9 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
-                            <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
-                            <TextInput
-                                style={styles.createMeeting.inputText}
-                                placeholder="Enter number"
-                                value={participants}
-                                onChangeText={enterParticipants}
-                                keyboardType="numeric"
-                            />
-                        </View>
+
+                        <NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/>
+                        
                         <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
                             <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
                             <TextInput
