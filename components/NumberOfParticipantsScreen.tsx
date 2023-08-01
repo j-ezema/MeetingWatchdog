@@ -12,16 +12,33 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
 
     const [participants, setParticipants] = useState('');
 
-    const handleCancel = async () => {
+    const enterParticipants = (x:string) =>{
+        if(x.trim().length < 1){
+            setParticipants(x);
+        }else{
+            const parsed = parseInt(x);
+            if(parsed){
+                if(parsed > 1000){
+                    setParticipants(""+1000);
+                }else if(parsed < 1){
+                    setParticipants(""+1);
+                }else{
+                    setParticipants(""+parsed);
+                }
+            }
+        }
+    }
+    const handleExit = async () => {
         setParticipants("");
+        navigation.navigate('Settings', {
+            participants: participants,
+        });
     };
 
     const handleSave = async () => {
         const db = await getDBConnection();
         await saveNumberOfParticipants(db, participants);
-        navigation.navigate('Settings', {
-            participants: participants,
-        });
+        handleExit();
     };
 
     return (
@@ -37,7 +54,7 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
                         style={styles.createMeeting.inputText}
                         placeholder="Enter number"
                         value={participants}
-                        onChangeText={setParticipants}
+                        onChangeText={enterParticipants}
                         keyboardType="numeric"
                     />
                 </View>
@@ -51,7 +68,7 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
                             titleStyle={styles.createMeeting.footerButtonTextB}
                             buttonStyle={styles.createMeeting.footerButton}
                             containerStyle={styles.createMeeting.footerButtonContainerStyle}
-                            onPress={handleCancel}
+                            onPress={handleExit}
 
 
                         />

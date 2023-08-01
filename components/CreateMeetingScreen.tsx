@@ -34,6 +34,20 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
 
+    const enterParticipants = (x:string) =>{
+        const parsed = parseInt(x);
+        if(parsed){
+            if(parsed > 1000){
+                setParticipants(""+1000);
+            }else if(parsed < 1){
+                setParticipants(""+1);
+            }else{
+                setParticipants(""+parsed);
+            }
+        }
+        
+    }
+
     //grab settings
     const loadDataCallback = useCallback(async () => {
         try {
@@ -209,7 +223,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 style={styles.createMeeting.inputText}
                                 placeholder="Enter number"
                                 value={participants}
-                                onChangeText={setParticipants}
+                                onChangeText={enterParticipants}
                                 keyboardType="numeric"
                             />
                         </View>
