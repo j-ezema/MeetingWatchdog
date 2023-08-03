@@ -1402,7 +1402,7 @@ export const styles = {
       borderColor:"#000000", 
       margin:20, 
       padding:5,
-      marginTop:-10 
+      marginTop:-10, 
     },
     accept:{
       flex:1,
