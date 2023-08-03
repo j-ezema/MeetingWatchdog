@@ -1,20 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image} from 'react-native-elements';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    ScrollView,
-    KeyboardAvoidingView,
-    Platform,
-    Modal,
-
-
-} from 'react-native';
+import {View} from 'react-native';
 import { colors } from '../assets/Styles';
-
 
 
 export const SplashScreen = () => {
