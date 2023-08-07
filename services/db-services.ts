@@ -23,9 +23,9 @@ const settings: any[] = new Array(
 export const createTable = async (db: SQLiteDatabase) => {
   // create tables if not exists
   const Queries = [
-    //`DROP TABLE ${tableNames.MeetingItems};`,
-    //`DROP TABLE ${tableNames.MailClientConfiguration};`,
-    //`DROP TABLE ${tableNames.settings};`,
+    // `DROP TABLE ${tableNames.MeetingItems};`,
+    // `DROP TABLE ${tableNames.MailClientConfiguration};`,
+    // `DROP TABLE ${tableNames.settings};`,
     `CREATE TABLE IF NOT EXISTS ${tableNames.MeetingItems}(
             meeting_title TEXT NOT NULL,
             number_of_participants INT NOT NULL,

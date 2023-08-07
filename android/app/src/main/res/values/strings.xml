@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Meeting Watchdog</string>
+    <string name="client_id">6e13bfa8-323b-420d-8239-fe430b3bc057</string>
+    <string name="redirect_url">msal6e13bfa8-323b-420d-8239-fe430b3bc057://auth</string>
 </resources>

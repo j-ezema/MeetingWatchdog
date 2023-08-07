@@ -19,6 +19,8 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
     const [participants, setParticipants] = useState('');
 
+    const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
+
     const loadDataCallback = useCallback(async () => {
         try {
             const db = await getDBConnection();
@@ -40,12 +42,20 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
 
     const handleNumber = () => {
-        navigation.navigate('NumberOfParticipants')
+        setActiveButtonIndex(0);
+        navigation.navigate('NumberOfParticipants');
     };
 
     const handleHourlyRate = () => {
-        navigation.navigate('AverageHourlyRate')
+        setActiveButtonIndex(1);
+        navigation.navigate('AverageHourlyRate');
     };
+
+    const handleAccessibility = () => {
+        setActiveButtonIndex(2);
+    };
+
+    
 
 
 
@@ -63,17 +73,17 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
             <View style={styles.createMeeting.buttonsContainer}>
                 <Text style={styles.settings.subHeader}>Meeting Defaults</Text>
 
-                <TouchableOpacity style={styles.settings.textButton} onPress={handleNumber}>
+                <TouchableOpacity style={[styles.settings.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60'}]} onPress={handleNumber}>
                     <Text style={styles.settings.buttonText}>Number of Participants</Text>
                     <Text style={styles.settings.inputText}>{participants}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.settings.textButton} onPress={handleHourlyRate}>
+                <TouchableOpacity style={[styles.settings.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60'}]} onPress={handleHourlyRate}>
                     <Text style={styles.settings.buttonText}>Average Hourly Rate</Text>
                     <Text style={styles.settings.inputText}>{hourlyRate}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[styles.createMeeting.textButton]}
+                    style={[styles.settings.textButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60'}]} onPress={handleAccessibility}
                 >
 
                     <View style={styles.settings.accessibility}>
