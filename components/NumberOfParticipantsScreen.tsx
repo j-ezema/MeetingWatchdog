@@ -1,17 +1,21 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
     View,
     Text,
     TextInput,
+    TouchableOpacity,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { styles } from "../assets/Styles";
 import { getDBConnection, retrieveSettings, saveNumberOfParticipants } from '../services/db-services';
 import { useFocusEffect } from '@react-navigation/native';
 
+
 export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) => {
 
     const [participants, setParticipants] = useState('');
+
+    const participantsInputRef = useRef<TextInput>(null);
 
     const handleCancel = async () => {
         setParticipants("");
@@ -50,16 +54,17 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
 
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
 
-                <View style={styles.createMeeting.textButton}>
+                <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => participantsInputRef.current?.focus()}>
                     <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
                     <TextInput
+                        ref={participantsInputRef}
                         style={styles.createMeeting.inputText}
                         placeholder="Enter number"
                         value={participants}
                         onChangeText={setParticipants}
                         keyboardType="numeric"
                     />
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.createMeeting.footerContainer}>
 

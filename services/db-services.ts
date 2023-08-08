@@ -16,7 +16,7 @@ const tableNames = {
 
 const settings: any[] = new Array(
   { name: 'default_participants', value: 5 },
-  { name: 'default_hourly', value: 100 },
+  { name: 'default_hourly', value: '$100.00' },
   { name: 'termsOfService', value: 0 },
 );
 
