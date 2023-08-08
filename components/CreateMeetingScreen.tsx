@@ -43,7 +43,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             const db = await getDBConnection();
             const settings: { [k: string]: any } = await retrieveSettings(db);
             setParticipants("" + settings.default_participants);
-            setHourlyRate("" + settings.default_hourly);
+            setHourlyRate("$" + settings.default_hourly.toFixed(2));
         } catch (error) {
             console.error(error);
         }
@@ -131,9 +131,10 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const saveMeetingData = async () => {
         try {
             var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/\D/g, ''), +participants);
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
+            
             console.log(await saveMeetingItems(db, [newMeeting]));
             navigation.navigate('Home', { key: Date.now() });
         } catch (error) {
@@ -144,7 +145,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const startMeetingData = async () => {
         try {
             var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/\D/g, ''), +participants);
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
             await saveMeetingItems(db, [newMeeting]);

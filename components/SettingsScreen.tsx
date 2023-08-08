@@ -26,7 +26,7 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
             const db = await getDBConnection();
             const settings: { [k: string]: any } = await retrieveSettings(db);
             setParticipants("" + settings.default_participants);
-            setHourlyRate("" + settings.default_hourly);
+            setHourlyRate("$" + settings.default_hourly.toFixed(2));
         } catch (error) {
             console.error(error);
         }

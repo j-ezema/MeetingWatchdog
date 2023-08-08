@@ -39,8 +39,11 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
     };
 
     const handleSave = async () => {
+        handleHourlyRateSubmit();
+        console.log(hourlyRate);
+        console.log((hourlyRate).replace(/[^0-9.]/g, ''));
         const db = await getDBConnection();
-        await saveAverageHourlyRate(db, hourlyRate);
+        await saveAverageHourlyRate(db, +(hourlyRate).replace(/[^0-9.]/g, ''));
         navigation.navigate('Settings', {
             hourlyRate: hourlyRate,
         });
@@ -50,7 +53,7 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
         try {
             const db = await getDBConnection();
             const settings: { [k: string]: any } = await retrieveSettings(db);
-            setHourlyRate("" + settings.default_hourly);
+            setHourlyRate("$" + settings.default_hourly.toFixed(2));
         } catch (error) {
             console.error(error);
         }

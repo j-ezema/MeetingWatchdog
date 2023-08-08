@@ -16,7 +16,7 @@ const tableNames = {
 
 const settings: any[] = new Array(
   { name: 'default_participants', value: 5 },
-  { name: 'default_hourly', value: '$100.00' },
+  { name: 'default_hourly', value: 100 },
   { name: 'termsOfService', value: 0 },
 );
 
@@ -41,7 +41,7 @@ export const createTable = async (db: SQLiteDatabase) => {
         );`,
     `CREATE TABLE IF NOT EXISTS ${tableNames.settings}(
             setting_name TEXT NOT NULL UNIQUE,
-            setting_value INT NOT NULL
+            setting_value REAL NOT NULL
         );`,
   ];
 
@@ -208,7 +208,8 @@ export const deleteTable = async (db: SQLiteDatabase) => {
 export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants: string): Promise<void> => {
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_participants'`, [participants]);
 };
-export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: string): Promise<void> => {
+export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: number): Promise<void> => {
+  console.log(hourlyRate);
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_hourly'`, [hourlyRate]);
 }
 
