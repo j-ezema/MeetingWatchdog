@@ -7,6 +7,7 @@ import { View } from "react-native";
 
 export const MeetingView: React.FC<{meetings: MeetingItem[]; deleteItem: Function; toDetails: Function;}> = ({meetings, deleteItem, toDetails }) =>{
 
+    //loop through meeting items to create 
     var arr: JSX.Element[] = [];
     meetings.forEach(meeting => {
       arr.push(

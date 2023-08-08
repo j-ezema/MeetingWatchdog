@@ -40,9 +40,6 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
     }).start(/*() =>setState({visible:false,x:new Animated.Value(0)})*/);
   };
   const tapMeeting = () => {
-    //replace with navigation to meeting details
-    //console.log(meeting_title + " was selected");
-    //navigation.navigate('MeetingDetailsScreen');
     toDetails(id);
   }
   const tapDeleteMeeting = () => {

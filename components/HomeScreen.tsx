@@ -14,10 +14,9 @@ import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems, termsAgreed, updateTermsAgreement } from '../services/db-services';
 import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView} from 'react-native-gesture-handler';
 import { styles, colors } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
-import { BackHandler } from 'react-native';
 import { TermsScreen } from './TermsScreen';
 
 
@@ -177,17 +176,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   return (
     <GestureHandlerRootView>
       <SafeAreaView style={styles.homeScreen.background}>
-        {/*
-        <View style={styles.homeScreen.container}>
-          <View style={styles.homeScreen.header}>
-            <Image source={require('../assets/logo_01.png')} style={styles.homeScreen.logo} />
-            <Text style={styles.homeScreen.headerText}>Home</Text>
-            <TouchableOpacity style={styles.homeScreen.settingsContainer} onPress={handleSettings}>
-              <Image source={require('../assets/settings.png')} style={styles.homeScreen.settings} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        */}
         <View style={styles.homeScreen.content}>
           <View style={styles.homeScreen.buttonsContainer}>
             <View style={[styles.homeScreen.button, styles.homeScreen.buttonWithBorder]}>
@@ -227,20 +215,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                 size={35} raised reverseColor='black' type="material" name="add" color="#000000"
               />
             </TouchableOpacity>
-
-            /*
-            <View style={styles.homeScreen.footerContainer}>
-              <View style={styles.homeScreen.footer}>
-                <View style={styles.homeScreen.footerButtonContainer}>
-                  <TouchableOpacity
-                    style={[styles.homeScreen.footerButton, styles.homeScreen.footerBorder]}
-                    onPress={handleButtonPress}
-                  >
-                    <Image source={require('../assets/plus.png')} style={styles.homeScreen.plus} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>*/
           }
         </View>
       </SafeAreaView>

@@ -1,5 +1,4 @@
 const STRINGS_EN = {
-    SOME_STRING : 'Some string',
     termsAndConditions:{
         acceptTitle:"Please Accept the terms and conditions below",
         title:"TERMS AND CONDITIONS AGREEMENT FOR MEETING WATCHDOG ",
@@ -92,7 +91,10 @@ const STRINGS_EN = {
         accept:"Accept",
         decline:"Decline"
 
-    }
+    },
+    meetingDetails:{
+        
+    },
 }
 
 const STRINGS = STRINGS_EN

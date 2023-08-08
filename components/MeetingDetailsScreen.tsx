@@ -14,17 +14,17 @@ import { TextInput } from "react-native";
 
 
 export const MeetingDetailsScreen = ({ route}:{route:any}) => {
-    //const [meetings, setMeetings] = useState<MeetingItem[]>([]);
+    ///STATE VARIABLES
     const { meetingID, otherParam } = route.params;
     const [meeting, setMeeting] = useState(createNewMeetingItem());
     const [rate, setRate] = useState(100);// idle time
     const [participants, setParticipants] = useState(5);// total time
     const [timerA, setTimerA] = useState(0);// idle time
     const [timerB, setTimerB] = useState(0);// total time
-    const [TimerValueA, setTimerValueA] = useState(moment("2015-01-01").startOf('day').seconds(timerA).format('HH:mm:ss'));
-    const [TimerValueB, setTimerValueB] = useState(moment("2015-01-01").startOf('day').seconds(timerB).format('HH:mm:ss'));
-    const [costA, setCostA] = useState('$'+Number(rate*timerA/3600*participants).toFixed(2));
-    const [costB, setCostB] = useState('$'+Number(rate*timerB/3600*participants).toFixed(2));
+    const [TimerValueA, setTimerValueA] = useState("00:00:00");
+    const [TimerValueB, setTimerValueB] = useState("00:00:00");
+    const [costA, setCostA] = useState('$0');
+    const [costB, setCostB] = useState('$0');
     const [isCounting, setIsCounting] = useState(false);
     const [isIdle, setIsIdle] = useState(true);
     const [pointInitial, setPointInitial] = useState(moment.now);// total time
@@ -33,18 +33,32 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     const [isPastMeeting, setIsPastMeeting] = useState(true);// total time
     const [rateEntry, setRateEntry] = useState("100");// idle time
     const [participantsEntry, setParticipantsEntry] = useState("5");// total time
+    const windowHeight = Dimensions.get('window').height-100;
+    let startButton = (<View/>);
+
+    ///FORMATTING METHODS
+
+    //formats time
+    const formatTime = (ms: number) =>{
+        return moment("2015-01-01").startOf('day').millisecond(ms).format('HH:mm:ss');
+    }
+    //calculates and formats cost 
+    const calculateCost = (ms: number) =>{
+        return '$'+Number(rate*ms/3600/1000*participants).toFixed(2)
+    }
+
+    ///DATABASE METHODS
 
     const loadDataCallback = useCallback(async () => {
         const db = await getDBConnection();
         let meetingTemp = await getMeetingItem(db, meetingID);
+        //setting
         setMeeting(meetingTemp)
-        
-        //console.log(">>>>");
-        //console.log(meetingTemp);
         setRate(meetingTemp.average_hourly_cost);
         setParticipants(meetingTemp.number_of_participants);
         setRateEntry(""+meetingTemp.average_hourly_cost);
         setParticipantsEntry(""+meetingTemp.number_of_participants);
+
         if(meetingTemp.id != -1 ){
             if(meetingTemp.total_meeting_time == null){
                 setIsPastMeeting(false);
@@ -54,8 +68,8 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                 setTimerB(meetingTemp.total_meeting_time);
                 setCostA('$'+meetingTemp.total_wait_cost.toFixed(2));
                 setCostB('$'+meetingTemp.total_meeting_cost.toFixed(2));
-                setTimerValueA(moment("2015-01-01").startOf('day').seconds(meetingTemp.total_wait_time).format('HH:mm:ss'))
-                setTimerValueB(moment("2015-01-01").startOf('day').seconds(meetingTemp.total_meeting_time).format('HH:mm:ss'))
+                setTimerValueA(formatTime(meetingTemp.total_wait_time));
+                setTimerValueB(formatTime(meetingTemp.total_meeting_time));
             }
         }
     }, []);
@@ -72,7 +86,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
 
     
 
- 
+    ///Stopwatch functionality
     React.useEffect(() => {
         const intervalID = setInterval(() =>  {
             if(isCounting){
@@ -91,17 +105,19 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
             meeting.average_hourly_cost = rate;
             meeting.number_of_participants = participants;
             if(isIdle){
-                setTimerValueA(moment("2023-01-01").startOf('day').milliseconds(timerA).format('HH:mm:ss'));
-                setCostA('$'+Number(rate*timerA/3600/1000*participants).toFixed(2));
+                setTimerValueA(formatTime(timerA));
+                setCostA(calculateCost(timerA));
                 meeting.total_wait_cost = rate*timerA/3600/1000*participants;
                 meeting.total_wait_time = Math.round(timerA/1000);
             }
-            setTimerValueB(moment("2015-01-01").startOf('day').milliseconds(timerB).format('HH:mm:ss'));
-            setCostB('$'+Number(rate*timerB/3600/1000*participants).toFixed(2));
-            meeting.total_meeting_cost = rate*timerB/3600/1000*participants;
-            meeting.total_meeting_time = Math.round(timerB/1000);
+            setTimerValueB(formatTime(timerB));
+            setCostB(calculateCost(timerA));
+            meeting.total_meeting_cost = rate*timerB/3600/1000*participants;//updates meeting object, this is just for updating db
+            meeting.total_meeting_time = Math.round(timerB/1000);//updates meeting object, this is just for updating db
         }
     }, [timerA, timerB]);//*/
+
+    ///Handlers
     
     const handleIdlePause = () => {
         if(isIdle){
@@ -125,9 +141,9 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
         setBaseIdle(0);
     }
 
-    const windowHeight = Dimensions.get('window').height-100;
     
-    let startButton;
+    
+    /// ui switch
     if (isPastMeeting ) {
         startButton = (
             <View style={[ styles.meetingDetails.button, styles.meetingDetails.startButton,styles.meetingDetails.disabled]}>
@@ -145,7 +161,6 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
             </TouchableOpacity>
         );
     }
-    //
 
     return (
         <ScrollView style={{flex:1,backgroundColor:colors.oxfordBlue}}>
@@ -279,38 +294,3 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
         </ScrollView>
     );
 }
-
-/*
-<View style={{flexDirection:"row",flex:0,}}>
-                        <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerLeft]}>
-                            <TextInput
-                                    style={[ styles.meetingDetails.statValue]}
-                                    placeholder="Enter rate"
-                                    value={participantsEntry}
-                                    onChangeText={(x)=>{if(+x>0){setParticipants(+x);}setParticipantsEntry(x);}}
-                                    keyboardType="numeric"
-                            />
-                            <View style={styles.meetingDetails.statTitleOver}>
-                                <Text style={styles.meetingDetails.statTitle}>
-                                    Number of Participants
-                                </Text>
-                            </View>
-                            
-                        </View>
-                        <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerRight]}>
-                            <TextInput
-                                    style={[ styles.meetingDetails.statValue]}
-                                    placeholder="Enter rate"
-                                    value={rateEntry}
-                                    onChangeText={(x)=>{if(+x>0){setRate(+x);}setRateEntry(x);}}
-                                    keyboardType="numeric"
-                            />
-                            <View style={styles.meetingDetails.statTitleOver}>
-                                <Text style={styles.meetingDetails.statTitle}>
-                                    Average Hourly Rate
-                                </Text>
-                            </View>
-                            
-                            
-                        </View>
-                    </View>*/
