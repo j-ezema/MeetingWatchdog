@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import {
     View,
     Text,
@@ -34,6 +34,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const [hourlyRate, setHourlyRate] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const hourlyRateInputRef = useRef<TextInput>(null);
+    const participantsInputRef = useRef<TextInput>(null);
 
     //grab settings
     const loadDataCallback = useCallback(async () => {
@@ -41,17 +43,17 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             const db = await getDBConnection();
             const settings: { [k: string]: any } = await retrieveSettings(db);
             setParticipants("" + settings.default_participants);
-            setHourlyRate("$"+(""+settings.default_hourly).replace(/\D/g,''));
+            setHourlyRate("" + settings.default_hourly);
         } catch (error) {
             console.error(error);
         }
     }, []);
 
-    
+
     useFocusEffect(
-    React.useCallback(() => {
-        loadDataCallback();
-    }, [loadDataCallback]));
+        React.useCallback(() => {
+            loadDataCallback();
+        }, [loadDataCallback]));
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -67,11 +69,20 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     };
 
     const handleHourlyRateChange = (inputValue: string) => {
-        const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
-        if (isNaN(numericValue)) {
-            setHourlyRate('');
-        } else {
-            const formattedRate = inputValue.startsWith('$') ? inputValue : `$${inputValue}`;
+        setHourlyRate(inputValue);
+    };
+
+    const handleHourlyRateSubmit = () => {
+        const numericValue = parseFloat(hourlyRate.replace(/\$|,/g, ''));
+        if (!isNaN(numericValue)) {
+            let formattedRate;
+            if (Number.isInteger(numericValue)) {
+                formattedRate = `$${numericValue.toFixed(2)}`;
+            } else if (numericValue.toFixed(1) === numericValue.toString()) {
+                formattedRate = `$${numericValue.toFixed(2)}`;
+            } else {
+                formattedRate = `$${numericValue}`;
+            }
             setHourlyRate(formattedRate);
         }
     };
@@ -120,7 +131,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const saveMeetingData = async () => {
         try {
             var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime,+hourlyRate.replace(/\D/g,''),+participants);
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/\D/g, ''), +participants);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
             console.log(await saveMeetingItems(db, [newMeeting]));
@@ -133,19 +144,19 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const startMeetingData = async () => {
         try {
             var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime,+hourlyRate.replace(/\D/g,''),+participants);
+            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/\D/g, ''), +participants);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
             await saveMeetingItems(db, [newMeeting]);
             const tfdiji = `SELECT last_insert_rowid()`;
             const result = await db.executeSql(tfdiji);
-            navigation.navigate('meetingDetails', {meetingID: result[0].rows.item(0)["last_insert_rowid()"]});
+            navigation.navigate('meetingDetails', { meetingID: result[0].rows.item(0)["last_insert_rowid()"] });
         } catch (error) {
             console.error(error);
         }
         return;
     };
-    
+
 
 
     return (
@@ -204,19 +215,30 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-
-                        <NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/>
-                        
-                        <View style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]}>
+                        <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
+                            <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
+                            <TextInput
+                                ref={participantsInputRef}
+                                style={styles.createMeeting.inputText}
+                                placeholder="Enter number"
+                                value={participants}
+                                onChangeText={setParticipants}
+                                keyboardType="numeric"
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
                             <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
                             <TextInput
+                                ref={hourlyRateInputRef}
                                 style={styles.createMeeting.inputText}
-                                placeholder="Enter rate"
+                                placeholder="Enter hourly rate"
                                 value={hourlyRate}
                                 onChangeText={handleHourlyRateChange}
                                 keyboardType="numeric"
+                                onSubmitEditing={handleHourlyRateSubmit}
+
                             />
-                        </View>
+                        </TouchableOpacity>
 
                     </View>
                     <View style={styles.createMeeting.footerContainer}>

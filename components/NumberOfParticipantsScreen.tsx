@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
     View,
     Text,
     TextInput,
+    TouchableOpacity,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { styles } from "../assets/Styles";
@@ -10,10 +11,12 @@ import { getDBConnection, retrieveSettings, saveNumberOfParticipants } from '../
 import { NumericTextEntry } from './NumericTextEntry';
 import { useFocusEffect } from '@react-navigation/native';
 
+
 export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) => {
 
     const [participants, setParticipants] = useState('');
 
+<<<<<<< HEAD
     const enterParticipants = (x:string) =>{
         if(x.trim().length < 1){
             setParticipants(x);
@@ -31,6 +34,11 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
         }
     }
     const handleExit = async () => {
+=======
+    const participantsInputRef = useRef<TextInput>(null);
+
+    const handleCancel = async () => {
+>>>>>>> 99784b1a6682b0444d9ba4f65eee71b8f81617f4
         setParticipants("");
         navigation.navigate('Settings', {
             participants: participants,
@@ -66,7 +74,22 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
 
             <View style={styles.createMeeting.buttonsContainer}>
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
+<<<<<<< HEAD
                 <NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/>
+=======
+
+                <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => participantsInputRef.current?.focus()}>
+                    <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
+                    <TextInput
+                        ref={participantsInputRef}
+                        style={styles.createMeeting.inputText}
+                        placeholder="Enter number"
+                        value={participants}
+                        onChangeText={setParticipants}
+                        keyboardType="numeric"
+                    />
+                </TouchableOpacity>
+>>>>>>> 99784b1a6682b0444d9ba4f65eee71b8f81617f4
             </View>
             <View style={styles.createMeeting.footerContainer}>
 

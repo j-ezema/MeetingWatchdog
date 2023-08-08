@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
     View,
     Text,
     TextInput,
+    TouchableOpacity,
 } from 'react-native';
 import { styles } from "../assets/Styles";
 import { Button } from 'react-native-elements'
@@ -12,18 +13,24 @@ import { useFocusEffect } from '@react-navigation/native';
 export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => {
 
     const [hourlyRate, setHourlyRate] = useState('');
-
-    const [isHourlyRateEntered, setIsHourlyRateEntered] = useState(false);
+    const hourlyRateInputRef = useRef<TextInput>(null);
 
     const handleHourlyRateChange = (inputValue: string) => {
-        const numericValue = parseFloat(inputValue.replace(/\$|,/g, ''));
-        if (isNaN(numericValue)) {
-            setHourlyRate('');
-            setIsHourlyRateEntered(false);
-        } else {
-            const formattedRate = inputValue.startsWith('$') ? inputValue : `$${inputValue}`;
+        setHourlyRate(inputValue);
+    };
+
+    const handleHourlyRateSubmit = () => {
+        const numericValue = parseFloat(hourlyRate.replace(/\$|,/g, ''));
+        if (!isNaN(numericValue)) {
+            let formattedRate;
+            if (Number.isInteger(numericValue)) {
+                formattedRate = `$${numericValue.toFixed(2)}`;
+            } else if (numericValue.toFixed(1) === numericValue.toString()) {
+                formattedRate = `$${numericValue.toFixed(2)}`;
+            } else {
+                formattedRate = `$${numericValue}`;
+            }
             setHourlyRate(formattedRate);
-            setIsHourlyRateEntered(true);
         }
     };
 
@@ -67,16 +74,18 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
 
                 <Text style={styles.settings.subHeader}>Edit Average Hourly Rate</Text>
 
-                <View style={styles.createMeeting.textButton}>
+                <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => hourlyRateInputRef.current?.focus()}>
                     <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
                     <TextInput
+                        ref={hourlyRateInputRef}
                         style={styles.createMeeting.inputText}
-                        placeholder="Enter rate"
+                        placeholder="Enter hourly rate"
                         value={hourlyRate}
                         onChangeText={handleHourlyRateChange}
                         keyboardType="numeric"
+                        onSubmitEditing={handleHourlyRateSubmit}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.createMeeting.footerContainer}>
 
