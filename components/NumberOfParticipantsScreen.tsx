@@ -70,7 +70,7 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
 
             <View style={styles.createMeeting.buttonsContainer}>
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
-
+                {/*<NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/> redo later */}
                 <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => participantsInputRef.current?.focus()}>
                     <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
                     <TextInput
