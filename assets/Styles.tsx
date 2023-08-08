@@ -105,8 +105,8 @@ export const styles = {
       position: 'relative',
     },
     buttonsContainer: {
-      marginTop: 20,
-      paddingHorizontal: 16, // Adds horizontal padding
+      marginTop: '8%',
+      paddingHorizontal: '5%', // Adds horizontal padding
       flexDirection: 'row',
     },
     buttonWithBorder: {
@@ -122,8 +122,10 @@ export const styles = {
     },
 
     container: {
+      flex: 1,
       backgroundColor: '#0A1128', // Sets the background color
       paddingVertical: 10, // Adds vertical padding
+
     },
 
     content: {
@@ -202,7 +204,7 @@ export const styles = {
     },
     message: {
       flex: 1,
-      height: 350,
+      height: '130%',
       width: '100%', // Sets the width to 100% of the container
       borderRadius: 10, // Sets the border radius
       justifyContent: 'center', // Centers content vertically
@@ -927,6 +929,7 @@ export const styles = {
     },
 
     nextArrow: {
+      flex: 1,
       resizeMode: 'contain',
       width: 30,
       height: 30,
@@ -937,6 +940,7 @@ export const styles = {
 
     accessibility: {
       flexDirection: 'row',
+      marginTop: 15,
     },
     title: {
       color: '#040F21',
@@ -967,11 +971,13 @@ export const styles = {
       marginTop: 15, // Adds top margin
     },
     inputText: {
+      flex: 1,
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
       fontSize: 17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
-      marginTop: 5, // Adjusts the position
+      marginTop: '0.5%', // Adjusts the position
+      marginBottom: '0.5%',
     },
 
 
@@ -979,193 +985,193 @@ export const styles = {
   'meetingDetails': StyleSheet.create({
     detailTitle: {
       marginBottom: 20, // Adds bottom margin
-      width:"100%",
-      flex:0,
+      width: "100%",
+      flex: 0,
       height: 70, // Sets the height of the button
       alignItems: 'flex-start', // Aligns text to the left
-      alignContent:"center",
+      alignContent: "center",
     },
     Title: {
       //textAlign: 'center',
       fontFamily: 'OpenSans-Bold',
-      color:colors.white,
-      fontSize:25,
-      alignSelf:"center",
+      color: colors.white,
+      fontSize: 25,
+      alignSelf: "center",
     },
     detailDateTime: {
       //marginHorizontal:20,
-      flex:1,
-      width:"100%",
-      alignItems:'center',
+      flex: 1,
+      width: "100%",
+      alignItems: 'center',
       height: 50, // Sets the height of the button
-      alignContent:"stretch",
-      justifyContent:'center',
-      flexDirection:'row',
+      alignContent: "stretch",
+      justifyContent: 'center',
+      flexDirection: 'row',
     },
     dateText: {
       textAlign: 'center',
       paddingLeft: 4,
-      paddingBottom:4,
+      paddingBottom: 4,
       verticalAlign: 'middle',
       color: colors.white,
       fontSize: 13,
       fontFamily: 'OpenSans-Regular',
-      alignSelf:"center",
-      textAlignVertical:"center",
+      alignSelf: "center",
+      textAlignVertical: "center",
     },
-    splitItem:{
-      flex:0,
-      marginHorizontal:20,
-      paddingTop:10,
-      flexDirection:'row',
-      alignSelf:'center',
+    splitItem: {
+      flex: 0,
+      marginHorizontal: 20,
+      paddingTop: 10,
+      flexDirection: 'row',
+      alignSelf: 'center',
       //backgroundColor:colors.black,
       //borderWidth:1,
       //borderColor:colors.white,
     },
     overViewView: {
       marginBottom: 20, // Adds bottom margin
-      marginHorizontal:20,
+      marginHorizontal: 20,
       height: 90, // Sets the height of the button
       borderRadius: 10, // Sets the border radius
       backgroundColor: '#ffffff', // Sets the background color of the button
       alignItems: 'flex-start', // Aligns text to the left
-      flexDirection:'column',
-      overflow:"hidden",
-      paddingTop:5,
+      flexDirection: 'column',
+      overflow: "hidden",
+      paddingTop: 5,
     },
-    interiorRow:{
-      flex:1, 
-      flexDirection:"row",
+    interiorRow: {
+      flex: 1,
+      flexDirection: "row",
     },
-    costContainer:{
-      
-      flex:1,
-      height:'100%',
-      borderWidth:1,
-      borderColor:colors.white,
-      marginRight:0,
-      paddingLeft:25,
+    costContainer: {
+
+      flex: 1,
+      height: '100%',
+      borderWidth: 1,
+      borderColor: colors.white,
+      marginRight: 0,
+      paddingLeft: 25,
     },
-    costTitle:{
-      textAlign:'left',
+    costTitle: {
+      textAlign: 'left',
       fontFamily: 'OpenSans-Regular',
-      fontSize:15,
+      fontSize: 15,
       color: colors.richBlack,
     },
-    costValue:{
-      textAlign:'left',
+    costValue: {
+      textAlign: 'left',
       fontFamily: 'OpenSans-Bold',
       fontSize:24,
       color: colors.richBlack,
     },
-    timeContainer:{
-      marginLeft:0,
-      flex:1,
-      borderWidth:1,
-      borderColor:colors.white,
-      paddingRight:25,
+    timeContainer: {
+      marginLeft: 0,
+      flex: 1,
+      borderWidth: 1,
+      borderColor: colors.white,
+      paddingRight: 25,
     },
-    timeTitle:{
-      textAlign:'right',
+    timeTitle: {
+      textAlign: 'right',
       fontFamily: 'OpenSans-Regular',
-      fontSize:15,
+      fontSize: 15,
       color: colors.richBlack,
     },
-    timeValue:{
-      textAlign:'right',
+    timeValue: {
+      textAlign: 'right',
       fontFamily: 'OpenSans-Bold',
       fontSize:24,
       color: colors.richBlack,
     },
-    statContainerRight:{
-      flexDirection:"column-reverse",
-      flex:1,
+    statContainerRight: {
+      flexDirection: "column-reverse",
+      flex: 1,
       //height:70,
       //flexDirection:'row',
       //backgroundColor:colors.royalBlue,
-      borderWidth:2,
-      borderColor:colors.steelBlue,
-      marginLeft:5,
-      marginRight:20,
-      
-      paddingHorizontal:10,
+      borderWidth: 2,
+      borderColor: colors.steelBlue,
+      marginLeft: 5,
+      marginRight: 20,
+
+      paddingHorizontal: 10,
     },
-    statContainerLeft:{
-      flexDirection:"column-reverse",
-      flex:1,
+    statContainerLeft: {
+      flexDirection: "column-reverse",
+      flex: 1,
       //height:70,
       //flexDirection:'row',
       //backgroundColor:colors.royalBlue,
-      borderWidth:2,
-      borderColor:colors.steelBlue,
-      marginRight:5,  
-      paddingHorizontal:10,
+      borderWidth: 2,
+      borderColor: colors.steelBlue,
+      marginRight: 5,
+      paddingHorizontal: 10,
     },
-    statContainerTop:{
-      flexDirection:"column",
-      flexWrap:'wrap',
-      marginHorizontal:5,
+    statContainerTop: {
+      flexDirection: "column",
+      flexWrap: 'wrap',
+      marginHorizontal: 5,
       /// these 4 finally made it expand correctly
-      flexShrink:1,
-      width:"50%",
-      flex:0,
-      height:'auto',
+      flexShrink: 1,
+      width: "50%",
+      flex: 0,
+      height: 'auto',
       //flexDirection:'row',
       //backgroundColor:colors.royalBlue,
-      borderWidth:2,
-      borderBottomWidth:0,
-      borderColor:colors.steelBlue,
-      paddingLeft:5,
-      paddingRight:2,
-      borderBottomRightRadius:0,
-      borderBottomLeftRadius:0,
-      marginBottom:0,
+      borderWidth: 2,
+      borderBottomWidth: 0,
+      borderColor: colors.steelBlue,
+      paddingLeft: 5,
+      paddingRight: 2,
+      borderBottomRightRadius: 0,
+      borderBottomLeftRadius: 0,
+      marginBottom: 0,
     },
-    statContainerBottom:{
-      flexDirection:"column-reverse",
-      flex:1,
-      height:45,
-      marginHorizontal:5,
-      
+    statContainerBottom: {
+      flexDirection: "column-reverse",
+      flex: 1,
+      height: 45,
+      marginHorizontal: 5,
+
       //flexDirection:'row',
       //backgroundColor:colors.royalBlue,
-      borderWidth:2,
-      borderTopWidth:0,
-      borderColor:colors.steelBlue,
-      paddingLeft:5,
-      paddingRight:2,
-      borderTopRightRadius:0,
-      borderTopLeftRadius:0,
-      paddingTop:2,
+      borderWidth: 2,
+      borderTopWidth: 0,
+      borderColor: colors.steelBlue,
+      paddingLeft: 5,
+      paddingRight: 2,
+      borderTopRightRadius: 0,
+      borderTopLeftRadius: 0,
+      paddingTop: 2,
     },
-    statTitleOver:{
-      flex:0,
+    statTitleOver: {
+      flex: 0,
     },
-    statTitle:{
-      textAlign:'left',
+    statTitle: {
+      textAlign: 'left',
       fontFamily: 'OpenSans-SemiBold',
-      flexDirection:'column',
-      fontSize:15,
+      flexDirection: 'column',
+      fontSize: 15,
       color: colors.richBlack,
-      flex:0,
+      flex: 0,
       //backgroundColor:'red',
     },
-    statValue:{
-      textAlign:'left',
+    statValue: {
+      textAlign: 'left',
       fontFamily: 'OpenSans-SemiBold',
-      fontSize:20,
-      paddingTop:5,
+      fontSize: 20,
+      paddingTop: 5,
       color: colors.richBlack,
-      marginBottom:2,
-      flex:1,
+      marginBottom: 2,
+      flex: 1,
     },
-    button:{
-      overflow:"hidden",
-      flex:0,
-      justifyContent:'center',
+    button: {
+      overflow: "hidden",
+      flex: 0,
+      justifyContent: 'center',
       marginBottom: 20, // Adds bottom margin
-      marginHorizontal:30,
+      marginHorizontal: 30,
       height: 60, // Sets the height of the button
       borderRadius: 10, // Sets the border radius
     },
@@ -1176,21 +1182,21 @@ export const styles = {
       backgroundColor: colors.white, // Sets the background color of the button
     },
     startButton: {
-      borderWidth:1,
-      borderColor:colors.white,
+      borderWidth: 1,
+      borderColor: colors.white,
     },
     disabled: {
       color: colors.disabled,
-      borderColor:colors.disabled,
+      borderColor: colors.disabled,
     },
-    TextWhite:{
+    TextWhite: {
       color: colors.white,
     },
-    buttonText:{
+    buttonText: {
       marginTop: -10,
-      textAlign:'center',
+      textAlign: 'center',
       fontFamily: 'OpenSans-SemiBold',
-      fontSize:20,
+      fontSize: 20,
       color: colors.richBlack,
     },
   }),
@@ -1274,25 +1280,81 @@ export const styles = {
       paddingBottom: 25,
     },
 
-    privacy: {
+    privacySmall: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: '53%',
+
+    },
+    privacyMedium: {
+      flex:1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: '54.5%',
+
+    },
+    privacyLarge: {
+      flex: 1,
       resizeMode: 'contain',
       width: 30,
       height: 30,
       marginTop: 2,
       marginLeft: '55%',
-
     },
 
-    terms: {
+    termsSmall: {
+      flex: 1,
       resizeMode: 'contain',
       width: 30,
       height: 30,
       marginTop: 2,
-      marginLeft: '38%',
+      marginLeft: '34%',
+
+    },
+    termsMedium: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: '36%',
+
+    },
+    termsLarge: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: '37.5%',
 
     },
 
-    copyright: {
+    copyrightSmall: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: '62%',
+
+    },
+    copyrightMedium: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginTop: 2,
+      marginLeft: '63%',
+
+    },
+    copyrightLarge: {
+      flex: 1,
       resizeMode: 'contain',
       width: 30,
       height: 30,
@@ -1301,11 +1363,28 @@ export const styles = {
 
     },
 
-    developer: {
+    developerSmall: {
+      flex: 1,
       resizeMode: 'contain',
       width: 30,
       height: 30,
-      marginLeft: '-12.5%',
+      marginLeft: '-11%',
+      marginTop: 22,
+    },
+    developerMedium: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginLeft: '-12%',
+      marginTop: 22,
+    },
+    developerLarge: {
+      flex: 1,
+      resizeMode: 'contain',
+      width: 30,
+      height: 30,
+      marginLeft: '-13%',
       marginTop: 22,
     },
     accessibility: {
@@ -1356,11 +1435,13 @@ export const styles = {
       marginTop: 15, // Adds top margin
     },
     inputText: {
+      flex: 1,
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
       fontSize: 17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
-      marginTop: 5, // Adjusts the position
+      marginTop: '0.5%', // Adjusts the position
+      marginBottom: '0.5%',
     },
 
 
@@ -1368,35 +1449,35 @@ export const styles = {
   'terms': StyleSheet.create({
 
     fineprint: {
-      fontFamily: 'OpenSans-Regular', 
-      fontSize:10, 
-      color:"#000000"
+      fontFamily: 'OpenSans-Regular',
+      fontSize: 10,
+      color: "#000000"
     },
     fineprintBold: {
-      fontFamily: 'OpenSans-Bold', 
-      fontSize:10, 
-      color:"#000000"
+      fontFamily: 'OpenSans-Bold',
+      fontSize: 10,
+      color: "#000000"
     },
-    title:{
-      fontFamily: 'OpenSans-Bold', 
-      fontSize:20, 
-      color:"#000000"
+    title: {
+      fontFamily: 'OpenSans-Bold',
+      fontSize: 20,
+      color: "#000000"
     },
-    titleView:{
-      flex: 0, 
-      margin:20 
+    titleView: {
+      flex: 0,
+      margin: 20
     },
-    MainView:{ 
-      flex: 1, 
-      backgroundColor:"#FFFFFF", 
-      margin:40,
-      borderRadius:20, 
+    MainView: {
+      flex: 1,
+      backgroundColor: "#FFFFFF",
+      margin: 40,
+      borderRadius: 20,
     },
-    semiTransparentRange:{
+    semiTransparentRange: {
       flex: 1,
       backgroundColor: "#000000AA"
     },
-    termsContainer:{
+    termsContainer: {
       flex: 1,
       borderWidth: 1,
       borderColor:"#000000", 
@@ -1404,40 +1485,40 @@ export const styles = {
       padding:5,
       marginTop:-10, 
     },
-    accept:{
-      flex:1,
-      padding:5,
-      borderRadius:15,
-      margin:10, 
-      marginHorizontal:20, 
-      height:50, 
-      backgroundColor:colors.oxfordBlue
+    accept: {
+      flex: 1,
+      padding: 5,
+      borderRadius: 15,
+      margin: 10,
+      marginHorizontal: 20,
+      height: 50,
+      backgroundColor: colors.oxfordBlue
     },
-    decline:{
-      flex:1,
-      padding:5,
-      borderRadius:15,
-      margin:10, 
-      marginHorizontal:20, 
-      height:50, 
-      backgroundColor:colors.gray,
-      alignContent:"center",
-      alignItems:"center",
-      
+    decline: {
+      flex: 1,
+      padding: 5,
+      borderRadius: 15,
+      margin: 10,
+      marginHorizontal: 20,
+      height: 50,
+      backgroundColor: colors.gray,
+      alignContent: "center",
+      alignItems: "center",
+
     },
-    acceptText:{
-      color:colors.white,
-      textAlign:'center',
-      textAlignVertical:'center',
-      flex:1,
-      paddingBottom:3,
+    acceptText: {
+      color: colors.white,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 1,
+      paddingBottom: 3,
     },
-    declineText:{
-      color:colors.black,
-      textAlign:'center',
-      textAlignVertical:'center',
-      flex:1,
-      paddingBottom:3,
+    declineText: {
+      color: colors.black,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 1,
+      paddingBottom: 3,
     },
   }),
 

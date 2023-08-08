@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     View,
     Text,
     TextInput,
 } from 'react-native';
 import { styles } from "../assets/Styles";
-import { Button} from 'react-native-elements'
-import { getDBConnection, saveAverageHourlyRate } from '../services/db-services';
+import { Button } from 'react-native-elements'
+import { getDBConnection, retrieveSettings, saveAverageHourlyRate } from '../services/db-services';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => {
 
@@ -38,6 +39,26 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
         });
     };
 
+    const loadDataCallback = useCallback(async () => {
+        try {
+            const db = await getDBConnection();
+            const settings: { [k: string]: any } = await retrieveSettings(db);
+            setHourlyRate("" + settings.default_hourly);
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            loadDataCallback();
+        }, [loadDataCallback]));
+
+
+
+
+
 
     return (
         <View style={styles.settings.container}>
@@ -51,7 +72,7 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
                     <TextInput
                         style={styles.createMeeting.inputText}
                         placeholder="Enter rate"
-                        value={isHourlyRateEntered ? hourlyRate : ''}
+                        value={hourlyRate}
                         onChangeText={handleHourlyRateChange}
                         keyboardType="numeric"
                     />

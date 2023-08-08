@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     View,
     Text,
@@ -6,8 +6,9 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { styles } from "../assets/Styles";
-import { getDBConnection, saveNumberOfParticipants } from '../services/db-services';
+import { getDBConnection, retrieveSettings, saveNumberOfParticipants } from '../services/db-services';
 import { NumericTextEntry } from './NumericTextEntry';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) => {
 
@@ -41,6 +42,24 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
         await saveNumberOfParticipants(db, participants);
         handleExit();
     };
+
+    const loadDataCallback = useCallback(async () => {
+        try {
+            const db = await getDBConnection();
+            const settings: { [k: string]: any } = await retrieveSettings(db);
+            setParticipants("" + settings.default_participants);
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            loadDataCallback();
+        }, [loadDataCallback]));
+
+
 
     return (
         <View style={styles.settings.container}>

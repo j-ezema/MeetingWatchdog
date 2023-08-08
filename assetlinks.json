@@ -1,0 +1,10 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.meetingwatchdog",
+      "sha256_cert_fingerprints": [
+        "01:CA:64:3C:A9:A7:3D:B8:0A:7E:BC:84:99:01:B4:6C:6C:19:B0:5B:C2:26:06:F9:B9:7B:E5:CA:06:69:6E:0C"
+      ]
+    }
+  }]

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   Linking,
+  Dimensions,
 
 } from 'react-native';
 import { Icon } from '@rneui/themed';
@@ -18,11 +19,23 @@ import { GestureHandlerRootView} from 'react-native-gesture-handler';
 import { styles, colors } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
 import { TermsScreen } from './TermsScreen';
+import { authorize, AuthorizeResult } from 'react-native-app-auth';
+import authConfig from '../utils/authConfig';
+import { Client } from '@microsoft/microsoft-graph-client';
+
+
+
+
+
+
+
 
 
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
   const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const screenWidth = Dimensions.get('window').width;
 
   ///loads in data
   const loadDataCallback = useCallback(async () => {
@@ -30,12 +43,12 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       const db = await getDBConnection();
       await createTable(db);
       const storedMeetingItems = await getMeetingItems(db);
-      let pastMeetingsTemp:MeetingItem[] = [];
-      let futureMeetingsTemp:MeetingItem[] = [];
+      let pastMeetingsTemp: MeetingItem[] = [];
+      let futureMeetingsTemp: MeetingItem[] = [];
       storedMeetingItems.forEach(meeting => {
-        if(meeting.total_meeting_time != null && meeting.total_meeting_time > 0){
+        if (meeting.total_meeting_time != null && meeting.total_meeting_time > 0) {
           pastMeetingsTemp.push(meeting);
-        }else{
+        } else {
           futureMeetingsTemp.push(meeting);
         }
       });
@@ -64,21 +77,21 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }, [navigation]);
 
   const deleteItem = async (id: number) => {
-    
+
     try {
-      const pastArr:Boolean = !viewingUpcomingMeetings;
+      const pastArr: Boolean = !viewingUpcomingMeetings;
       const db = await getDBConnection();
       await deleteMeetingItem(db, id);
-      if(pastArr){
+      if (pastArr) {
         const pos = pastMeetings.map(e => e.id).indexOf(id);
         pastMeetings.splice(pos, 1);
         setPastMeetings(pastMeetings.slice(0));
-      }else{
+      } else {
         const pos = meetings.map(e => e.id).indexOf(id);
         meetings.splice(pos, 1);
         setMeetings(meetings.slice(0));
       }
-      
+
     } catch (error) {
       console.error(error);
     }
@@ -107,13 +120,53 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       setTimeout(() => { setIsButtonClicked(false) }, 300)
     }
   };
-  const handleImportMeeting = () => {
-    if (activeButtonIndex == -1) {
-      setActiveButtonIndex(1);
-      navigation.navigate('OutlookMeeting');
-      setTimeout(() => { setIsButtonClicked(false) }, 300)
+  const authenticateWithMicrosoft = async (): Promise<AuthorizeResult> => {
+    try {
+      const result = await authorize(authConfig);
+      
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error('Authentication error:', error);
+      throw error;
     }
   };
+
+  const handleImportMeeting = async () => {
+    try {
+      // Call the authentication function to get the access token
+      const authResult = await authenticateWithMicrosoft();
+
+      // Ensure that the authentication was successful and the access token is available
+      if (authResult && authResult.accessToken) {
+        setAccessToken(authResult.accessToken);
+        console.log(authResult.accessToken);
+        // Create a Microsoft Graph client instance
+
+        const client = Client.init({
+          authProvider: (done) => {
+            // Pass the obtained access token to the authProvider
+            done(null, authResult.accessToken);
+          },
+        });
+
+        // Make an API call to fetch events (meetings) from the user's calendar
+        const events = await client.api('/me/events').get();
+
+        // Process the events and extract meeting details
+        console.log('Meetings:', events.value);
+
+        navigation.navigate('OutlookMeetingScreen');
+      } else {
+        console.error('Authentication failed or access token not available.');
+      }
+    } catch (error) {
+      console.error('Import Meeting Error:', error);
+      // Handle import meeting errors (e.g., show error message to the user)
+    }
+    console.log(accessToken);
+  };
+
   const handlePastUpcomingPress = (incoming: String) => {
     if (incoming == "past" && viewingUpcomingMeetings) {
       setViewingUpcomingMeetings(false);
@@ -132,9 +185,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       setIsModalVisible(false);
     }
     setTimeout(() => { setIsButtonClicked(false) }, 300)
-    navigation.navigate('About');
 
-    setTimeout(() => { setIsButtonClicked(false) }, 300)
+    navigation.navigate('About');
   }
   const handleSetting = () => {
     setActiveButtonIndex(3);
@@ -143,8 +195,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     }
     setTimeout(() => { setIsButtonClicked(false) }, 300)
     navigation.navigate('Settings');
-
-    setTimeout(() => { setIsButtonClicked(false) }, 300)
   }
   const handleFeedback = () => {
     setActiveButtonIndex(4);
@@ -153,24 +203,23 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     }
     setTimeout(() => { setIsButtonClicked(false) }, 300)
     Linking.openURL('https://www.carbonedge.com/meeting-watchdog#feedback-form');
-
-    setTimeout(() => { setIsButtonClicked(false) }, 300)
   }
-  const toDetails = (id:number) => {
-    navigation.navigate('meetingDetails', {meetingID: id});
+  const toDetails = (id: number) => {
+    navigation.navigate('meetingDetails', { meetingID: id });
   }
   const handleRateApp = () => {
     setActiveButtonIndex(5);
+    console.log(screenWidth);
   }
   let meetingPanel;
   if (viewingUpcomingMeetings) {
     meetingPanel = (
       <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
-      );
+    );
   } else {
     meetingPanel = (
       <MeetingView meetings={pastMeetings} deleteItem={deleteItem} toDetails={toDetails} />
-      );
+    );
   }
 
   return (
@@ -200,12 +249,12 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
             </View>
           </View>
           <View style={styles.homeScreen.cardsContainer}>
-            {meetings.length+pastMeetings.length > 0 &&
+            {meetings.length + pastMeetings.length > 0 &&
               <View>
                 {meetingPanel}
               </View>
             }
-            {meetings.length+pastMeetings.length == 0 &&
+            {meetings.length + pastMeetings.length == 0 &&
               <WelcomeScreen />
             }
           </View>
