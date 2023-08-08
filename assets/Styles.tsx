@@ -135,8 +135,8 @@ export const styles = {
       position: 'relative',
     },
     buttonsContainer: {
-      marginTop: 20,
-      paddingHorizontal: 16, // Adds horizontal padding
+      marginTop: '8%',
+      paddingHorizontal: '5%', // Adds horizontal padding
       flexDirection: 'row',
     },
     buttonWithBorder: {
@@ -234,7 +234,7 @@ export const styles = {
     },
     message: {
       flex: 1,
-      height: 350,
+      height: '130%',
       width: '100%', // Sets the width to 100% of the container
       borderRadius: 10, // Sets the border radius
       justifyContent: 'center', // Centers content vertically
@@ -1000,11 +1000,13 @@ export const styles = {
       marginTop: 15, // Adds top margin
     },
     inputText: {
+      flex: 1,
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
       fontSize: 17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
-      marginTop: 5, // Adjusts the position
+      marginTop: '0.5%', // Adjusts the position
+      marginBottom: '0.5%',
     },
 
 
@@ -1415,6 +1417,9 @@ export const styles = {
       marginTop: 22,
     },
     accessibility: {
+      flex: 1,
+      marginTop: '5%',
+      marginBotton: '5%',
       flexDirection: 'row',
     },
     title: {
@@ -1450,11 +1455,13 @@ export const styles = {
       marginTop: 15, // Adds top margin
     },
     inputText: {
+      flex: 1,
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
       fontSize: 17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
-      marginTop: 5, // Adjusts the position
+      marginTop: '0.5%', // Adjusts the position
+      marginBottom: '0.5%',
     },
 
 
