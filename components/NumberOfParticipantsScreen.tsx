@@ -16,7 +16,8 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
 
     const [participants, setParticipants] = useState('');
 
-<<<<<<< HEAD
+    const participantsInputRef = useRef<TextInput>(null);
+    
     const enterParticipants = (x:string) =>{
         if(x.trim().length < 1){
             setParticipants(x);
@@ -34,11 +35,6 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
         }
     }
     const handleExit = async () => {
-=======
-    const participantsInputRef = useRef<TextInput>(null);
-
-    const handleCancel = async () => {
->>>>>>> 99784b1a6682b0444d9ba4f65eee71b8f81617f4
         setParticipants("");
         navigation.navigate('Settings', {
             participants: participants,
@@ -74,9 +70,6 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
 
             <View style={styles.createMeeting.buttonsContainer}>
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
-<<<<<<< HEAD
-                <NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/>
-=======
 
                 <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => participantsInputRef.current?.focus()}>
                     <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
@@ -89,7 +82,6 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
                         keyboardType="numeric"
                     />
                 </TouchableOpacity>
->>>>>>> 99784b1a6682b0444d9ba4f65eee71b8f81617f4
             </View>
             <View style={styles.createMeeting.footerContainer}>
 
