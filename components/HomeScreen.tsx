@@ -15,7 +15,7 @@ import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems, termsAgreed, updateTermsAgreement } from '../services/db-services';
 import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
-import { GestureHandlerRootView} from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { styles, colors } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
 import { TermsScreen } from './TermsScreen';
@@ -101,6 +101,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [viewingUpcomingMeetings, setViewingUpcomingMeetings] = useState(true);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleButtonPress = () => {
     setIsButtonClicked(!isButtonClicked);
     setActiveButtonIndex(-1);
@@ -120,51 +121,53 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       setTimeout(() => { setIsButtonClicked(false) }, 300)
     }
   };
-  const authenticateWithMicrosoft = async (): Promise<AuthorizeResult> => {
+  // Function to handle authentication
+  const authenticateWithMicrosoft = async (): Promise<void> => {
     try {
       const result = await authorize(authConfig);
-      
       console.log(result);
-      return result;
+      if (result && result.accessToken) {
+        setAccessToken(result.accessToken);
+        setIsAuthenticated(true);
+      }
     } catch (error) {
       console.error('Authentication error:', error);
-      throw error;
     }
   };
 
-  const handleImportMeeting = async () => {
+  // Function to fetch events from Microsoft Graph API
+  const fetchEventsFromGraphAPI = async (): Promise<void> => {
     try {
-      // Call the authentication function to get the access token
-      const authResult = await authenticateWithMicrosoft();
-
-      // Ensure that the authentication was successful and the access token is available
-      if (authResult && authResult.accessToken) {
-        setAccessToken(authResult.accessToken);
-        console.log(authResult.accessToken);
-        // Create a Microsoft Graph client instance
-
+      if (accessToken) {
         const client = Client.init({
           authProvider: (done) => {
-            // Pass the obtained access token to the authProvider
-            done(null, authResult.accessToken);
+            done(null, accessToken);
           },
         });
 
-        // Make an API call to fetch events (meetings) from the user's calendar
         const events = await client.api('/me/events').get();
+        console.log('Events:', events.value);
 
-        // Process the events and extract meeting details
-        console.log('Meetings:', events.value);
-
-        navigation.navigate('OutlookMeetingScreen');
+        // You can process the events and set state accordingly
       } else {
-        console.error('Authentication failed or access token not available.');
+        console.error('Access token not available.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+    }
+  };
+
+
+  const handleImportMeeting = async () => {
+    try {
+      await authenticateWithMicrosoft();
+      if (isAuthenticated) {
+        await fetchEventsFromGraphAPI();
       }
     } catch (error) {
       console.error('Import Meeting Error:', error);
-      // Handle import meeting errors (e.g., show error message to the user)
+      // Handle error (e.g., show error message to the user)
     }
-    console.log(accessToken);
   };
 
   const handlePastUpcomingPress = (incoming: String) => {
@@ -327,7 +330,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <View style={styles.homeScreen.settingContent}>
                     <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                     <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
-                    
+
                   </View>
                 </View>
               </TouchableOpacity>
