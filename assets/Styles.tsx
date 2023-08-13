@@ -488,6 +488,125 @@ export const styles = {
     },
   }),
 
+  'outlookMeetingItem': StyleSheet.create({
+    //Meeting View Cards
+    sectionContainer: {
+      flexDirection: 'column',
+      alignSelf: 'stretch',
+      marginLeft: 0,
+      flex: 1,
+      paddingRight: 0
+    },
+    iconWrapper: {
+      margin: 0,
+      display: "flex",
+      marginLeft: 10,
+      marginTop: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+    },
+
+    meetingContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+
+    cardsContainer: {
+      paddingTop: 20,
+    },
+
+    meetingContent: {
+      flex: 1,
+      marginLeft: '2%',
+    },
+
+    iconWrapperChevron: {
+      margin: 0,
+      display: "flex",
+      marginLeft: 55,
+      marginTop: 25,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    dateButtonIcon: {
+
+      width: 17, // Adjust the width to your preference
+      height: 17,
+      tintColor: '#152B61', // Adjust the height to your preference
+      marginTop: 2,
+    },
+
+    icon: {
+      fontSize: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+    },
+    space: {
+      flexDirection: 'row',
+      marginLeft: 30,
+      alignItems: 'center',
+    },
+    time: {
+      flexDirection: 'row',
+      marginTop: 10,
+    },
+    date: {
+      flexDirection: 'row',
+      alignItems: 'center',
+
+    },
+    iconText: {
+      color: colors.white,
+      fontFamily: 'OpenSans-Bold',
+    },
+    slideView: {
+      backgroundColor: colors.alertRed,
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      width: 50,
+      height: '100%',
+
+      alignSelf: 'flex-end',
+      overflow: 'hidden',
+    },
+    cardOuter: {
+      borderRadius: 15,
+      marginBottom: 30,
+      marginTop: 10,
+      backgroundColor: colors.white,
+      height: 90,
+      overflow: 'hidden',
+    },
+    cardTitle: {
+      textAlign: 'left',
+      fontSize: 17,
+      fontFamily: 'OpenSans-Bold',
+      color: colors.oxfordBlue,
+      //fontWeight: "700",
+    },
+    dateText: {
+      textAlign: 'left',
+      paddingLeft: 2,
+      verticalAlign: 'middle',
+      color: colors.richBlack,
+      fontSize: 13,
+      fontFamily: 'OpenSans-Regular'
+    },
+    sectionTitle: {
+      fontSize: 24,
+      fontWeight: '600',
+    },
+    thinBlueLine: {
+      marginTop: 0,
+      height: 7.5,
+      backgroundColor: colors.steelBlue,
+    },
+  }),
+
+
   'createMeeting': StyleSheet.create({
     container: {
       flex: 1, // Takes up the entire available space

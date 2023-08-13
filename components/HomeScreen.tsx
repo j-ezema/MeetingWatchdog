@@ -13,15 +13,15 @@ import {
 } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems, termsAgreed, updateTermsAgreement } from '../services/db-services';
-import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
+import { MeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { styles, colors } from '../assets/Styles';
+import { styles } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
 import { TermsScreen } from './TermsScreen';
-import { authorize, AuthorizeResult } from 'react-native-app-auth';
+import { authorize } from 'react-native-app-auth';
 import authConfig from '../utils/authConfig';
-import { Client } from '@microsoft/microsoft-graph-client';
+
 
 
 
@@ -34,7 +34,6 @@ import { Client } from '@microsoft/microsoft-graph-client';
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
   const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const screenWidth = Dimensions.get('window').width;
 
   ///loads in data
@@ -75,6 +74,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       ),
     });
   }, [navigation]);
+
 
   const deleteItem = async (id: number) => {
 
@@ -121,48 +121,30 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       setTimeout(() => { setIsButtonClicked(false) }, 300)
     }
   };
+
+
   // Function to handle authentication
-  const authenticateWithMicrosoft = async (): Promise<void> => {
+  const authenticateWithMicrosoft = async (): Promise<string | null> => {
     try {
       const result = await authorize(authConfig);
       console.log(result);
       if (result && result.accessToken) {
-        setAccessToken(result.accessToken);
         setIsAuthenticated(true);
+        return result.accessToken;
       }
     } catch (error) {
       console.error('Authentication error:', error);
     }
+    return null;  // Return null if no token was retrieved
   };
-
-  // Function to fetch events from Microsoft Graph API
-  const fetchEventsFromGraphAPI = async (): Promise<void> => {
-    try {
-      if (accessToken) {
-        const client = Client.init({
-          authProvider: (done) => {
-            done(null, accessToken);
-          },
-        });
-
-        const events = await client.api('/me/events').get();
-        console.log('Events:', events.value);
-
-        // You can process the events and set state accordingly
-      } else {
-        console.error('Access token not available.');
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-    }
-  };
-
 
   const handleImportMeeting = async () => {
     try {
-      await authenticateWithMicrosoft();
-      if (isAuthenticated) {
-        await fetchEventsFromGraphAPI();
+      const token = await authenticateWithMicrosoft();
+      if (token) {
+        navigation.navigate('OutlookMeeting', { token: token });
+      } else {
+        console.error('No access token received.');
       }
     } catch (error) {
       console.error('Import Meeting Error:', error);

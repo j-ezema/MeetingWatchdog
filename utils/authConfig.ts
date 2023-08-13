@@ -5,7 +5,7 @@ export default {
     clientId: '6e13bfa8-323b-420d-8239-fe430b3bc057',
     redirectUrl: 'com.meetingwatchdog://oauth2redirect',
     scopes: [
-        'User.read'
+        'User.read', 'Calendars.read'
     ],
 };
 

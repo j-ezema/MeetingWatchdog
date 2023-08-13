@@ -37,6 +37,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const hourlyRateInputRef = useRef<TextInput>(null);
     const participantsInputRef = useRef<TextInput>(null);
     const meetingNameInputRef = useRef<TextInput>(null);
+    const [tempDate, setTempDate] = useState(new Date());
+    const [tempTime, setTempTime] = useState(new Date());
 
     //grab settings
     const loadDataCallback = useCallback(async () => {
@@ -65,7 +67,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     };
 
     const handleDateConfirm = (date: React.SetStateAction<Date>) => {
-        setSelectedDate(date);
+        setSelectedDate(tempDate);
         setDatePickerVisibility(false);
     };
 
@@ -114,7 +116,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     };
 
     const handleTimeConfirm = (time: React.SetStateAction<Date>) => {
-        setSelectedTime(time);
+        setSelectedTime(tempTime);
         hideTimePicker();
     };
 
@@ -135,6 +137,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
             const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
             //setMeetings(meetings.concat(newMeeting));
             const db = await getDBConnection();
+            console.log(combinedDateTime);
 
             console.log(await saveMeetingItems(db, [newMeeting]));
             navigation.navigate('Home', { key: Date.now() });
@@ -281,7 +284,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                         mode="date"
                                         textColor="#0A1128"
                                         androidVariant="nativeAndroid"
-                                        onDateChange={setSelectedDate}
+                                        onDateChange={setTempDate}
                                         theme='dark'
                                     />
                                     <View style={styles.createMeeting.modalButtonsContainer}>
@@ -316,7 +319,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                         date={selectedTime}
                                         mode="time"
                                         textColor="#0A1128"
-                                        onDateChange={setSelectedTime}
+                                        onDateChange={setTempTime}
                                         theme='dark'
                                     />
                                     <View style={styles.createMeeting.modalButtonsContainer}>
