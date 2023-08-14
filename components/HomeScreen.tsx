@@ -13,15 +13,15 @@ import {
 } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveMeetingItems, termsAgreed, updateTermsAgreement } from '../services/db-services';
-import { MeetingItem, createNewMeetingItem, sortMeetingFN } from '../models';
+import { MeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
-import { GestureHandlerRootView} from 'react-native-gesture-handler';
-import { styles, colors } from '../assets/Styles';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { styles } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
 import { TermsScreen } from './TermsScreen';
-import { authorize, AuthorizeResult } from 'react-native-app-auth';
+import { authorize } from 'react-native-app-auth';
 import authConfig from '../utils/authConfig';
-import { Client } from '@microsoft/microsoft-graph-client';
+
 
 
 
@@ -34,7 +34,6 @@ import { Client } from '@microsoft/microsoft-graph-client';
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
   const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const screenWidth = Dimensions.get('window').width;
 
   ///loads in data
@@ -76,6 +75,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     });
   }, [navigation]);
 
+
   const deleteItem = async (id: number) => {
 
     try {
@@ -101,6 +101,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [viewingUpcomingMeetings, setViewingUpcomingMeetings] = useState(true);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleButtonPress = () => {
     setIsButtonClicked(!isButtonClicked);
     setActiveButtonIndex(-1);
@@ -120,51 +121,35 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       setTimeout(() => { setIsButtonClicked(false) }, 300)
     }
   };
-  const authenticateWithMicrosoft = async (): Promise<AuthorizeResult> => {
+
+
+  // Function to handle authentication
+  const authenticateWithMicrosoft = async (): Promise<string | null> => {
     try {
       const result = await authorize(authConfig);
-      
       console.log(result);
-      return result;
+      if (result && result.accessToken) {
+        setIsAuthenticated(true);
+        return result.accessToken;
+      }
     } catch (error) {
       console.error('Authentication error:', error);
-      throw error;
     }
+    return null;  // Return null if no token was retrieved
   };
 
   const handleImportMeeting = async () => {
     try {
-      // Call the authentication function to get the access token
-      const authResult = await authenticateWithMicrosoft();
-
-      // Ensure that the authentication was successful and the access token is available
-      if (authResult && authResult.accessToken) {
-        setAccessToken(authResult.accessToken);
-        console.log(authResult.accessToken);
-        // Create a Microsoft Graph client instance
-
-        const client = Client.init({
-          authProvider: (done) => {
-            // Pass the obtained access token to the authProvider
-            done(null, authResult.accessToken);
-          },
-        });
-
-        // Make an API call to fetch events (meetings) from the user's calendar
-        const events = await client.api('/me/events').get();
-
-        // Process the events and extract meeting details
-        console.log('Meetings:', events.value);
-
-        navigation.navigate('OutlookMeetingScreen');
+      const token = await authenticateWithMicrosoft();
+      if (token) {
+        navigation.navigate('OutlookMeeting', { token: token });
       } else {
-        console.error('Authentication failed or access token not available.');
+        console.error('No access token received.');
       }
     } catch (error) {
       console.error('Import Meeting Error:', error);
-      // Handle import meeting errors (e.g., show error message to the user)
+      // Handle error (e.g., show error message to the user)
     }
-    console.log(accessToken);
   };
 
   const handlePastUpcomingPress = (incoming: String) => {
@@ -327,7 +312,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <View style={styles.homeScreen.settingContent}>
                     <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
                     <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
-                    
+
                   </View>
                 </View>
               </TouchableOpacity>

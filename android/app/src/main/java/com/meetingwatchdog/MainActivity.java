@@ -3,10 +3,12 @@ package com.meetingwatchdog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
+import java.net.URLDecoder;
 
 public class MainActivity extends ReactActivity {
 
@@ -35,18 +37,5 @@ public class MainActivity extends ReactActivity {
       DefaultNewArchitectureEntryPoint.getFabricEnabled()
     );
   }
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    // Check if this activity is started from an app link
-    Intent intent = getIntent();
-    Uri data = intent.getData();
-    if (data != null) {
-      // Handle the data from the app link here (you can remove this part if you don't want to handle the data)
-      String url = data.toString();
-      // Your code to handle the URL data goes here (you can remove this part if you don't want to handle the data)
-    }
-  }
 }
+ 

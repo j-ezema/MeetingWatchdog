@@ -127,7 +127,7 @@ export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]
   }
 };
 
-export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<MeetingItem> => {
+export const getMeetingItem = async (db: SQLiteDatabase, id: number): Promise<MeetingItem> => {
   try {
     const MeetingItems: MeetingItem[] = [];
     const results = await db.executeSql(`
@@ -145,7 +145,7 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
       FROM ${tableNames.MeetingItems}
       WHERE rowid = ${id}
     `);
-    
+
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         var temp = result.rows.item(index);
@@ -154,7 +154,6 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
         MeetingItems.push(temp);
       }
     });
-    console.log(MeetingItems[0]);
     return MeetingItems[0];
   } catch (error) {
     console.error(error);
@@ -162,9 +161,8 @@ export const getMeetingItem = async (db: SQLiteDatabase, id:number): Promise<Mee
   }
 };
 
-export const updateMeetingItem = async (db: SQLiteDatabase, meeting:MeetingItem) => {
+export const updateMeetingItem = async (db: SQLiteDatabase, meeting: MeetingItem) => {
   try {
-    console.log(meeting);
     await db.executeSql(`UPDATE ${tableNames.MeetingItems} SET 
       total_wait_time = ?,
       total_meeting_time = ?,
@@ -172,11 +170,11 @@ export const updateMeetingItem = async (db: SQLiteDatabase, meeting:MeetingItem)
       total_meeting_cost = ?,
       average_hourly_cost = ?,
       number_of_participants = ?
-      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost,meeting.average_hourly_cost, meeting.number_of_participants]);
-      
+      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost, meeting.average_hourly_cost, meeting.number_of_participants]);
+
   } catch (error) {
     console.error(error);
-    throw Error('Failed to update MeetingItem '+meeting.id);
+    throw Error('Failed to update MeetingItem ' + meeting.id);
   }
 };
 
@@ -190,14 +188,12 @@ export const saveMeetingItems = async (db: SQLiteDatabase, MeetingItems: Meeting
   const insertQuery =
     `INSERT INTO ${tableNames.MeetingItems}(meeting_title, number_of_participants, average_hourly_cost, meeting_datetime) values` +
     MeetingItems.map(i => `('${i.meeting_title}', ${i.number_of_participants} , ${i.average_hourly_cost}, julianday('${moment(i.meeting_datetime).format('YYYY-MM-DD HH:mm:ss')}'))`).join(',');
-  console.log(insertQuery);
   return db.executeSql(insertQuery);
 };
 
 export const deleteMeetingItem = async (db: SQLiteDatabase, id: number) => {
   const deleteQuery = `DELETE from ${tableNames.MeetingItems} where rowid = ${id}`;
-  console.log(deleteQuery);
-  console.log(await db.executeSql(deleteQuery));
+  await db.executeSql(deleteQuery);
 };
 
 export const deleteTable = async (db: SQLiteDatabase) => {
@@ -209,7 +205,6 @@ export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants:
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_participants'`, [participants]);
 };
 export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: number): Promise<void> => {
-  console.log(hourlyRate);
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_hourly'`, [hourlyRate]);
 }
 
@@ -219,6 +214,6 @@ export const termsAgreed = async (db: SQLiteDatabase): Promise<boolean> => {
   return results[0].rows.item(0)['setting_value'] > 0;
 }
 
-export const updateTermsAgreement = async (db: SQLiteDatabase, newValue:number): Promise<void> => {
+export const updateTermsAgreement = async (db: SQLiteDatabase, newValue: number): Promise<void> => {
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = "termsOfService"`, [newValue]);
 }

@@ -52,8 +52,6 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     const loadDataCallback = useCallback(async () => {
         const db = await getDBConnection();
         let meetingTemp = await getMeetingItem(db, meetingID);
-        //setting
-        console.log(meetingTemp);
         setMeeting(meetingTemp)
         setRate(meetingTemp.average_hourly_cost);
         setParticipants(meetingTemp.number_of_participants);
