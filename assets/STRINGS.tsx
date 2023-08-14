@@ -1,6 +1,6 @@
 const STRINGS_EN = {
     termsAndConditions:{
-        acceptTitle:"Please Accept the terms and conditions below",
+        acceptTitle:"Please accept the Terms and Conditions below",
         title:"TERMS AND CONDITIONS AGREEMENT FOR MEETING WATCHDOG ",
         date:"Effective Date",
         policyDate:"July 7, 2023 ",

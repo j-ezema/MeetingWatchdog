@@ -1,16 +1,24 @@
 import { Icon, Text } from "@rneui/base";
 import { Animated, TouchableOpacity, View, Image } from "react-native";
-import { MeetingItem } from "../models";
+import { MeetingItem, createNewMeetingItem } from "../models";
 import React from "react";
 import { Directions, Gesture, GestureDetector} from "react-native-gesture-handler";
 import { useState } from 'react';
-import { colors, styles } from "../assets/Styles";
+import { colors, getStyles, styles } from '../assets/Styles';
 import moment from "moment";
 
 const animationwidth = 100;
 
-export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: Function; toDetails: Function;}> = ({ meeting: { id, meeting_title, meeting_datetime }, deleteItem, toDetails }) => {
+interface props {
+  meeting: MeetingItem,
+  deleteItem?: Function, 
+  toDetails?: Function,
+  style?: any,
+}
 
+export const MeetingItemComponent: React.FC<props> = ({ meeting: { id, meeting_title, meeting_datetime }, deleteItem = ()=>{}, toDetails = ()=>{}, style = getStyles() }) => {
+
+  //const [style, setStyle] = useState(pullStyles);
   const [state, setState] = useState({ visible: false, x: new Animated.Value(0), xx: new Animated.Value(animationwidth) });
 
   const swipeLeft = () => {
@@ -54,38 +62,38 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
 
   return (
     <GestureDetector gesture={composed}>
-      <View style={styles.meetingItem.cardOuter}>
+      <View style={style.meetingItem.cardOuter}>
         <View style={{ flex: 1, flexDirection: 'row-reverse', margin: 0 }}>
-          <Animated.View style={[styles.meetingItem.slideView, { width: state.x }]}>
+          <Animated.View style={[style.meetingItem.slideView, { width: state.x }]}>
             {state.visible &&
-              <TouchableOpacity style={styles.meetingItem.iconWrapper} onPressOut={tapDeleteMeeting}>
-                <Icon iconStyle={styles.meetingItem.icon} type="material" name="delete" color="white" />
-                <Text numberOfLines={1} style={styles.meetingItem.iconText}>Delete</Text>
+              <TouchableOpacity style={style.meetingItem.iconWrapper} onPressOut={tapDeleteMeeting}>
+                <Icon iconStyle={style.meetingItem.icon} type="material" name="delete" color="white" />
+                <Text numberOfLines={1} style={style.meetingItem.iconText}>Delete</Text>
               </TouchableOpacity>
             }
           </Animated.View>
-          <Animated.View style={[styles.meetingItem.slideView, { width: state.xx, backgroundColor: colors.white }]}>
-            <View style={styles.meetingItem.thinBlueLine}></View>
+          <Animated.View style={[style.meetingItem.slideView, { width: state.xx, backgroundColor: colors.white }]}>
+            <View style={style.meetingItem.thinBlueLine}></View>
             {!state.visible &&
-              <View style={styles.meetingItem.iconWrapperChevron}>
-                <Icon iconStyle={styles.meetingItem.icon} type="material" name="chevron-right" color="black" />
+              <View style={style.meetingItem.iconWrapperChevron}>
+                <Icon iconStyle={style.meetingItem.icon} type="material" name="chevron-right" color="black" />
               </View>
             }
           </Animated.View>
-          <View style={styles.meetingItem.sectionContainer}>
-            <View style={styles.meetingItem.thinBlueLine}></View>
+          <View style={style.meetingItem.sectionContainer}>
+            <View style={style.meetingItem.thinBlueLine}></View>
             <View style={{ paddingLeft: 20 ,paddingTop: 10,}} >
-              <Text numberOfLines={1} style={styles.meetingItem.cardTitle}>{meeting_title}</Text>
-              <View style={styles.meetingItem.time}>
-                <View style={styles.meetingItem.date}>
-                  {/*<Image source={require('../assets/calendar.png')} style={[styles.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
-                  <Icon style={styles.meetingItem.dateText} type="material-community" name="calendar-month-outline" size={20}/>
-                  <Text style={styles.meetingItem.dateText}>{moment(meeting_datetime).format("YYYY-MM-DD")}</Text>
+              <Text numberOfLines={1} style={style.meetingItem.cardTitle}>{meeting_title}</Text>
+              <View style={style.meetingItem.time}>
+                <View style={style.meetingItem.date}>
+                  {/*<Image source={require('../assets/calendar.png')} style={[style.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
+                  <Icon style={style.meetingItem.dateText} type="material-community" name="calendar-month-outline" size={20}/>
+                  <Text style={style.meetingItem.dateText}>{moment(meeting_datetime).format("YYYY-MM-DD")}</Text>
                 </View>
-                <View style={styles.meetingItem.space}>
-                  {/*<Image source={require('../assets/clock.png')} style={[styles.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
-                  <Icon style={styles.meetingItem.dateText} type="material-community" name="clock-outline" size={20}/>
-                  <Text style={styles.meetingItem.dateText}>{moment(meeting_datetime).format("h:mma")}</Text>
+                <View style={style.meetingItem.space}>
+                  {/*<Image source={require('../assets/clock.png')} style={[style.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
+                  <Icon style={style.meetingItem.dateText} type="material-community" name="clock-outline" size={20}/>
+                  <Text style={style.meetingItem.dateText}>{moment(meeting_datetime).format("h:mma")}</Text>
                 </View>
               </View>
               <View style={{ flexDirection: 'row', }}>
@@ -100,5 +108,7 @@ export const MeetingItemComponent: React.FC<{ meeting: MeetingItem; deleteItem: 
   )
 }
 
+
+export default MeetingItemComponent
 
 

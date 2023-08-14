@@ -20,7 +20,10 @@ export const colors = {
 
 }
 
-export const styles = {
+export const getStyles = (fontMagnify:number = 1) =>{
+
+
+  return {
   'homeScreen': StyleSheet.create({
     floatingButtonContainer: {
       position: 'absolute',
@@ -44,7 +47,7 @@ export const styles = {
     },
 
     headerText: {
-      fontSize: 18, // Sets the font size
+      fontSize: fontMagnify *  18, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
       marginLeft: 8,
@@ -72,7 +75,7 @@ export const styles = {
 
     },
     icon: {
-      fontSize: 30,
+      fontSize: fontMagnify *  30,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight:5,
@@ -136,12 +139,12 @@ export const styles = {
     upcomingText: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: 14, // Sets the font size
+      fontSize: fontMagnify *  14, // Sets the font size
     },
     pastText: {
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: 14, // Sets the font size
+      fontSize: fontMagnify *  14, // Sets the font size
       //alignItems: 'center', // Aligns text to the left
       marginLeft: 15,
     },
@@ -157,7 +160,7 @@ export const styles = {
     count: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: 14, // Sets the font size
+      fontSize: fontMagnify *  14, // Sets the font size
       marginTop: 3.5,
     },
     viewingColor: {
@@ -180,7 +183,7 @@ export const styles = {
     pastCount: {
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: 14, // Sets the font size
+      fontSize: fontMagnify *  14, // Sets the font size
       marginTop: 3.5,
     },
 
@@ -216,14 +219,14 @@ export const styles = {
     welcomeText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
-      fontSize: 30, // Sets the font size
+      fontSize: fontMagnify *  30, // Sets the font size
       marginBottom: 15, // Adds top margin
     },
 
     toText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
-      fontSize: 15, // Sets the font size
+      fontSize: fontMagnify *  15, // Sets the font size
       marginBottom: 15, // Adds top margin
     },
     messageWrapper: {
@@ -233,19 +236,19 @@ export const styles = {
     mwText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
-      fontSize: 28, // Sets the font size
+      fontSize: fontMagnify *  28, // Sets the font size
       marginBottom: 50, // Adds top margin
     },
     selectText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Regular', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
       marginBottom: 3, // Adds top margin
     },
     selectTextB: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Regular', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
       marginBottom: 15, // Adds top margin
     },
     footer: {
@@ -308,18 +311,18 @@ export const styles = {
     optionsText: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Regular', // Sets the font family
-      fontSize: 13, // Sets the font size
+      fontSize: fontMagnify *  13, // Sets the font size
     },
     optionsTextB: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 13, // Sets the font size
+      fontSize: fontMagnify *  13, // Sets the font size
     },
 
     settingsText: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Regular', // Sets the font family
-      fontSize: 14, // Sets the font size
+      fontSize: fontMagnify *  14, // Sets the font size
       marginLeft: 15,
       textAlign:'left',
       marginBottom:5,
@@ -374,7 +377,7 @@ export const styles = {
     footerButtonText: {
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 50, // Sets the font size
+      fontSize: fontMagnify *  50, // Sets the font size
     },
 
     footerBorder: {
@@ -418,7 +421,7 @@ export const styles = {
     },
 
     icon: {
-      fontSize: 30,
+      fontSize: fontMagnify *  30,
       justifyContent: 'center',
       alignItems: 'center',
 
@@ -464,7 +467,7 @@ export const styles = {
     },
     cardTitle: {
       textAlign: 'left',
-      fontSize: 17,
+      fontSize: fontMagnify *  17,
       fontFamily: 'OpenSans-Bold',
       color: colors.oxfordBlue,
       //fontWeight: "700",
@@ -474,11 +477,11 @@ export const styles = {
       paddingLeft: 2,
       verticalAlign: 'middle',
       color: colors.richBlack,
-      fontSize: 13,
+      fontSize: fontMagnify *  13,
       fontFamily: 'OpenSans-Regular'
     },
     sectionTitle: {
-      fontSize: 24,
+      fontSize: fontMagnify *  24,
       fontWeight: '600',
     },
     thinBlueLine: {
@@ -659,7 +662,7 @@ export const styles = {
       alignItems: 'center', // Add this line to vertically align the content
     },
     headerText: {
-      fontSize: 21, // Sets the font size
+      fontSize: fontMagnify *  21, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
     },
@@ -696,7 +699,7 @@ export const styles = {
     dateButtonTitle: {
       color: '#040F21',
       fontFamily: 'OpenSans-Semibold',
-      fontSize: 13,
+      fontSize: fontMagnify *  13,
       textAlign: 'left',
       alignSelf: 'flex-start',
       marginLeft: 10,
@@ -705,7 +708,7 @@ export const styles = {
     dateButtonText: {
       color: '#040F21',
       fontFamily: 'OpenSans-Regular',
-      fontSize: 17,
+      fontSize: fontMagnify *  17,
       textAlign: 'left',
       alignSelf: 'flex-start',
       marginLeft: 10, // Adjust the margin to your preference
@@ -740,7 +743,7 @@ export const styles = {
     buttonText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 13, // Sets the font size
+      fontSize: fontMagnify *  13, // Sets the font size
       textAlign: 'left', // Aligns text to the left
       alignSelf: 'flex-start', // Aligns text to the left within the button
       marginLeft: 10, // Adds left margin
@@ -749,7 +752,7 @@ export const styles = {
     inputText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
       marginTop: -13, // Adjusts the position
     },
@@ -799,13 +802,13 @@ export const styles = {
     footerButtonText: {
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
     },
 
     footerButtonTextB: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
     },
 
     startButton: {
@@ -870,7 +873,7 @@ export const styles = {
     },
     dateText: {
       flex: 1,
-      fontSize: 16,
+      fontSize: fontMagnify *  16,
       color: '#0A1128',
       fontFamily: 'OpenSans-Semibold',
       textAlign: 'center',
@@ -887,7 +890,7 @@ export const styles = {
       alignItems: 'center', // Add this line to vertically align the content
     },
     headerText: {
-      fontSize: 21, // Sets the font size
+      fontSize: fontMagnify *  21, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
     },
@@ -917,7 +920,7 @@ export const styles = {
     selectButtonTitle: {
       color: '#0A1128',
       fontFamily: 'OpenSans-Regular',
-      fontSize: 14,
+      fontSize: fontMagnify *  14,
       textAlign: 'left',
       alignSelf: 'flex-start',
       marginLeft: 10,
@@ -982,13 +985,13 @@ export const styles = {
     footerButtonText: {
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
     },
 
     footerButtonTextB: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
     },
 
     startButton: {
@@ -1035,14 +1038,14 @@ export const styles = {
     },
 
     headerText: {
-      fontSize: 18, // Sets the font size
+      fontSize: fontMagnify *  18, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
       marginLeft: 8,
     },
 
     subHeader: {
-      fontSize: 18, // Sets the font size
+      fontSize: fontMagnify *  18, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
       marginLeft: 8,
@@ -1066,7 +1069,7 @@ export const styles = {
     title: {
       color: '#040F21',
       fontFamily: 'OpenSans-Bold',
-      fontSize: 15,
+      fontSize: fontMagnify *  15,
       textAlign: 'left',
       alignSelf: 'flex-start',
       marginLeft: 10,
@@ -1085,7 +1088,7 @@ export const styles = {
     buttonText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 13, // Sets the font size
+      fontSize: fontMagnify *  13, // Sets the font size
       textAlign: 'left', // Aligns text to the left
       alignSelf: 'flex-start', // Aligns text to the left within the button
       marginLeft: 10, // Adds left margin
@@ -1095,7 +1098,7 @@ export const styles = {
       flex: 1,
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
       marginTop: '0.5%', // Adjusts the position
       marginBottom: '0.5%',
@@ -1116,7 +1119,7 @@ export const styles = {
       //textAlign: 'center',
       fontFamily: 'OpenSans-Bold',
       color: colors.white,
-      fontSize: 25,
+      fontSize: fontMagnify *  25,
       alignSelf: "center",
     },
     detailDateTime: {
@@ -1135,7 +1138,7 @@ export const styles = {
       paddingBottom: 4,
       verticalAlign: 'middle',
       color: colors.white,
-      fontSize: 13,
+      fontSize: fontMagnify *  13,
       fontFamily: 'OpenSans-Regular',
       alignSelf: "center",
       textAlignVertical: "center",
@@ -1177,13 +1180,13 @@ export const styles = {
     costTitle: {
       textAlign: 'left',
       fontFamily: 'OpenSans-Regular',
-      fontSize: 15,
+      fontSize: fontMagnify *  15,
       color: colors.richBlack,
     },
     costValue: {
       textAlign: 'left',
       fontFamily: 'OpenSans-Bold',
-      fontSize:24,
+      fontSize: fontMagnify * 24,
       color: colors.richBlack,
     },
     timeContainer: {
@@ -1196,13 +1199,13 @@ export const styles = {
     timeTitle: {
       textAlign: 'right',
       fontFamily: 'OpenSans-Regular',
-      fontSize: 15,
+      fontSize: fontMagnify *  15,
       color: colors.richBlack,
     },
     timeValue: {
       textAlign: 'right',
       fontFamily: 'OpenSans-Bold',
-      fontSize:24,
+      fontSize: fontMagnify * 24,
       color: colors.richBlack,
     },
     statContainerRight: {
@@ -1273,7 +1276,7 @@ export const styles = {
       textAlign: 'left',
       fontFamily: 'OpenSans-SemiBold',
       flexDirection: 'column',
-      fontSize: 15,
+      fontSize: fontMagnify *  15,
       color: colors.richBlack,
       flex: 0,
       //backgroundColor:'red',
@@ -1281,7 +1284,7 @@ export const styles = {
     statValue: {
       textAlign: 'left',
       fontFamily: 'OpenSans-SemiBold',
-      fontSize: 20,
+      fontSize: fontMagnify *  20,
       paddingTop: 5,
       color: colors.richBlack,
       marginBottom: 2,
@@ -1317,7 +1320,7 @@ export const styles = {
       marginTop: -10,
       textAlign: 'center',
       fontFamily: 'OpenSans-SemiBold',
-      fontSize: 20,
+      fontSize: fontMagnify *  20,
       color: colors.richBlack,
     },
   }),
@@ -1335,7 +1338,7 @@ export const styles = {
     },
     titleText: {
       color: colors.white,
-      fontSize: 20, // Sets the font size
+      fontSize: fontMagnify *  20, // Sets the font size
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
       marginLeft: 8,
     },
@@ -1387,14 +1390,14 @@ export const styles = {
     },
 
     headerText: {
-      fontSize: 18, // Sets the font size
+      fontSize: fontMagnify *  18, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'Montserrat-ExtraBold', // Sets the font family
       marginLeft: 8,
     },
 
     subHeader: {
-      fontSize: 18, // Sets the font size
+      fontSize: fontMagnify *  18, // Sets the font size
       color: '#ffffff', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
       marginLeft: 8,
@@ -1521,13 +1524,13 @@ export const styles = {
     title: {
       color: '#040F21',
       fontFamily: 'OpenSans-Bold',
-      fontSize: 15,
+      fontSize: fontMagnify *  15,
       textAlign: 'left',
       flex:1,
       
     },
     icon: {
-      fontSize: 32,
+      fontSize: fontMagnify *  32,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight:15,
@@ -1549,7 +1552,7 @@ export const styles = {
     buttonText: {
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
-      fontSize: 13, // Sets the font size
+      fontSize: fontMagnify *  13, // Sets the font size
       textAlign: 'left', // Aligns text to the left
       alignSelf: 'flex-start', // Aligns text to the left within the button
       marginLeft: 10, // Adds left margin
@@ -1559,7 +1562,7 @@ export const styles = {
       flex: 1,
       color: '#040F21', // Sets the text color
       fontFamily: 'OpenSans', // Sets the font family
-      fontSize: 17, // Sets the font size
+      fontSize: fontMagnify *  17, // Sets the font size
       paddingHorizontal: 10, // Adds horizontal padding
       marginTop: '0.5%', // Adjusts the position
       marginBottom: '0.5%',
@@ -1571,17 +1574,17 @@ export const styles = {
 
     fineprint: {
       fontFamily: 'OpenSans-Regular',
-      fontSize: 10,
+      fontSize: fontMagnify *  10,
       color: "#000000"
     },
     fineprintBold: {
       fontFamily: 'OpenSans-Bold',
-      fontSize: 10,
+      fontSize: fontMagnify *  10,
       color: "#000000"
     },
     title: {
       fontFamily: 'OpenSans-Bold',
-      fontSize: 20,
+      fontSize: fontMagnify *  20,
       color: "#000000"
     },
     titleView: {
@@ -1642,5 +1645,7 @@ export const styles = {
       paddingBottom: 3,
     },
   }),
-
 };
+}
+
+export const styles = getStyles();
