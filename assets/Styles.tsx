@@ -513,6 +513,8 @@ export const styles = {
     },
 
     cardsContainer: {
+      paddingHorizontal: 16, // Adds horizontal padding
+      justifyContent: 'center',
       paddingTop: 20,
     },
 

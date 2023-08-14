@@ -34,10 +34,6 @@ const OutlookMeetingScreen = ({ navigation, route }: { navigation: any, route: a
 
     const [tempDate, setTempDate] = useState(new Date());
 
-    const [title, setTitle] = useState('');
-
-    const [time, setTime] = useState(new Date());
-
     const hourlyRate = '0.00';
 
     const participants = 0;
@@ -212,7 +208,7 @@ const OutlookMeetingScreen = ({ navigation, route }: { navigation: any, route: a
 
                 const endDateTime = new Date(year, monthNumber, day + 1).toISOString();
 
-                const response = await client.api(`/me/events?$filter=start/dateTime ge '${startDateTime}' and end/dateTime lt '${endDateTime}'`).get();
+                const response = await client.api(`/me/calendarView?startDateTime=${startDateTime}&endDateTime=${endDateTime}`).get();
 
                 if (response && response.value && Array.isArray(response.value)) {
                     const newMeetings: OutlookMeetingItem[] = response.value.map((event: { start: { dateTime: string; }; id: any; subject: any; }) => {
@@ -299,16 +295,10 @@ const OutlookMeetingScreen = ({ navigation, route }: { navigation: any, route: a
                                 </View>
                             </View>
                         </View>
-
-                        <View style={styles.outlookMeetingItem.cardsContainer}>
-                            <OutlookMeetingView meetings={meetings} onCheckboxChange={handleMeetingCheckboxChange}/>
-                        </View>
-
-
-
-
-
                     </View>
+                </View>
+                <View style={styles.outlookMeetingItem.cardsContainer}>
+                    <OutlookMeetingView meetings={meetings} onCheckboxChange={handleMeetingCheckboxChange} />
                 </View>
             </View>
             <View style={styles.outlookMeeting.footerContainer}>

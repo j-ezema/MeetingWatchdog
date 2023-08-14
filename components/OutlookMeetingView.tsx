@@ -14,7 +14,7 @@ export const OutlookMeetingView: React.FC<{ meetings: OutlookMeetingItem[]; onCh
     
 
     return (
-        <ScrollView style={{ flexGrow: 1 }} >
+        <ScrollView style={{ flexGrow: 1, marginBottom:'30.5%' }} >
             {renderedMeetings}
             <View style={{ height: 80 }} />
         </ScrollView>
