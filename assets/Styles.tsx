@@ -20,7 +20,7 @@ export const colors = {
 
 }
 
-export const getStyles = (fontMagnify:number = 0.5) =>{
+export const getStyles = (fontMagnify:number = 1) =>{
 
 
   return {
