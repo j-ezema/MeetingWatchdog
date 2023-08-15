@@ -6,7 +6,6 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    ScrollView,
     KeyboardAvoidingView,
     Platform,
     Modal,
@@ -23,6 +22,8 @@ import moment from 'moment';
 import CurrencyInput from 'react-native-currency-input';
 import { useFocusEffect } from '@react-navigation/native';
 import { NumericTextEntry } from './NumericTextEntry';
+import { ScrollView } from 'react-native-gesture-handler';
+
 
 
 
@@ -39,6 +40,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     const meetingNameInputRef = useRef<TextInput>(null);
     const [tempDate, setTempDate] = useState(new Date());
     const [tempTime, setTempTime] = useState(new Date());
+    const [showError, setShowError] = useState(false);
 
     //grab settings
     const loadDataCallback = useCallback(async () => {
@@ -132,50 +134,53 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     };//*/
 
     const saveMeetingData = async () => {
-        try {
-            var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
-            //setMeetings(meetings.concat(newMeeting));
-            const db = await getDBConnection();
-            console.log(combinedDateTime);
-
-            console.log(await saveMeetingItems(db, [newMeeting]));
-            navigation.navigate('Home', { key: Date.now() });
-        } catch (error) {
-            console.error(error);
+        if (!meetingName) {
+            setShowError(true);
+        } else {
+            try {
+                var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
+                const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
+                //setMeetings(meetings.concat(newMeeting));
+                const db = await getDBConnection();
+                await saveMeetingItems(db, [newMeeting]);
+                navigation.navigate('Home', { key: Date.now() });
+            } catch (error) {
+                console.error(error);
+            }
+            return;
         }
-        return;
+
     };
     const startMeetingData = async () => {
-        try {
-            var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
-            const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
-            //setMeetings(meetings.concat(newMeeting));
-            const db = await getDBConnection();
-            await saveMeetingItems(db, [newMeeting]);
-            const tfdiji = `SELECT last_insert_rowid()`;
-            const result = await db.executeSql(tfdiji);
-            navigation.navigate('meetingDetails', { meetingID: result[0].rows.item(0)["last_insert_rowid()"] });
-        } catch (error) {
-            console.error(error);
+        if (!meetingName) {
+            setShowError(true);
+        } else {
+            try {
+                var combinedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedTime.getHours(), selectedTime.getMinutes(), selectedTime.getSeconds());
+                const newMeeting = createNewMeetingItem(0, meetingName, combinedDateTime, +hourlyRate.replace(/[^0-9.]/g, ''), +participants);
+                //setMeetings(meetings.concat(newMeeting));
+                const db = await getDBConnection();
+                await saveMeetingItems(db, [newMeeting]);
+                const tfdiji = `SELECT last_insert_rowid()`;
+                const result = await db.executeSql(tfdiji);
+                navigation.navigate('meetingDetails', { meetingID: result[0].rows.item(0)["last_insert_rowid()"] });
+            } catch (error) {
+                console.error(error);
+            }
+            return;
         }
-        return;
     };
 
 
 
     return (
-        <ScrollView
-            contentContainerStyle={styles.createMeeting.scrollContainer}
-            keyboardShouldPersistTaps="handled"
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // padding is generally for iOS, and height for Android but adjust as necessary
         >
-            <KeyboardAvoidingView
-                //behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.createMeeting.container}
-            >
 
-                <View style={styles.createMeeting.container}>
-                    {/*
+            <View style={styles.createMeeting.container}>
+                {/*
                     <View style={styles.createMeeting.header}>
                         <TouchableOpacity style={styles.createMeeting.cancelButtonContainer} onPress={handleCancel}>
                             <Image source={require('../assets/close.png')} style={styles.createMeeting.cancelButtonImage} />
@@ -183,95 +188,106 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                         <Text style={styles.createMeeting.headerText}>Create A Meeting</Text>
                     </View>
                     */}
-                    <View style={styles.createMeeting.buttonsContainer}>
-                        <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => meetingNameInputRef.current?.focus()}>
-                            <Text style={styles.createMeeting.buttonText}>Meeting Name</Text>
-                            <TextInput
-                                ref={meetingNameInputRef}
-                                style={styles.createMeeting.inputText}
-                                placeholder="Enter meeting name"
-                                value={meetingName}
-                                onChangeText={setMeetingName}
-
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
-                            onPress={showDatePicker}
-                        >
-                            <View style={styles.createMeeting.dateButtonContent}>
-                                {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30} />
-                                <View>
-                                    <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date</Text>
-                                    <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
-                            onPress={showTimePicker}
-                        >
-                            <View style={styles.createMeeting.dateButtonContent}>
-                                {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
-                                <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30} />
-                                <View >
-                                    <Text style={styles.createMeeting.dateButtonTitle}>Meeting Time</Text>
-                                    <Text style={styles.createMeeting.dateButtonText}>{formattedTime}</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
-                            <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
-                            <TextInput
-                                ref={participantsInputRef}
-                                style={styles.createMeeting.inputText}
-                                placeholder="Enter number"
-                                value={participants}
-                                onChangeText={setParticipants}
-                                keyboardType="numeric"
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
-                            <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
-                            <TextInput
-                                ref={hourlyRateInputRef}
-                                style={styles.createMeeting.inputText}
-                                placeholder="Enter hourly rate"
-                                value={hourlyRate}
-                                onChangeText={handleHourlyRateChange}
-                                keyboardType="numeric"
-                                onSubmitEditing={handleHourlyRateSubmit}
-
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-                    <View style={styles.createMeeting.footerContainer}>
-
-                        <View style={styles.createMeeting.footer}>
-                            <View style={styles.createMeeting.footerButtonContainer}>
-                                <Button
-                                    title="Save"
-                                    titleStyle={styles.createMeeting.footerButtonTextB}
-                                    buttonStyle={styles.createMeeting.footerButton}
-                                    containerStyle={styles.createMeeting.footerButtonContainerStyle}
-                                    onPress={saveMeetingData}
+                <View style={styles.outlookMeeting.content}>
+                    <ScrollView style={{ flexGrow: 1 }} >
+                        <View style={styles.createMeeting.buttonsContainer}>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, showError && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
+                                <Text style={[styles.createMeeting.buttonText, showError && styles.createMeeting.errorText]}>Meeting Name *</Text>
+                                <TextInput
+                                    ref={meetingNameInputRef}
+                                    style={styles.createMeeting.inputText}
+                                    placeholder="Enter meeting name"
+                                    value={meetingName}
+                                    onChangeText={setMeetingName}
 
                                 />
-                            </View>
-                            <View style={styles.createMeeting.footerButtonContainer}>
-                                <Button
-                                    title="Start Meeting"
-                                    titleStyle={styles.createMeeting.footerButtonText}
-                                    buttonStyle={[styles.createMeeting.footerButton, styles.createMeeting.startButton, styles.createMeeting.footerBorder]}
-                                    containerStyle={styles.createMeeting.footerButtonContainerStyle}
-                                    onPress={startMeetingData}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
+                                onPress={showDatePicker}
+                            >
+                                <View style={styles.createMeeting.dateButtonContent}>
+                                    {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="calendar-month" size={30} />
+                                    <View>
+                                        <Text style={styles.createMeeting.dateButtonTitle}>Meeting Date *</Text>
+                                        <Text style={styles.createMeeting.dateButtonText}>{formattedDate}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
+                                onPress={showTimePicker}
+                            >
+                                <View style={styles.createMeeting.dateButtonContent}>
+                                    {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
+                                    <Icon style={styles.meetingItem.dateText} color={'#0A112899'} type="material-community" name="clock" size={30} />
+                                    <View >
+                                        <Text style={styles.createMeeting.dateButtonTitle}>Meeting Time *</Text>
+                                        <Text style={styles.createMeeting.dateButtonText}>{formattedTime}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
+                                <Text style={styles.createMeeting.buttonText}>Number of Participants *</Text>
+                                <TextInput
+                                    ref={participantsInputRef}
+                                    style={styles.createMeeting.inputText}
+                                    placeholder="Enter number"
+                                    value={participants}
+                                    onChangeText={setParticipants}
+                                    keyboardType="numeric"
                                 />
-                            </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
+                                <Text style={styles.createMeeting.buttonText}>Average Hourly Rate *</Text>
+                                <TextInput
+                                    ref={hourlyRateInputRef}
+                                    style={styles.createMeeting.inputText}
+                                    placeholder="Enter hourly rate"
+                                    value={hourlyRate}
+                                    onChangeText={handleHourlyRateChange}
+                                    keyboardType="numeric"
+                                    onSubmitEditing={handleHourlyRateSubmit}
+
+                                />
+                            </TouchableOpacity>
+
+                            {showError && (
+
+                                <View style={[styles.createMeeting.errorTextButton, styles.createMeeting.errorButtonWithBorder]}>
+                                    <Text style={styles.createMeeting.errorButtonText}>Please fill in the required* information</Text>
+                                </View>
+                            )}
+
+                        </View>
+                    </ScrollView>
+                </View>
+                <View style={styles.createMeeting.footerContainer}>
+
+                    <View style={styles.createMeeting.footer}>
+                        <View style={styles.createMeeting.footerButtonContainer}>
+                            <Button
+                                title="Save"
+                                titleStyle={styles.createMeeting.footerButtonTextB}
+                                buttonStyle={styles.createMeeting.footerButton}
+                                containerStyle={styles.createMeeting.footerButtonContainerStyle}
+                                onPress={saveMeetingData}
+
+                            />
+                        </View>
+                        <View style={styles.createMeeting.footerButtonContainer}>
+                            <Button
+                                title="Start Meeting"
+                                titleStyle={styles.createMeeting.footerButtonText}
+                                buttonStyle={[styles.createMeeting.footerButton, styles.createMeeting.startButton, styles.createMeeting.footerBorder]}
+                                containerStyle={styles.createMeeting.footerButtonContainerStyle}
+                                onPress={startMeetingData}
+                            />
                         </View>
                     </View>
                 </View>
+
 
 
                 {
@@ -308,6 +324,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                 </View>
                             </View>
                         </Modal>
+
                     )
                 }
                 {
@@ -345,8 +362,9 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                         </Modal>
                     )
                 }
-            </KeyboardAvoidingView>
-        </ScrollView>
+
+            </View>
+        </KeyboardAvoidingView>
     );
 };
 
