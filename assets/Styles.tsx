@@ -27,7 +27,6 @@ const screenWidth = Dimensions.get('window').width;
 
 export const getStyles = (fontMagnify:number = global.fontSize) =>{
 
-
   return {
   'homeScreen': StyleSheet.create({
     floatingButtonContainer: {
@@ -625,7 +624,6 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       backgroundColor: colors.steelBlue,
     },
   }),
-
 
   'createMeeting': StyleSheet.create({
     container: {

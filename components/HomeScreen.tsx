@@ -238,13 +238,13 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
           </View>
           <View style={style.cardsContainer}>
             {pastMeetings.length === 0 && viewingUpcomingMeetings === false ? (
-              <PastScreen />
+              <PastScreen styling={style}/>
             ) : (meetings.length === 0 && pastMeetings.length > 0 && viewingUpcomingMeetings === true) ? (
-              <WelcomeScreen />
+              <WelcomeScreen styling={style} />
             ) : meetings.length > 0 || pastMeetings.length > 0 ? (
               <View>{meetingPanel}</View>
             ) : (
-              <WelcomeScreen styles={style} />
+              <WelcomeScreen styling={style} />
             )}
           </View>
           {!isButtonClicked &&
@@ -348,7 +348,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
 }
 
 
-function WelcomeScreen(style:any) {
+function WelcomeScreen(styling:any) {
+  const style = styling.styling;
   return (
     <View style={style.buttonsContainer}>
       <View style={[style.message, style.buttonWithBorder]}>
@@ -364,7 +365,8 @@ function WelcomeScreen(style:any) {
   )
 }
 
-function PastScreen(style:any) {
+function PastScreen(styling:any) {
+  const style = styling.styling;
   return (
     <View style={style.buttonsContainer}>
       <View style={[style.message, style.buttonWithBorder]}>
