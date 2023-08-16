@@ -17,19 +17,22 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
     const [participants, setParticipants] = useState('');
 
     const participantsInputRef = useRef<TextInput>(null);
-    
-    const enterParticipants = (x:string) =>{
-        if(x.trim().length < 1){
+
+    const [showError, setShowError] = useState(false);
+
+
+    const enterParticipants = (x: string) => {
+        if (x.trim().length < 1) {
             setParticipants(x);
-        }else{
+        } else {
             const parsed = parseInt(x);
-            if(parsed){
-                if(parsed > 1000){
-                    setParticipants(""+1000);
-                }else if(parsed < 1){
-                    setParticipants(""+1);
-                }else{
-                    setParticipants(""+parsed);
+            if (parsed) {
+                if (parsed > 1000) {
+                    setParticipants("" + 1000);
+                } else if (parsed < 1) {
+                    setParticipants("" + 1);
+                } else {
+                    setParticipants("" + parsed);
                 }
             }
         }
@@ -42,9 +45,13 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
     };
 
     const handleSave = async () => {
-        const db = await getDBConnection();
-        await saveNumberOfParticipants(db, participants);
-        handleExit();
+        if (!participants) {
+            setShowError(true);
+        } else {
+            const db = await getDBConnection();
+            await saveNumberOfParticipants(db, participants);
+            handleExit();
+        }
     };
 
     const loadDataCallback = useCallback(async () => {
@@ -71,8 +78,8 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
             <View style={styles.createMeeting.buttonsContainer}>
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
                 {/*<NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/> redo later */}
-                <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => participantsInputRef.current?.focus()}>
-                    <Text style={styles.createMeeting.buttonText}>Number of Participants</Text>
+                <TouchableOpacity style={[styles.createMeeting.textButton, (!participants && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
+                    <Text style={[styles.createMeeting.buttonText, (!participants && showError) && styles.createMeeting.errorText]}>Number of Participants *</Text>
                     <TextInput
                         ref={participantsInputRef}
                         style={styles.createMeeting.inputText}
@@ -82,6 +89,12 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
                         keyboardType="numeric"
                     />
                 </TouchableOpacity>
+                {showError && (
+
+                    <View style={[styles.createMeeting.errorTextButton, styles.createMeeting.errorButtonWithBorder]}>
+                        <Text style={styles.createMeeting.errorButtonText}>Please fill in the required* information</Text>
+                    </View>
+                )}
             </View>
             <View style={styles.createMeeting.footerContainer}>
 

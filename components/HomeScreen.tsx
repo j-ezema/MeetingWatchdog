@@ -127,7 +127,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const authenticateWithMicrosoft = async (): Promise<string | null> => {
     try {
       const result = await authorize(authConfig);
-      console.log(result);
       if (result && result.accessToken) {
         setIsAuthenticated(true);
         return result.accessToken;
@@ -194,7 +193,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }
   const handleRateApp = () => {
     setActiveButtonIndex(5);
-    console.log(screenWidth);
   }
   let meetingPanel;
   if (viewingUpcomingMeetings) {
@@ -234,14 +232,13 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
             </View>
           </View>
           <View style={styles.homeScreen.cardsContainer}>
-            {meetings.length + pastMeetings.length > 0 &&
-              <View>
-                {meetingPanel}
-              </View>
-            }
-            {meetings.length + pastMeetings.length == 0 &&
+            {( pastMeetings.length === 0 && viewingUpcomingMeetings == false) ? (
+              <PastScreen />
+            ) : meetings.length > 0 || pastMeetings.length > 0 ? (
+              <View>{meetingPanel}</View>
+            ) : (
               <WelcomeScreen />
-            }
+            )}
           </View>
           {!isButtonClicked &&
             <TouchableOpacity style={styles.homeScreen.floatingButtonContainer} onPressOut={handleButtonPress}>
@@ -359,5 +356,23 @@ function WelcomeScreen() {
     </View>
   )
 }
+
+function PastScreen() {
+  return (
+    <View style={styles.homeScreen.buttonsContainer}>
+      <View style={[styles.homeScreen.message, styles.homeScreen.buttonWithBorder]}>
+        <View style={styles.homeScreen.messageWrapper}>
+          <Text style={styles.homeScreen.selectText}>You do not currently have any </Text>
+          <Text style={styles.homeScreen.selectText}>past meeting.</Text>
+          <Text style={styles.homeScreen.selectText}></Text>
+          <Text style={styles.homeScreen.selectText}>Select the '+' button to create a</Text>
+          <Text style={styles.homeScreen.selectTextB}>new trackable meeting.</Text>
+        </View>
+      </View>
+    </View>
+  )
+
+}
+
 
 

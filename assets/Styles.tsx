@@ -745,7 +745,6 @@ export const getStyles = (fontMagnify:number = 1) =>{
       paddingLeft: 16, // Adds left padding for text
     },
     errorTextButton: {
-      flex: 1,
       marginBottom: 20, // Adds bottom margin
       width: '100%', // Sets the width to 100% of the container
       height: 70, // Sets the height of the button

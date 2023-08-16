@@ -134,7 +134,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
     };//*/
 
     const saveMeetingData = async () => {
-        if (!meetingName) {
+        if (!meetingName || !participants || !hourlyRate) {
             setShowError(true);
         } else {
             try {
@@ -152,7 +152,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
 
     };
     const startMeetingData = async () => {
-        if (!meetingName) {
+        if (!meetingName || !participants || !hourlyRate) {
             setShowError(true);
         } else {
             try {
@@ -191,8 +191,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                 <View style={styles.outlookMeeting.content}>
                     <ScrollView style={{ flexGrow: 1 }} >
                         <View style={styles.createMeeting.buttonsContainer}>
-                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, showError && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
-                                <Text style={[styles.createMeeting.buttonText, showError && styles.createMeeting.errorText]}>Meeting Name *</Text>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, (!meetingName && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
+                                <Text style={[styles.createMeeting.buttonText, (!meetingName && showError) && styles.createMeeting.errorText]}>Meeting Name *</Text>
                                 <TextInput
                                     ref={meetingNameInputRef}
                                     style={styles.createMeeting.inputText}
@@ -228,8 +228,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                     </View>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
-                                <Text style={styles.createMeeting.buttonText}>Number of Participants *</Text>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, styles.createMeeting.buttonWithBorder, (!participants && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
+                                <Text style={[styles.createMeeting.buttonText, (!participants && showError) && styles.createMeeting.errorText]}>Number of Participants *</Text>
                                 <TextInput
                                     ref={participantsInputRef}
                                     style={styles.createMeeting.inputText}
@@ -239,8 +239,8 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                                     keyboardType="numeric"
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
-                                <Text style={styles.createMeeting.buttonText}>Average Hourly Rate *</Text>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, styles.createMeeting.buttonWithBorder, (!hourlyRate && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
+                                <Text style={[styles.createMeeting.buttonText, (!hourlyRate && showError) && styles.createMeeting.errorText]}>Average Hourly Rate *</Text>
                                 <TextInput
                                     ref={hourlyRateInputRef}
                                     style={styles.createMeeting.inputText}
