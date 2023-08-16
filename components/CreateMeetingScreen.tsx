@@ -191,7 +191,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                 <View style={styles.outlookMeeting.content}>
                     <ScrollView style={{ flexGrow: 1 }} >
                         <View style={styles.createMeeting.buttonsContainer}>
-                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, (!meetingName && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
+                            <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, (!meetingName && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => meetingNameInputRef.current?.focus()}>
                                 <Text style={[styles.createMeeting.buttonText, (!meetingName && showError) && styles.createMeeting.errorText]}>Meeting Name *</Text>
                                 <TextInput
                                     ref={meetingNameInputRef}

@@ -232,8 +232,10 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
             </View>
           </View>
           <View style={styles.homeScreen.cardsContainer}>
-            {( pastMeetings.length === 0 && viewingUpcomingMeetings == false) ? (
+            {pastMeetings.length === 0 && viewingUpcomingMeetings === false ? (
               <PastScreen />
+            ) : (meetings.length === 0 && pastMeetings.length > 0 && viewingUpcomingMeetings === true) ? (
+              <WelcomeScreen />
             ) : meetings.length > 0 || pastMeetings.length > 0 ? (
               <View>{meetingPanel}</View>
             ) : (
