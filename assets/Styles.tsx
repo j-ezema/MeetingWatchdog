@@ -531,6 +531,8 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
 
     cardsContainer: {
+      paddingHorizontal: 16, // Adds horizontal padding
+      justifyContent: 'center',
       paddingTop: 20,
     },
 
@@ -627,13 +629,12 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
 
   'createMeeting': StyleSheet.create({
     container: {
-      flex: 1, // Takes up the entire available space
+      flex: 1,
+      paddingVertical: 10,
       backgroundColor: '#0A1128', // Sets the background color
-      paddingVertical: 10, // Adds vertical padding
     },
 
     scrollContainer: {
-      flex: 1,
       backgroundColor: '#0A1128',
     },
 
@@ -694,6 +695,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
 
     buttonsContainer: {
+      flex:1,
       paddingTop: 20, // Add top padding
       paddingBottom: 20, // Add bottom padding
       paddingHorizontal: 16, // Adds horizontal padding
@@ -743,6 +745,10 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       borderColor: '#4D7EA8', // Sets the border color
       borderWidth: 2, // Sets the border width
     },
+    errorButtonWithBorder: {
+      borderColor: '#B01D2D', // Sets the border color
+      borderWidth: 2, // Sets the border width
+    },
     textButton: {
       marginBottom: 20, // Adds bottom margin
       width: '100%', // Sets the width to 100% of the container
@@ -753,8 +759,34 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       alignItems: 'flex-start', // Aligns text to the left
       paddingLeft: 16, // Adds left padding for text
     },
+    errorTextButton: {
+      marginBottom: 20, // Adds bottom margin
+      width: '100%', // Sets the width to 100% of the container
+      height: 70, // Sets the height of the button
+      borderRadius: 10, // Sets the border radius
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      justifyContent: 'center', // Centers content vertically
+      alignItems: 'center', // Aligns text to the left
+    },
     buttonText: {
       color: '#040F21', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: fontMagnify *  13, // Sets the font size
+      textAlign: 'left', // Aligns text to the left
+      alignSelf: 'flex-start', // Aligns text to the left within the button
+      marginLeft: 10, // Adds left margin
+      marginTop: 15, // Adds top margin
+    },
+    
+    errorButtonText: {
+      color: '#B01D2D', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: fontMagnify *  16, // Sets the font size
+      textAlign: 'center', // Aligns text to the left
+      alignSelf: 'center', // Aligns text to the left within the button
+    },
+    errorText: {
+      color: '#B01D2D', // Sets the text color
       fontFamily: 'OpenSans-Semibold', // Sets the font family
       fontSize: fontMagnify *  13, // Sets the font size
       textAlign: 'left', // Aligns text to the left
@@ -786,7 +818,6 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
 
     footerContainer: {
-      flex: 1,
       left: 0,
       right: 0,
       bottom: 0,
@@ -797,7 +828,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
 
 
     footerButtonContainer: {
-      flex: 1, // Takes up the available space
+      flexGrow: 1, // Takes up the available space
       alignItems: 'center', // Centers content horizontally
       paddingVertical: 20, // Adds vertical padding
       borderTopWidth: 0.5,

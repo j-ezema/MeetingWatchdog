@@ -34,10 +34,6 @@ const OutlookMeetingScreen = ({ navigation, route }: { navigation: any, route: a
 
     const [tempDate, setTempDate] = useState(new Date());
 
-    const [title, setTitle] = useState('');
-
-    const [time, setTime] = useState(new Date());
-
     const hourlyRate = '0.00';
 
     const participants = 0;
@@ -299,16 +295,10 @@ const OutlookMeetingScreen = ({ navigation, route }: { navigation: any, route: a
                                 </View>
                             </View>
                         </View>
-
-                        <View style={styles.outlookMeetingItem.cardsContainer}>
-                            <OutlookMeetingView meetings={meetings} onCheckboxChange={handleMeetingCheckboxChange}/>
-                        </View>
-
-
-
-
-
                     </View>
+                </View>
+                <View style={styles.outlookMeetingItem.cardsContainer}>
+                    <OutlookMeetingView meetings={meetings} onCheckboxChange={handleMeetingCheckboxChange} />
                 </View>
             </View>
             <View style={styles.outlookMeeting.footerContainer}>

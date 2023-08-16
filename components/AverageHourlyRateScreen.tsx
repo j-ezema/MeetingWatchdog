@@ -14,6 +14,7 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
 
     const [hourlyRate, setHourlyRate] = useState('');
     const hourlyRateInputRef = useRef<TextInput>(null);
+    const [showError, setShowError] = useState(false);
 
     const handleHourlyRateChange = (inputValue: string) => {
         setHourlyRate(inputValue);
@@ -36,17 +37,22 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
 
     const handleCancel = async () => {
         setHourlyRate("");
-    };
-
-    const handleSave = async () => {
-        handleHourlyRateSubmit();
-        console.log(hourlyRate);
-        console.log((hourlyRate).replace(/[^0-9.]/g, ''));
-        const db = await getDBConnection();
-        await saveAverageHourlyRate(db, +(hourlyRate).replace(/[^0-9.]/g, ''));
         navigation.navigate('Settings', {
             hourlyRate: hourlyRate,
         });
+    };
+
+    const handleSave = async () => {
+        if (!hourlyRate) {
+            setShowError(true);
+        } else {
+            handleHourlyRateSubmit();
+            const db = await getDBConnection();
+            await saveAverageHourlyRate(db, +(hourlyRate).replace(/[^0-9.]/g, ''));
+            navigation.navigate('Settings', {
+                hourlyRate: hourlyRate,
+            });
+        }
     };
 
     const loadDataCallback = useCallback(async () => {
@@ -77,8 +83,8 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
 
                 <Text style={styles.settings.subHeader}>Edit Average Hourly Rate</Text>
 
-                <TouchableOpacity style={styles.createMeeting.textButton} onPress={() => hourlyRateInputRef.current?.focus()}>
-                    <Text style={styles.createMeeting.buttonText}>Average Hourly Rate</Text>
+                <TouchableOpacity style={[styles.createMeeting.textButton, (!hourlyRate && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
+                    <Text style={[styles.createMeeting.buttonText, (!hourlyRate && showError) && styles.createMeeting.errorText]}>Average Hourly Rate *</Text>
                     <TextInput
                         ref={hourlyRateInputRef}
                         style={styles.createMeeting.inputText}
@@ -89,6 +95,12 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
                         onSubmitEditing={handleHourlyRateSubmit}
                     />
                 </TouchableOpacity>
+                {showError && (
+
+                    <View style={[styles.createMeeting.errorTextButton, styles.createMeeting.errorButtonWithBorder]}>
+                        <Text style={styles.createMeeting.errorButtonText}>Please fill in the required* information</Text>
+                    </View>
+                )}
             </View>
             <View style={styles.createMeeting.footerContainer}>
 

@@ -132,7 +132,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const authenticateWithMicrosoft = async (): Promise<string | null> => {
     try {
       const result = await authorize(authConfig);
-      console.log(result);
       if (result && result.accessToken) {
         setIsAuthenticated(true);
         return result.accessToken;
@@ -199,7 +198,6 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   }
   const handleRateApp = () => {
     setActiveButtonIndex(5);
-    console.log(screenWidth);
   }
   let meetingPanel;
   if (viewingUpcomingMeetings) {
@@ -239,14 +237,15 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
             </View>
           </View>
           <View style={style.cardsContainer}>
-            {meetings.length + pastMeetings.length > 0 &&
-              <View>
-                {meetingPanel}
-              </View>
-            }
-            {meetings.length + pastMeetings.length == 0 &&
+            {pastMeetings.length === 0 && viewingUpcomingMeetings === false ? (
+              <PastScreen />
+            ) : (meetings.length === 0 && pastMeetings.length > 0 && viewingUpcomingMeetings === true) ? (
+              <WelcomeScreen />
+            ) : meetings.length > 0 || pastMeetings.length > 0 ? (
+              <View>{meetingPanel}</View>
+            ) : (
               <WelcomeScreen styles={style} />
-            }
+            )}
           </View>
           {!isButtonClicked &&
             <TouchableOpacity style={style.floatingButtonContainer} onPressOut={handleButtonPress}>
@@ -353,8 +352,8 @@ function WelcomeScreen(style:any) {
   return (
     <View style={style.buttonsContainer}>
       <View style={[style.message, style.buttonWithBorder]}>
-        <View style={styles.homeScreen.messageWrapper}>
-          <Text style={styles.homeScreen.welcomeText}>Welcome</Text>
+        <View style={style.messageWrapper}>
+          <Text style={style.welcomeText}>Welcome</Text>
           <Text style={style.toText}>To</Text>
           <Text style={style.mwText}>MEETING WATCHDOG</Text>
           <Text style={style.selectText}>Select the '+' button to create a</Text>
@@ -364,5 +363,22 @@ function WelcomeScreen(style:any) {
     </View>
   )
 }
+
+function PastScreen(style:any) {
+  return (
+    <View style={style.buttonsContainer}>
+      <View style={[style.message, style.buttonWithBorder]}>
+        <View style={style.messageWrapper}>
+          <Text style={style.selectText}>You do not currently have any </Text>
+          <Text style={style.selectText}>past meeting.</Text>
+          <Text style={style.selectText}></Text>
+          <Text style={style.selectText}>Select the '+' button to create a</Text>
+          <Text style={style.selectTextB}>new trackable meeting.</Text>
+        </View>
+      </View>
+    </View>
+  )
+}
+
 
 
