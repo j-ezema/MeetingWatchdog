@@ -212,7 +212,7 @@ const OutlookMeetingScreen = ({ navigation, route }: { navigation: any, route: a
 
                 const endDateTime = new Date(year, monthNumber, day + 1).toISOString();
 
-                const response = await client.api(`/me/events?$filter=start/dateTime ge '${startDateTime}' and end/dateTime lt '${endDateTime}'`).get();
+                const response = await client.api(`/me/calendarView?startDateTime=${startDateTime}&endDateTime=${endDateTime}`).get();
 
                 if (response && response.value && Array.isArray(response.value)) {
                     const newMeetings: OutlookMeetingItem[] = response.value.map((event: { start: { dateTime: string; }; id: any; subject: any; }) => {

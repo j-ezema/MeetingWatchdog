@@ -5,6 +5,7 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
+    ScrollView,
 
 
 
@@ -17,11 +18,13 @@ import { MeetingItem, createNewMeetingItem } from '../models/index';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { getStyles } from '../assets/Styles';
 import MeetingItemComponent from './MeetingItem';
+import * as global from '../services/global';
+
 
 export const SettingsScreen = ({ navigation }: { navigation: any }) => {
 
     const [style, setStyle] = useState(getStyles(1));
-    const [previewStyle, setPreviewStyle] = useState(getStyles(1));
+    const [previewStyle, setPreviewStyle] = useState(getStyles(2));
     //setStyle(getStyles(0.5));
 
     const [hourlyRate, setHourlyRate] = useState('');
@@ -54,7 +57,7 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
         setActiveButtonIndex(0);
         navigation.navigate('NumberOfParticipants');
     };
-
+    
     const handleHourlyRate = () => {
         setActiveButtonIndex(1);
         navigation.navigate('AverageHourlyRate');
@@ -63,13 +66,14 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
     const handleAccessibility = () => {
         setActiveButtonIndex(2);
     };
-
     const preview = () =>{
         return(
-        <MeetingItemComponent meeting={createNewMeetingItem()} style={previewStyle}/>
+            //for the love of god do not ask me WHY I need this scrollview in order for the meeting item to resize properly
+            <ScrollView style={{flexGrow:1}} >
+                <MeetingItemComponent meeting={createNewMeetingItem()} style={previewStyle}/>
+            </ScrollView>
         );
     }
-
 
 
     return (
@@ -106,37 +110,41 @@ export const SettingsScreen = ({ navigation }: { navigation: any }) => {
                         </View>
 
                     </TouchableOpacity>
-                    <View style={{marginHorizontal:30}}>
-                        <Slider
-                            //value={value}
-                            onValueChange={(value)=>{setPreviewStyle(getStyles(value/100))}}
-                            maximumValue={150}
-                            minimumValue={50}
-                            step={25}
-                            allowTouchTrack
-                            minimumTrackTintColor={colors.white}
-                            maximumTrackTintColor={colors.white}
-                            trackStyle={{ height: 5, backgroundColor: 'transparent' }}
-                            thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
-                            thumbProps={{
-                            children: (
-                                <Icon
-                                name="text-fields"
-                                type="material"
-                                size={15}
-                                reverse
-                                reverseColor={colors.black}
-                                containerStyle={{ bottom: 15, right: 15 }}
-                                color={colors.white}/>
-                                ),
-                            }}
-                        />
-                    </View>
+
+                        <View style={{marginHorizontal:30}}>
+                            <Slider
+                                //value={value}
+                                onValueChange={(value)=>{setPreviewStyle(getStyles(value/100)); global.setFontSize(value/100)}}
+                                maximumValue={150}
+                                minimumValue={50}
+                                step={25}
+                                allowTouchTrack
+                                minimumTrackTintColor={colors.white}
+                                maximumTrackTintColor={colors.white}
+                                trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                                thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+                                thumbProps={{
+                                children: (
+                                    <Icon
+                                    name="text-fields"
+                                    type="material"
+                                    size={15}
+                                    reverse
+                                    reverseColor={colors.black}
+                                    containerStyle={{ bottom: 15, right: 15 }}
+                                    color={colors.white}/>
+                                    ),
+                                }}
+                            />
+                        </View>
+
+                    
+                    
                     
                 </View>
-                <View style={{margin:5,borderWidth:1,borderColor:colors.white}}>
-                    {preview()}
-                </View>
+                
+                {preview()}
+                
             </View>
         </GestureHandlerRootView>
     )

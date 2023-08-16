@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import {
   Alert,
@@ -16,11 +16,12 @@ import { createTable, deleteMeetingItem, getDBConnection, getMeetingItems, saveM
 import { MeetingItem, sortMeetingFN } from '../models';
 import { MeetingView } from './MeetingView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { styles } from '../assets/Styles';
+import { getStyles, styles, updateStyles, } from '../assets/Styles';
 import { useFocusEffect } from '@react-navigation/native';
 import { TermsScreen } from './TermsScreen';
 import { authorize } from 'react-native-app-auth';
 import authConfig from '../utils/authConfig';
+import * as global from '../services/global';
 
 
 
@@ -34,7 +35,9 @@ import authConfig from '../utils/authConfig';
 export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
   const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
+  const [style, setStyle] = useState(getStyles(global.fontSize).homeScreen);
   const screenWidth = Dimensions.get('window').width;
+  
 
   ///loads in data
   const loadDataCallback = useCallback(async () => {
@@ -65,6 +68,8 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
     React.useCallback(() => {
       loadDataCallback();
       setActiveButtonIndex(-1);
+      setStyle(getStyles(global.fontSize).homeScreen);
+      updateStyles();
     }, [loadDataCallback]));
 
   React.useEffect(() => {
@@ -209,43 +214,43 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
 
   return (
     <GestureHandlerRootView>
-      <SafeAreaView style={styles.homeScreen.background}>
-        <View style={styles.homeScreen.content}>
-          <View style={styles.homeScreen.buttonsContainer}>
-            <View style={[styles.homeScreen.button, styles.homeScreen.buttonWithBorder]}>
+      <SafeAreaView style={style.background}>
+        <View style={style.content}>
+          <View style={style.buttonsContainer}>
+            <View style={[style.button, style.buttonWithBorder]}>
               <TouchableOpacity
-                style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.leftInnerButton, viewingUpcomingMeetings && styles.homeScreen.viewingInnerButton]}
+                style={[style.innerButton, style.button, style.leftInnerButton, viewingUpcomingMeetings && style.viewingInnerButton]}
                 onPress={() => handlePastUpcomingPress('upcoming')}
               >
-                <Text style={[styles.homeScreen.upcomingText, viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>Upcoming</Text>
-                <View style={[styles.homeScreen.textBorder, viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>
-                  <Text style={[styles.homeScreen.count, viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>{meetings.length}</Text>
+                <Text style={[style.upcomingText, viewingUpcomingMeetings ? style.viewingColor : style.notViewingColor]}>Upcoming</Text>
+                <View style={[style.textBorder, viewingUpcomingMeetings ? style.viewingColor : style.notViewingColor]}>
+                  <Text style={[style.count, viewingUpcomingMeetings ? style.viewingColor : style.notViewingColor]}>{meetings.length}</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.homeScreen.innerButton, styles.homeScreen.button, styles.homeScreen.rightInnerButton, !viewingUpcomingMeetings && styles.homeScreen.viewingInnerButton]}
+                style={[style.innerButton, style.button, style.rightInnerButton, !viewingUpcomingMeetings && style.viewingInnerButton]}
                 onPress={() => handlePastUpcomingPress('past')}
               >
-                <Text style={[styles.homeScreen.pastText, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>Past</Text>
-                <View style={[styles.homeScreen.textBorder, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>
-                  <Text style={[styles.homeScreen.count, !viewingUpcomingMeetings ? styles.homeScreen.viewingColor : styles.homeScreen.notViewingColor]}>{pastMeetings.length}</Text>
+                <Text style={[style.pastText, !viewingUpcomingMeetings ? style.viewingColor : style.notViewingColor]}>Past</Text>
+                <View style={[style.textBorder, !viewingUpcomingMeetings ? style.viewingColor : style.notViewingColor]}>
+                  <Text style={[style.count, !viewingUpcomingMeetings ? style.viewingColor : style.notViewingColor]}>{pastMeetings.length}</Text>
                 </View>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.homeScreen.cardsContainer}>
+          <View style={style.cardsContainer}>
             {meetings.length + pastMeetings.length > 0 &&
               <View>
                 {meetingPanel}
               </View>
             }
             {meetings.length + pastMeetings.length == 0 &&
-              <WelcomeScreen />
+              <WelcomeScreen styles={style} />
             }
           </View>
           {!isButtonClicked &&
-            <TouchableOpacity style={styles.homeScreen.floatingButtonContainer} onPressOut={handleButtonPress}>
-              <Icon style={styles.homeScreen.floatingButton}
+            <TouchableOpacity style={style.floatingButtonContainer} onPressOut={handleButtonPress}>
+              <Icon style={style.floatingButton}
                 size={35} raised reverseColor='black' type="material" name="add" color="#000000"
               />
             </TouchableOpacity>
@@ -263,24 +268,24 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
         }}>
         <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
 
-          <View style={styles.homeScreen.optionContainer}>
-            <View style={styles.homeScreen.optionButton}>
-              <View style={styles.homeScreen.textButton}>
-                <Text style={styles.homeScreen.optionsText}>How would you like to set up your meeting?</Text>
+          <View style={style.optionContainer}>
+            <View style={style.optionButton}>
+              <View style={style.textButton}>
+                <Text style={style.optionsText}>How would you like to set up your meeting?</Text>
               </View>
             </View>
-            <TouchableOpacity style={[styles.homeScreen.optionButton]} onPressOut={handleCreateMeeting}>
-              <View style={[styles.homeScreen.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60' }]}>
-                <Text style={[styles.homeScreen.optionsTextB]}>Create A Meeting</Text>
+            <TouchableOpacity style={[style.optionButton]} onPressOut={handleCreateMeeting}>
+              <View style={[style.textButton, activeButtonIndex === 0 && { backgroundColor: '#D6AD60' }]}>
+                <Text style={[style.optionsTextB]}>Create A Meeting</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.homeScreen.optionButton,]} onPressOut={handleImportMeeting}>
-              <View style={[styles.homeScreen.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60' }]}>
-                <Text style={[styles.homeScreen.optionsTextB]}>Import Meeting From Microsoft Outlook</Text>
+            <TouchableOpacity style={[style.optionButton,]} onPressOut={handleImportMeeting}>
+              <View style={[style.textButton, activeButtonIndex === 1 && { backgroundColor: '#D6AD60' }]}>
+                <Text style={[style.optionsTextB]}>Import Meeting From Microsoft Outlook</Text>
               </View>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress} />
+          <TouchableOpacity style={style.menu} onPress={handleScreenPress} />
         </View>
       </Modal>
       <Modal
@@ -293,44 +298,44 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
         }}>
 
         <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
-          <TouchableOpacity style={styles.homeScreen.menu} onPress={handleScreenPress} />
+          <TouchableOpacity style={style.menu} onPress={handleScreenPress} />
 
-          <View style={styles.homeScreen.settingsContainerB}>
+          <View style={style.settingsContainerB}>
             <View style={{ borderWidth: 1, borderRadius: 10, overflow: 'hidden' }}>
 
-              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleAbout}>
-                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60' }]}>
-                  <View style={styles.homeScreen.settingContent}>
-                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
-                    <Text style={[styles.homeScreen.settingsText]}>About</Text>
+              <TouchableOpacity style={[style.settingsButton]} onPressOut={handleAbout}>
+                <View style={[style.settingsTextButton, activeButtonIndex === 2 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={style.settingContent}>
+                    <Icon iconStyle={style.icon} type="material" name="chevron-right" color="black" />
+                    <Text style={[style.settingsText]}>About</Text>
                   </View>
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleSetting}>
-                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 3 && { backgroundColor: '#D6AD60' }]}>
-                  <View style={styles.homeScreen.settingContent}>
-                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
-                    <Text style={[styles.homeScreen.settingsText]}>Settings</Text>
+              <TouchableOpacity style={[style.settingsButton]} onPressOut={handleSetting}>
+                <View style={[style.settingsTextButton, activeButtonIndex === 3 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={style.settingContent}>
+                    <Icon iconStyle={style.icon} type="material" name="chevron-right" color="black" />
+                    <Text style={[style.settingsText]}>Settings</Text>
 
                   </View>
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleRateApp}>
-                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 5 && { backgroundColor: '#D6AD60' }]}>
-                  <View style={styles.homeScreen.settingContent}>
-                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
-                    <Text style={[styles.homeScreen.settingsText]}>Rate App</Text>
+              <TouchableOpacity style={[style.settingsButton]} onPressOut={handleRateApp}>
+                <View style={[style.settingsTextButton, activeButtonIndex === 5 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={style.settingContent}>
+                    <Icon iconStyle={style.icon} type="material" name="chevron-right" color="black" />
+                    <Text style={[style.settingsText]}>Rate App</Text>
                   </View>
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.homeScreen.settingsButton]} onPressOut={handleFeedback}>
-                <View style={[styles.homeScreen.settingsTextButton, activeButtonIndex === 4 && { backgroundColor: '#D6AD60' }]}>
-                  <View style={styles.homeScreen.settingContent}>
-                    <Icon iconStyle={styles.homeScreen.icon} type="material" name="chevron-right" color="black" />
-                    <Text style={[styles.homeScreen.settingsText]}>Send Feedback</Text>
+              <TouchableOpacity style={[style.settingsButton]} onPressOut={handleFeedback}>
+                <View style={[style.settingsTextButton, activeButtonIndex === 4 && { backgroundColor: '#D6AD60' }]}>
+                  <View style={style.settingContent}>
+                    <Icon iconStyle={style.icon} type="material" name="chevron-right" color="black" />
+                    <Text style={[style.settingsText]}>Send Feedback</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -344,16 +349,16 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
 }
 
 
-function WelcomeScreen() {
+function WelcomeScreen(style:any) {
   return (
-    <View style={styles.homeScreen.buttonsContainer}>
-      <View style={[styles.homeScreen.message, styles.homeScreen.buttonWithBorder]}>
+    <View style={style.buttonsContainer}>
+      <View style={[style.message, style.buttonWithBorder]}>
         <View style={styles.homeScreen.messageWrapper}>
           <Text style={styles.homeScreen.welcomeText}>Welcome</Text>
-          <Text style={styles.homeScreen.toText}>To</Text>
-          <Text style={styles.homeScreen.mwText}>MEETING WATCHDOG</Text>
-          <Text style={styles.homeScreen.selectText}>Select the '+' button to create a</Text>
-          <Text style={styles.homeScreen.selectTextB}>new trackable meeting.</Text>
+          <Text style={style.toText}>To</Text>
+          <Text style={style.mwText}>MEETING WATCHDOG</Text>
+          <Text style={style.selectText}>Select the '+' button to create a</Text>
+          <Text style={style.selectTextB}>new trackable meeting.</Text>
         </View>
       </View>
     </View>

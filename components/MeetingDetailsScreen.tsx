@@ -110,7 +110,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                 meeting.total_wait_time = Math.round(timerA/1000);
             }
             setTimerValueB(formatTime(timerB));
-            setCostB(calculateCost(timerA));
+            setCostB(calculateCost(timerB));
             meeting.total_meeting_cost = rate*timerB/3600/1000*participants;//updates meeting object, this is just for updating db
             meeting.total_meeting_time = Math.round(timerB/1000);//updates meeting object, this is just for updating db
         }

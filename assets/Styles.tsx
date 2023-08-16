@@ -1,7 +1,9 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { MeetingItem } from '../models/index';
 import { color } from "@rneui/base";
 import CreateMeetingScreen from "../components/CreateMeetingScreen";
+import * as global from '../services/global';
+import { el } from "date-fns/locale";
 
 export const colors = {
   'royalBlue': '#152B61',
@@ -20,7 +22,10 @@ export const colors = {
 
 }
 
-export const getStyles = (fontMagnify:number = 1) =>{
+const screenWidth = Dimensions.get('window').width;
+
+
+export const getStyles = (fontMagnify:number = global.fontSize) =>{
 
 
   return {
@@ -156,12 +161,16 @@ export const getStyles = (fontMagnify:number = 1) =>{
       width: 30,
       height: 30,
       alignItems: 'center',
+      //alignContent:'center',
+      verticalAlign:'center',
+      justifyContent:'center',
     },
     count: {
       color: '#0A1128', // Sets the text color
       fontFamily: 'OpenSans-Bold', // Sets the font family
       fontSize: fontMagnify *  14, // Sets the font size
-      marginTop: 3.5,
+      verticalAlign:'middle',
+      top:-1*fontMagnify*fontMagnify,
     },
     viewingColor: {
       borderColor: colors.oxfordBlue,
@@ -179,12 +188,6 @@ export const getStyles = (fontMagnify:number = 1) =>{
       width: 30,
       height: 30,
       alignItems: 'center',
-    },
-    pastCount: {
-      color: '#ffffff', // Sets the text color
-      fontFamily: 'OpenSans-Bold', // Sets the font family
-      fontSize: fontMagnify *  14, // Sets the font size
-      marginTop: 3.5,
     },
 
     rightInnerButton: {
@@ -271,7 +274,8 @@ export const getStyles = (fontMagnify:number = 1) =>{
       margin: 0,
     },
     optionButton: {
-      height: 50,
+      //height: 50,
+      minHeight: 50,
       width: '100%', // Sets the width to 100% of the container
       justifyContent: 'center', // Centers content vertically
       alignItems: 'center', // Aligns text to the left
@@ -298,7 +302,7 @@ export const getStyles = (fontMagnify:number = 1) =>{
     },
     textButton: {
       width: '100%', // Sets the width to 100% of the container
-      height: 50, // Sets the height of the button
+      minHeight: 50, // Sets the height of the button
       backgroundColor: '#ffffff', // Sets the background color of the button
       justifyContent: 'center', // Centers content vertically
       alignItems: 'center', // Aligns text to the left
@@ -393,24 +397,28 @@ export const getStyles = (fontMagnify:number = 1) =>{
       alignSelf: 'stretch',
       marginLeft: 0,
       flex: 1,
-      paddingRight: 0
+      paddingRight: 0,
+      maxWidth: screenWidth-100-30,
     },
     iconWrapper: {
       margin: 0,
       display: "flex",
-      marginLeft: 10,
-      marginTop: 20,
+      flex:1,
+      //marginLeft: 10,
+      //marginTop: 20,
+      top: 5,
       justifyContent: 'center',
       alignItems: 'center',
-
     },
     iconWrapperChevron: {
       margin: 0,
       display: "flex",
+      flex:1,
       marginLeft: 55,
-      marginTop: 25,
+      marginTop:-7.5,
       justifyContent: 'center',
       alignItems: 'center',
+      //top: -7.5,
     },
     dateButtonIcon: {
 
@@ -429,16 +437,18 @@ export const getStyles = (fontMagnify:number = 1) =>{
     space: {
       flexDirection: 'row',
       marginLeft: 30,
+      marginBottom:0, 
       alignItems: 'center',
     },
     time: {
       flexDirection: 'row',
       marginTop: 10,
-    },
-    date: {
-      flexDirection: 'row',
-      alignItems: 'center',
-
+      
+      flex:1,
+      flexWrap:'wrap',
+      marginBottom:0,
+      
+      
     },
     iconText: {
       color: colors.white,
@@ -451,7 +461,7 @@ export const getStyles = (fontMagnify:number = 1) =>{
       marginLeft: 0,
       width: 50,
       height: '100%',
-
+      //justifyContent: 'center',
       alignSelf: 'flex-end',
       overflow: 'hidden',
     },
@@ -462,12 +472,16 @@ export const getStyles = (fontMagnify:number = 1) =>{
       marginBottom: 30,
       marginTop: 10,
       backgroundColor: colors.white,
-      height: 90,
+      minHeight: 90,
       overflow: 'hidden',
+      flex:-1,
     },
     cardTitle: {
+      marginLeft:30,
+      marginBottom:10,
+      marginTop:10,
       textAlign: 'left',
-      fontSize: fontMagnify *  17,
+      fontSize: fontMagnify *  18,
       fontFamily: 'OpenSans-Bold',
       color: colors.oxfordBlue,
       //fontWeight: "700",
@@ -477,8 +491,9 @@ export const getStyles = (fontMagnify:number = 1) =>{
       paddingLeft: 2,
       verticalAlign: 'middle',
       color: colors.richBlack,
-      fontSize: fontMagnify *  13,
-      fontFamily: 'OpenSans-Regular'
+      fontSize: fontMagnify *  15,
+      fontFamily: 'OpenSans-Regular',
+      textAlignVertical:'bottom',
     },
     sectionTitle: {
       fontSize: fontMagnify *  24,
@@ -1646,4 +1661,9 @@ export const getStyles = (fontMagnify:number = 1) =>{
 };
 }
 
-export const styles = getStyles();
+export let styles = getStyles();
+
+export const updateStyles = () =>{
+  styles = getStyles(global.fontSize)
+}
+

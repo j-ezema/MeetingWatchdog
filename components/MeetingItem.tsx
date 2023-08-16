@@ -82,10 +82,9 @@ export const MeetingItemComponent: React.FC<props> = ({ meeting: { id, meeting_t
           </Animated.View>
           <View style={style.meetingItem.sectionContainer}>
             <View style={style.meetingItem.thinBlueLine}></View>
-            <View style={{ paddingLeft: 20 ,paddingTop: 10,}} >
               <Text numberOfLines={1} style={style.meetingItem.cardTitle}>{meeting_title}</Text>
               <View style={style.meetingItem.time}>
-                <View style={style.meetingItem.date}>
+                <View style={style.meetingItem.space}>
                   {/*<Image source={require('../assets/calendar.png')} style={[style.meetingItem.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: colors.steelBlue }]} />*/}
                   <Icon style={style.meetingItem.dateText} type="material-community" name="calendar-month-outline" size={20}/>
                   <Text style={style.meetingItem.dateText}>{moment(meeting_datetime).format("YYYY-MM-DD")}</Text>
@@ -96,10 +95,6 @@ export const MeetingItemComponent: React.FC<props> = ({ meeting: { id, meeting_t
                   <Text style={style.meetingItem.dateText}>{moment(meeting_datetime).format("h:mma")}</Text>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row', }}>
-
-              </View>
-            </View>
           </View>
 
         </View>

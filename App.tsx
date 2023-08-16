@@ -5,10 +5,10 @@
  * @format
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { colors, styles } from './assets/Styles';
+import { colors, styles} from './assets/Styles';
 import { HomeScreen } from './components/HomeScreen';
 import CreateMeetingScreen from './components/CreateMeetingScreen';
 import { Icon, Image, Text } from 'react-native-elements';
@@ -22,6 +22,7 @@ import { View } from 'react-native';
 import { SettingsScreen } from './components/SettingsScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight, SettingsHeaderLeft, AboutHeaderLeft } from './components/Headers';
+import * as global from './services/global';
 
 
 
