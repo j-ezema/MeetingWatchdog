@@ -4,6 +4,7 @@ import { color } from "@rneui/base";
 import CreateMeetingScreen from "../components/CreateMeetingScreen";
 import * as global from '../services/global';
 import { el } from "date-fns/locale";
+import { ScreenHeight } from "react-native-elements/dist/helpers";
 
 export const colors = {
   'royalBlue': '#152B61',
@@ -557,7 +558,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
 
     icon: {
-      fontSize: 30,
+      fontSize: fontMagnify * 30,
       justifyContent: 'center',
       alignItems: 'center',
 
@@ -601,7 +602,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
     cardTitle: {
       textAlign: 'left',
-      fontSize: 17,
+      fontSize: fontMagnify * 17,
       fontFamily: 'OpenSans-Bold',
       color: colors.oxfordBlue,
       //fontWeight: "700",
@@ -615,7 +616,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       fontFamily: 'OpenSans-Regular'
     },
     sectionTitle: {
-      fontSize: 24,
+      fontSize: fontMagnify * 24,
       fontWeight: '600',
     },
     thinBlueLine: {
@@ -1055,11 +1056,12 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
 
 
     },
+    
 
     container: {
       flex: 1,
-      backgroundColor: '#0A1128', // Sets the background color
-      paddingVertical: 10, // Adds vertical padding
+      backgroundColor: colors.oxfordBlue, // Sets the background color
+      paddingTop: 10, // Adds vertical padding
     },
 
     header: {
@@ -1145,7 +1147,56 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       marginTop: '0.5%', // Adjusts the position
       marginBottom: '0.5%',
     },
+    slider: {
+      marginBottom:20,
+      marginHorizontal:10,
+      flexDirection: 'column',
+      flex:1,
+      height:50,
+      justifyContent:'center',
+    },
+    font:{
+      color:colors.white,
+      textAlignVertical:'center',
+      maxHeight:50,
+    },
+    footer: {
+      flexDirection: 'row', // Sets the direction of items in the container to horizontal
 
+    },
+
+    footerContainer: {
+      left: 0,
+      right: 0,
+      bottom: 0,
+      flexDirection: 'column-reverse',
+      flex:-1,
+      backgroundColor:colors.oxfordBlue,
+      margin:0,
+    },
+
+    footerButtonContainer: {
+      //flexGrow: 1, // Takes up the available space
+      alignItems: 'center', // Centers content horizontally
+      paddingVertical: 20, // Adds vertical padding
+      borderTopWidth: 0.5,
+      borderTopColor: '#EFEFEF',
+      width:screenWidth,
+      flex:-1,
+    },
+
+    footerButton: {
+      height: 62, // Sets the height of the button
+      backgroundColor: '#ffffff', // Sets the background color of the button
+      borderRadius: 10, // Sets the border radius of the button
+      width: 160, // Sets the width of the button
+    },
+
+    footerButtonText: {
+      color: '#ffffff', // Sets the text color
+      fontFamily: 'OpenSans-Semibold', // Sets the font family
+      fontSize: fontMagnify *  17, // Sets the font size
+    },
 
   }),
   'meetingDetails': StyleSheet.create({
@@ -1153,7 +1204,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       marginBottom: 20, // Adds bottom margin
       width: "100%",
       flex: 0,
-      height: 70, // Sets the height of the button
+      minHeight: 100, // Sets the height of the button
       alignItems: 'flex-start', // Aligns text to the left
       alignContent: "center",
     },
@@ -1198,7 +1249,8 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     overViewView: {
       marginBottom: 20, // Adds bottom margin
       marginHorizontal: 20,
-      height: 90, // Sets the height of the button
+      flex:-1,
+      minHeight: 90, // Sets the height of the button
       borderRadius: 10, // Sets the border radius
       backgroundColor: '#ffffff', // Sets the background color of the button
       alignItems: 'flex-start', // Aligns text to the left
@@ -1207,15 +1259,14 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       paddingTop: 5,
     },
     interiorRow: {
-      flex: 1,
       flexDirection: "row",
     },
     costContainer: {
 
       flex: 1,
       height: '100%',
-      borderWidth: 1,
-      borderColor: colors.white,
+      //borderWidth: 1,
+      backgroundColor: colors.white,
       marginRight: 0,
       paddingLeft: 25,
     },
@@ -1234,8 +1285,8 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     timeContainer: {
       marginLeft: 0,
       flex: 1,
-      borderWidth: 1,
-      borderColor: colors.white,
+      //borderWidth: 1,
+      backgroundColor: colors.white,
       paddingRight: 25,
     },
     timeTitle: {
@@ -1250,66 +1301,45 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       fontSize: fontMagnify * 24,
       color: colors.richBlack,
     },
-    statContainerRight: {
-      flexDirection: "column-reverse",
+    statContainer: {
+      marginLeft: 0,
+      marginRight:0,
       flex: 1,
-      //height:70,
-      //flexDirection:'row',
-      //backgroundColor:colors.royalBlue,
-      borderWidth: 2,
-      borderColor: colors.steelBlue,
+      margin:-0.2,
+      //borderWidth: 1,
+      backgroundColor: colors.white,
+      paddingRight: 25,
+      borderRadius:10,
+      borderWidth:2,
+      borderColor:colors.steelBlue,
+    },
+    statContainerTopLeft: {
+      marginLeft: 0,
+      marginRight:5,
+      borderBottomLeftRadius:0,
+      borderBottomRightRadius:0,
+      borderBottomWidth:0,
+    },
+    statContainerBottomLeft: {
+      marginLeft: 0,
+      marginRight:5,
+      borderTopLeftRadius:0,
+      borderTopRightRadius:0,
+      borderTopWidth:0,
+    },
+    statContainerTopRight: {
       marginLeft: 5,
-      marginRight: 20,
-
-      paddingHorizontal: 10,
+      marginRight:0,
+      borderBottomLeftRadius:0,
+      borderBottomRightRadius:0,
+      borderBottomWidth:0,
     },
-    statContainerLeft: {
-      flexDirection: "column-reverse",
-      flex: 1,
-      //height:70,
-      //flexDirection:'row',
-      //backgroundColor:colors.royalBlue,
-      borderWidth: 2,
-      borderColor: colors.steelBlue,
-      marginRight: 5,
-      paddingHorizontal: 10,
-    },
-    statContainerTop: {
-      flexDirection: "column",
-      flexWrap: 'wrap',
-      marginHorizontal: 5,
-      /// these 4 finally made it expand correctly
-      flexShrink: 1,
-      width: "50%",
-      flex: 0,
-      height: 'auto',
-      //flexDirection:'row',
-      //backgroundColor:colors.royalBlue,
-      borderWidth: 2,
-      borderBottomWidth: 0,
-      borderColor: colors.steelBlue,
-      paddingLeft: 5,
-      paddingRight: 2,
-      borderBottomRightRadius: 0,
-      borderBottomLeftRadius: 0,
-      marginBottom: 0,
-    },
-    statContainerBottom: {
-      flexDirection: "column-reverse",
-      flex: 1,
-      height: 45,
-      marginHorizontal: 5,
-
-      //flexDirection:'row',
-      //backgroundColor:colors.royalBlue,
-      borderWidth: 2,
-      borderTopWidth: 0,
-      borderColor: colors.steelBlue,
-      paddingLeft: 5,
-      paddingRight: 2,
-      borderTopRightRadius: 0,
-      borderTopLeftRadius: 0,
-      paddingTop: 2,
+    statContainerBottomRight: {
+      marginLeft: 5,
+      marginRight:0,
+      borderTopLeftRadius:0,
+      borderTopRightRadius:0,
+      borderTopWidth:0,
     },
     statTitleOver: {
       flex: 0,
@@ -1330,7 +1360,8 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       paddingTop: 5,
       color: colors.richBlack,
       marginBottom: 2,
-      flex: 1,
+      flex: -1,
+      minHeight:30,
     },
     button: {
       overflow: "hidden",

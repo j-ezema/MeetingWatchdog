@@ -164,7 +164,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     return (
         <ScrollView style={{flex:1,backgroundColor:colors.oxfordBlue}}>
             <View style={{width:'100%', height:windowHeight,flex:1, }}>
-                <KeyboardAvoidingView style={{flex:1, paddingTop:30}}>
+                <KeyboardAvoidingView style={{flex:-1, paddingTop:30}} keyboardVerticalOffset={90}>
                     <View style={styles.meetingDetails.detailTitle}>
                         <Text style={styles.meetingDetails.Title}>
                             {meeting.meeting_title}
@@ -181,7 +181,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                         </View>
                     </View>
                     <View style={styles.meetingDetails.overViewView}>
-                    <View style={{flex:1, flexDirection:"row"}}>
+                        <View style={styles.meetingDetails.interiorRow}>
                             <View style={styles.meetingDetails.costContainer}>
                                 <Text style={styles.meetingDetails.costTitle}>
                                     Idle Time Cost
@@ -207,7 +207,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                         </View>
                     </View>
                     <View style={styles.meetingDetails.overViewView}>
-                        <View style={{flex:1, flexDirection:"row"}}>
+                        <View style={styles.meetingDetails.interiorRow}>
                             <View style={styles.meetingDetails.costContainer}>
                                 <Text style={styles.meetingDetails.costTitle}>
                                     Total Time Cost
@@ -232,6 +232,44 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                             </View>
                         </View>
                     </View>
+                    {/*---------------------------------------------------------------------------------*/}
+                    <View style={[styles.meetingDetails.overViewView,{backgroundColor:colors.oxfordBlue,overflow:"visible"}]}>
+                        <View style={styles.meetingDetails.interiorRow}>
+                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerTopLeft]}>
+                                <Text style={styles.meetingDetails.statTitle}>
+                                    Number Of Participants
+                                </Text>
+                            </View>
+                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerTopRight]}>
+                                <Text style={styles.meetingDetails.statTitle}>
+                                    Total Time Spent 
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={styles.meetingDetails.interiorRow}>
+                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerBottomLeft]}>
+                                <TextInput
+                                    style={[ styles.meetingDetails.statValue]}
+                                    placeholder="Enter rate"
+                                    value={participantsEntry}
+                                    onChangeText={(x)=>{if(+x>0){setParticipants(+x);}setParticipantsEntry(x);}}
+                                    keyboardType="numeric"
+                                    editable={!isCounting && !isPastMeeting}
+                                />
+                            </View>
+                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerBottomRight]}>
+                                <TextInput
+                                    style={[ styles.meetingDetails.statValue]}
+                                    placeholder="Enter rate"
+                                    value={rateEntry}
+                                    onChangeText={(x)=>{if(+x>0){setRate(+x);}setRateEntry(x);}}
+                                    keyboardType="numeric"
+                                    editable={!isCounting && !isPastMeeting}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                    {/*
                     <View style={{flexDirection:"row",flex:0,marginHorizontal:15,}}>
                         <View style={[styles.meetingDetails.overViewView, styles.meetingDetails.statContainerTop]}>
                             <Text style={styles.meetingDetails.statTitle}>
@@ -265,7 +303,8 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                                 editable={!isCounting && !isPastMeeting}
                             />
                         </View>
-                    </View>
+    </View>*/}
+                    
                 </KeyboardAvoidingView>
                 <View style={{flex:1, flexDirection:"column-reverse", marginBottom:0,}}>
                     {

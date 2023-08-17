@@ -79,7 +79,7 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
     return (
         <View style={styles.settings.container}>
 
-            <View style={styles.createMeeting.buttonsContainer}>
+            <View style={[styles.createMeeting.buttonsContainer,{flex:0}]}>
 
                 <Text style={styles.settings.subHeader}>Edit Average Hourly Rate</Text>
 
@@ -102,6 +102,7 @@ export const AverageHourlyRateScreen = ({ navigation }: { navigation: any }) => 
                     </View>
                 )}
             </View>
+            <View style={{flex:1,}}></View>
             <View style={styles.createMeeting.footerContainer}>
 
                 <View style={styles.createMeeting.footer}>

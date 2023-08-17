@@ -23,6 +23,7 @@ import { SettingsScreen } from './components/SettingsScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LogoReturnHeaderLeft, HomeHeaderLeft, CancelHeaderLeft, CancelHeaderRight, SettingsHeaderLeft, AboutHeaderLeft } from './components/Headers';
 import * as global from './services/global';
+import { getDBConnection, retrieveSettings } from './services/db-services';
 
 
 
@@ -31,6 +32,18 @@ import * as global from './services/global';
 function App(): JSX.Element {
   const Stack = createNativeStackNavigator();
   const [loading, setLoading] = useState(true);
+
+  const loadDataCallback = useCallback(async () => {
+    try {
+        const db = await getDBConnection();
+        const settings: { [k: string]: any } = await retrieveSettings(db);
+        console.log(settings);
+        global.setFontSize(+settings.font_size_accessibility)
+    } catch (error) {
+        console.error(error);
+    }
+  }, []);
+  loadDataCallback();
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);

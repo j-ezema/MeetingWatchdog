@@ -18,6 +18,7 @@ const settings: any[] = new Array(
   { name: 'default_participants', value: 5 },
   { name: 'default_hourly', value: 100 },
   { name: 'termsOfService', value: 0 },
+  { name: 'font_size_accessibility', value: 1 },
 );
 
 export const createTable = async (db: SQLiteDatabase) => {
@@ -206,6 +207,10 @@ export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants:
 };
 export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: number): Promise<void> => {
   await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_hourly'`, [hourlyRate]);
+}
+
+export const saveFontSizeAccessibility = async (db: SQLiteDatabase, fontSize: number): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'font_size_accessibility'`, [fontSize]);
 }
 
 export const termsAgreed = async (db: SQLiteDatabase): Promise<boolean> => {

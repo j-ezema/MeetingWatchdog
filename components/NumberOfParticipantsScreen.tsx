@@ -75,7 +75,7 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
     return (
         <View style={styles.settings.container}>
 
-            <View style={styles.createMeeting.buttonsContainer}>
+            <View style={[styles.createMeeting.buttonsContainer,{flex:0}]}>
                 <Text style={styles.settings.subHeader}>Edit Number of Participants</Text>
                 {/*<NumericTextEntry value={participants} setValue={(x:string)=>{setParticipants(x);}}/> redo later */}
                 <TouchableOpacity style={[styles.createMeeting.textButton, (!participants && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
@@ -96,6 +96,7 @@ export const NumberofParticipantsScreen = ({ navigation }: { navigation: any }) 
                     </View>
                 )}
             </View>
+            <View style={{flex:1,}}></View>
             <View style={styles.createMeeting.footerContainer}>
 
                 <View style={styles.createMeeting.footer}>
