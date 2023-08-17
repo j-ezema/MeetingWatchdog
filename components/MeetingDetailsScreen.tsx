@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { MeetingItem, createNewMeetingItem } from "../models";
 import { Dimensions, Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { colors, styles } from "../assets/Styles";
@@ -35,6 +35,8 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     const [participantsEntry, setParticipantsEntry] = useState("5");// total time
     const windowHeight = Dimensions.get('window').height-100;
     let startButton = (<View/>);
+    const participantsInputRef = useRef<TextInput>(null);
+    const hourlyRateInputRef = useRef<TextInput>(null);
 
     ///FORMATTING METHODS
 
@@ -235,20 +237,21 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                     {/*---------------------------------------------------------------------------------*/}
                     <View style={[styles.meetingDetails.overViewView,{backgroundColor:colors.oxfordBlue,overflow:"visible"}]}>
                         <View style={styles.meetingDetails.interiorRow}>
-                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerTopLeft]}>
+                            <TouchableOpacity activeOpacity={1}  onPress={() => participantsInputRef.current?.focus()} style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerTopLeft]}>
                                 <Text style={styles.meetingDetails.statTitle}>
                                     Number Of Participants
                                 </Text>
-                            </View>
-                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerTopRight]}>
+                            </TouchableOpacity>
+                            <TouchableOpacity activeOpacity={1} onPress={() => hourlyRateInputRef.current?.focus()} style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerTopRight]}>
                                 <Text style={styles.meetingDetails.statTitle}>
                                     Total Time Spent 
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.meetingDetails.interiorRow}>
-                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerBottomLeft]}>
+                            <TouchableOpacity activeOpacity={1}  onPress={() => participantsInputRef.current?.focus()} style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerBottomLeft]}>
                                 <TextInput
+                                    ref={participantsInputRef}
                                     style={[ styles.meetingDetails.statValue]}
                                     placeholder="Enter rate"
                                     value={participantsEntry}
@@ -256,17 +259,21 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                                     keyboardType="numeric"
                                     editable={!isCounting && !isPastMeeting}
                                 />
-                            </View>
-                            <View style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerBottomRight]}>
+                            </TouchableOpacity>
+                            <TouchableOpacity activeOpacity={1}  onPress={() => hourlyRateInputRef.current?.focus()} style={[styles.meetingDetails.statContainer,styles.meetingDetails.statContainerBottomRight]}>
                                 <TextInput
+                                    ref={hourlyRateInputRef}
                                     style={[ styles.meetingDetails.statValue]}
                                     placeholder="Enter rate"
-                                    value={rateEntry}
-                                    onChangeText={(x)=>{if(+x>0){setRate(+x);}setRateEntry(x);}}
+                                    value={"$"+(+rateEntry)}
+                                    onChangeText={(x)=>{
+                                        const val = x.replace(/[^0-9.]/g, '')
+                                        if(+val>0){setRate(+val);}setRateEntry(val);
+                                    }}
                                     keyboardType="numeric"
                                     editable={!isCounting && !isPastMeeting}
                                 />
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     {/*
@@ -303,7 +310,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                                 editable={!isCounting && !isPastMeeting}
                             />
                         </View>
-    </View>*/}
+                    </View>*/}
                     
                 </KeyboardAvoidingView>
                 <View style={{flex:1, flexDirection:"column-reverse", marginBottom:0,}}>

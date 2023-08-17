@@ -1260,6 +1260,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
     interiorRow: {
       flexDirection: "row",
+      flex:1,
     },
     costContainer: {
 
@@ -1300,6 +1301,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       fontFamily: 'OpenSans-Bold',
       fontSize: fontMagnify * 24,
       color: colors.richBlack,
+      textAlignVertical:'bottom',
     },
     statContainer: {
       marginLeft: 0,
@@ -1351,6 +1353,7 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       fontSize: fontMagnify *  15,
       color: colors.richBlack,
       flex: 0,
+      marginLeft:5,
       //backgroundColor:'red',
     },
     statValue: {
