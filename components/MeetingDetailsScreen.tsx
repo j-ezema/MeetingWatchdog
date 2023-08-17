@@ -23,8 +23,8 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
     const [timerB, setTimerB] = useState(0);// total time
     const [TimerValueA, setTimerValueA] = useState("00:00:00");
     const [TimerValueB, setTimerValueB] = useState("00:00:00");
-    const [costA, setCostA] = useState('$0');
-    const [costB, setCostB] = useState('$0');
+    const [costA, setCostA] = useState('$0.00');
+    const [costB, setCostB] = useState('$0.00');
     const [isCounting, setIsCounting] = useState(false);
     const [isIdle, setIsIdle] = useState(true);
     const [pointInitial, setPointInitial] = useState(moment.now);// total time
@@ -57,7 +57,7 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
         setMeeting(meetingTemp)
         setRate(meetingTemp.average_hourly_cost);
         setParticipants(meetingTemp.number_of_participants);
-        setRateEntry(""+meetingTemp.average_hourly_cost);
+        setRateEntry(""+meetingTemp.average_hourly_cost.toFixed(2));
         setParticipantsEntry(""+meetingTemp.number_of_participants);
 
         if(meetingTemp.id != -1 ){
@@ -265,13 +265,17 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                                     ref={hourlyRateInputRef}
                                     style={[ styles.meetingDetails.statValue]}
                                     placeholder="Enter rate"
-                                    value={"$"+(+rateEntry)}
+                                    value={"$"+rateEntry}
                                     onChangeText={(x)=>{
                                         const val = x.replace(/[^0-9.]/g, '')
                                         if(+val>0){setRate(+val);}setRateEntry(val);
                                     }}
                                     keyboardType="numeric"
                                     editable={!isCounting && !isPastMeeting}
+                                    onBlur={()=>{
+                                        const val = rateEntry.replace(/[^0-9.]/g, '')
+                                        setRateEntry(""+(+val).toFixed(2))
+                                    }}
                                 />
                             </TouchableOpacity>
                         </View>
