@@ -8,6 +8,7 @@ export function TermsScreen() {
 
   //whether or not the modal is popped up
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
 
   //retrieve all paragraphs from STRINGS
   var termsBody: JSX.Element[] = [];
@@ -85,7 +86,8 @@ export function TermsScreen() {
             </View>
           </ScrollView>
           <View style={{flexDirection:"row"}}>
-              <TouchableOpacity  onPressOut={BackHandler.exitApp} style={styles.terms.decline }>
+              {/* <TouchableOpacity  onPressOut={BackHandler.exitApp} style={styles.terms.decline }> */}
+              <TouchableOpacity  onPressOut={()=>setIsConfirmationModalVisible(true)} style={styles.terms.decline }>
                 <Text style={styles.terms.declineText}>
                   {STRINGS.termsAndConditions.decline}
                 </Text>
@@ -99,6 +101,40 @@ export function TermsScreen() {
         </View>
         
       </View>
+      <Modal
+      animationType="fade"
+      transparent={true}
+      visible={isConfirmationModalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+        attemptClose();
+      }}>
+          <View style={styles.terms.semiTransparentRange}>
+            <View style={[styles.terms.confirmView]}>
+              <View style={{flex:-1, minHeight:140,}}>
+                <Text style={styles.terms.confirmText}>
+                {STRINGS.termsAndConditions.confirm}
+                </Text>
+                <Text style={styles.terms.confirmItalicsText}>
+                {STRINGS.termsAndConditions.confirmItalics}
+                </Text>
+              </View>
+              <View style={{flexDirection:"row", margin:-10, flex:0}}>
+                {/* <TouchableOpacity  onPressOut={BackHandler.exitApp} style={styles.terms.decline }> */}
+                <TouchableOpacity  onPressOut={()=>setIsConfirmationModalVisible(false)} style={styles.terms.decline }>
+                  <Text style={styles.terms.declineText}>
+                    {STRINGS.termsAndConditions.cancel}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity  onPressOut={BackHandler.exitApp} style={styles.terms.accept}>
+                  <Text style={styles.terms.acceptText}>
+                    {STRINGS.termsAndConditions.confirmButton}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+      </Modal>
     </Modal>
   );
 }

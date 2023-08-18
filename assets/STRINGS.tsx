@@ -89,7 +89,11 @@ const STRINGS_EN = {
         },
         acceptText:"By using the App, you acknowledge that you have read, understood, and agree to be bound by this Agreement.",
         accept:"Accept",
-        decline:"Decline"
+        decline:"Decline",
+        confirm:"Are you sure you would like to decline the terms and conditions?",
+        confirmItalics:"If the terms and conditions are declined, the app will close",
+        cancel:"Cancel",
+        confirmButton:'Confirm'
 
     },
     meetingDetails:{

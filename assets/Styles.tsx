@@ -1673,9 +1673,18 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       margin: 40,
       borderRadius: 20,
     },
+    confirmView: {
+      flex: -1,
+      minHeight:200,
+      backgroundColor: "#FFFFFF",
+      margin: 40,
+      borderRadius: 20,
+      padding:10,
+    },
     semiTransparentRange: {
       flex: 1,
-      backgroundColor: "#000000AA"
+      backgroundColor: "#000000AA",
+      justifyContent:'center',
     },
     termsContainer: {
       flex: 1,
@@ -1719,6 +1728,26 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       textAlignVertical: 'center',
       flex: 1,
       paddingBottom: 3,
+    },
+    confirmText: {
+      color: colors.black,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 0,
+      paddingBottom: 20,
+      fontSize: 15*fontMagnify,
+      marginHorizontal:25,
+      fontFamily:'OpenSans',
+    },
+    confirmItalicsText: {
+      color: colors.black,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 0,
+      paddingBottom: 20,
+      fontSize: 15*fontMagnify,
+      marginHorizontal:25,
+      fontFamily:'OpenSans-SemiboldItalic',
     },
   }),
 };
