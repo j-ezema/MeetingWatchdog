@@ -196,12 +196,12 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                             </View>
                         </View>
                         <View style={styles.meetingDetails.interiorRow}>
-                            <View style={styles.meetingDetails.costContainer}>
+                            <View style={[styles.meetingDetails.costContainer, styles.meetingDetails.valueBottom]}>
                                 <Text style={styles.meetingDetails.costValue}>
                                     {costA}
                                 </Text>
                             </View>
-                            <View style={styles.meetingDetails.timeContainer}>
+                            <View style={[styles.meetingDetails.timeContainer, styles.meetingDetails.valueBottom]}>
                                 <Text style={styles.meetingDetails.timeValue}>
                                     {TimerValueA}
                                 </Text>
@@ -222,12 +222,12 @@ export const MeetingDetailsScreen = ({ route}:{route:any}) => {
                             </View>
                         </View>
                         <View style={styles.meetingDetails.interiorRow}>
-                            <View style={styles.meetingDetails.costContainer}>
+                            <View style={[styles.meetingDetails.costContainer, styles.meetingDetails.valueBottom]}>
                                 <Text style={styles.meetingDetails.costValue}>
                                     {costB}
                                 </Text>
                             </View>
-                            <View style={styles.meetingDetails.timeContainer}>
+                            <View style={[styles.meetingDetails.timeContainer, styles.meetingDetails.valueBottom]}>
                                 <Text style={styles.meetingDetails.timeValue}>
                                     {TimerValueB}
                                 </Text>

@@ -1314,16 +1314,18 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       alignItems: 'flex-start', // Aligns text to the left
       flexDirection: 'column',
       overflow: "hidden",
-      paddingTop: 5,
+      
     },
     interiorRow: {
       flexDirection: "row",
-      flex:1,
+      flex:0,
+      flexGrow:1,
+      
     },
     costContainer: {
 
       flex: 1,
-      height: '100%',
+      //height: '100%',
       //borderWidth: 1,
       backgroundColor: colors.white,
       marginRight: 0,
@@ -1347,6 +1349,11 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       //borderWidth: 1,
       backgroundColor: colors.white,
       paddingRight: 25,
+    },
+    valueBottom:{
+      justifyContent:'flex-end',
+      paddingBottom:10,
+      paddingTop:0,
     },
     timeTitle: {
       textAlign: 'right',
