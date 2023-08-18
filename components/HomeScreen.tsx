@@ -22,6 +22,7 @@ import { TermsScreen } from './TermsScreen';
 import { authorize } from 'react-native-app-auth';
 import authConfig from '../utils/authConfig';
 import * as global from '../services/global';
+import STRINGS from '../assets/STRINGS';
 
 
 
@@ -36,6 +37,7 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [meetings, setMeetings] = useState<MeetingItem[]>([]);
   const [pastMeetings, setPastMeetings] = useState<MeetingItem[]>([]);
   const [style, setStyle] = useState(getStyles(global.fontSize).homeScreen);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
   const screenWidth = Dimensions.get('window').width;
   
 
@@ -101,6 +103,11 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
       console.error(error);
     }
   };
+  const [deleteTarget, setDeleteTarget] = useState(-1);
+  const deletePass = (id: number) =>{
+    setDeleteTarget(id);
+    setIsConfirmationModalVisible(true);
+  }
 
   const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -202,11 +209,11 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
   let meetingPanel;
   if (viewingUpcomingMeetings) {
     meetingPanel = (
-      <MeetingView meetings={meetings} deleteItem={deleteItem} toDetails={toDetails} />
+      <MeetingView meetings={meetings} deleteItem={deletePass} toDetails={toDetails} />
     );
   } else {
     meetingPanel = (
-      <MeetingView meetings={pastMeetings} deleteItem={deleteItem} toDetails={toDetails} />
+      <MeetingView meetings={pastMeetings} deleteItem={deletePass} toDetails={toDetails} />
     );
   }
 
@@ -342,6 +349,34 @@ export const HomeScreen = ({ navigation }: { navigation: any }) => {
             </View>
           </View>
         </View>
+      </Modal>
+      <Modal
+      animationType="fade"
+      transparent={true}
+      visible={isConfirmationModalVisible}
+      onRequestClose={() => {setIsConfirmationModalVisible(false);
+      }}>
+          <View style={style.semiTransparentRange}>
+            <View style={[style.confirmView]}>
+              <View style={{flex:-1, minHeight:80,}}>
+                <Text style={style.confirmText}>
+                {STRINGS.homeScreen.confirm}
+                </Text>
+              </View>
+              <View style={{flexDirection:"row", margin:-10, flex:0}}>
+                <TouchableOpacity  onPressOut={()=>{setIsConfirmationModalVisible(false);setDeleteTarget(-1);}} style={style.decline }>
+                  <Text style={style.declineText}>
+                    {STRINGS.homeScreen.cancel}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPressOut={()=>{setIsConfirmationModalVisible(false);deleteItem(deleteTarget);setDeleteTarget(-1);}}   style={style.accept}>
+                  <Text style={style.acceptText}>
+                    {STRINGS.homeScreen.accept}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
       </Modal>
     </GestureHandlerRootView>
   )

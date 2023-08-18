@@ -389,6 +389,64 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
       borderWidth: 2, // Sets the border width
 
     },
+    accept: {
+      flex: 1,
+      padding: 5,
+      borderRadius: 15,
+      margin: 10,
+      marginHorizontal: 20,
+      height: 50,
+      backgroundColor: colors.oxfordBlue
+    },
+    decline: {
+      flex: 1,
+      padding: 5,
+      borderRadius: 15,
+      margin: 10,
+      marginHorizontal: 20,
+      height: 50,
+      backgroundColor: colors.gray,
+      alignContent: "center",
+      alignItems: "center",
+    
+    },
+    acceptText: {
+      color: colors.white,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 1,
+      paddingBottom: 3,
+    },
+    declineText: {
+      color: colors.black,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 1,
+      paddingBottom: 3,
+    },
+    confirmText: {
+      color: colors.black,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      flex: 0,
+      paddingBottom: 20,
+      fontSize: 15*fontMagnify,
+      marginHorizontal:25,
+      fontFamily:'OpenSans',
+    },
+    confirmView: {
+      flex: -1,
+      minHeight:120,
+      backgroundColor: "#FFFFFF",
+      margin: 40,
+      borderRadius: 20,
+      padding:10,
+    },
+    semiTransparentRange: {
+      flex: 1,
+      backgroundColor: "#000000AA",
+      justifyContent:'center',
+    },
   }),
   'meetingItem': StyleSheet.create({
     //Meeting View Cards

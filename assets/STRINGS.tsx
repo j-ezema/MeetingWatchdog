@@ -99,6 +99,11 @@ const STRINGS_EN = {
     meetingDetails:{
         
     },
+    homeScreen:{
+        confirm:"Are you sure you would like to delete this meeting?",
+        accept:"Confirm",
+        cancel:"Cancel"
+    },
 }
 
 const STRINGS = STRINGS_EN
