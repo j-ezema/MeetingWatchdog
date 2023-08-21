@@ -188,12 +188,13 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                         <Text style={styles.createMeeting.headerText}>Create A Meeting</Text>
                     </View>
                     */}
-                <View style={styles.outlookMeeting.content}>
-                    <ScrollView style={{ flexGrow: 1 }} >
+                <View style={styles.createMeeting.content}>
+                    <ScrollView style={{ flex: 1 }} >
                         <View style={styles.createMeeting.buttonsContainer}>
                             <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, (!meetingName && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => meetingNameInputRef.current?.focus()}>
                                 <Text style={[styles.createMeeting.buttonText, (!meetingName && showError) && styles.createMeeting.errorText]}>Meeting Name *</Text>
                                 <TextInput
+                                    accessible={true}
                                     ref={meetingNameInputRef}
                                     style={styles.createMeeting.inputText}
                                     placeholder="Enter meeting name"
@@ -205,6 +206,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             <TouchableOpacity
                                 style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
                                 onPress={showDatePicker}
+                                accessible={true}
                             >
                                 <View style={styles.createMeeting.dateButtonContent}>
                                     {/*<Image source={require('../assets/calendar.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
@@ -218,6 +220,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             <TouchableOpacity
                                 style={[styles.createMeeting.button, styles.createMeeting.buttonWithBorder]}
                                 onPress={showTimePicker}
+                                accessible={true}
                             >
                                 <View style={styles.createMeeting.dateButtonContent}>
                                     {/*<Image source={require('../assets/clock.png')} style={[styles.createMeeting.dateButtonIcon, { resizeMode: 'contain' }, { tintColor: '#0A112899' }]} />*/}
@@ -231,6 +234,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, styles.createMeeting.buttonWithBorder, (!participants && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => participantsInputRef.current?.focus()}>
                                 <Text style={[styles.createMeeting.buttonText, (!participants && showError) && styles.createMeeting.errorText]}>Number of Participants *</Text>
                                 <TextInput
+                                    accessible={true}
                                     ref={participantsInputRef}
                                     style={styles.createMeeting.inputText}
                                     placeholder="Enter number"
@@ -242,6 +246,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                             <TouchableOpacity style={[styles.createMeeting.textButton, styles.createMeeting.buttonWithBorder, styles.createMeeting.buttonWithBorder, (!hourlyRate && showError) && styles.createMeeting.errorButtonWithBorder]} onPress={() => hourlyRateInputRef.current?.focus()}>
                                 <Text style={[styles.createMeeting.buttonText, (!hourlyRate && showError) && styles.createMeeting.errorText]}>Average Hourly Rate *</Text>
                                 <TextInput
+                                    accessible={true}
                                     ref={hourlyRateInputRef}
                                     style={styles.createMeeting.inputText}
                                     placeholder="Enter hourly rate"
@@ -268,6 +273,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                     <View style={styles.createMeeting.footer}>
                         <View style={styles.createMeeting.footerButtonContainer}>
                             <Button
+                                accessible={true}
                                 title="Save"
                                 titleStyle={styles.createMeeting.footerButtonTextB}
                                 buttonStyle={styles.createMeeting.footerButton}
@@ -278,6 +284,7 @@ export const CreateMeetingScreen = ({ navigation }: { navigation: any }) => {
                         </View>
                         <View style={styles.createMeeting.footerButtonContainer}>
                             <Button
+                                accessible={true}
                                 title="Start Meeting"
                                 titleStyle={styles.createMeeting.footerButtonText}
                                 buttonStyle={[styles.createMeeting.footerButton, styles.createMeeting.startButton, styles.createMeeting.footerBorder]}
