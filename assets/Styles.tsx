@@ -885,6 +885,8 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
 
 
     footerButtonContainer: {
+      flex: 1, // Takes up the available space
+      alignItems: 'center', // Centers content horizontally
       paddingVertical: 20, // Adds vertical padding
       borderTopWidth: 0.5,
       borderTopColor: '#EFEFEF',
@@ -892,7 +894,6 @@ export const getStyles = (fontMagnify:number = global.fontSize) =>{
     },
 
     footerButton: {
-      marginHorizontal: '5.6%',
       height: 62, // Sets the height of the button
       backgroundColor: '#ffffff', // Sets the background color of the button
       borderRadius: 10, // Sets the border radius of the button
