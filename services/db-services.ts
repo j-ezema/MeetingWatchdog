@@ -1,0 +1,224 @@
+import { SQLiteDatabase, enablePromise, openDatabase } from 'react-native-sqlite-storage';
+import { MeetingItem, createNewMeetingItem } from '../models';
+import moment from 'moment';
+
+enablePromise(true);
+
+export const getDBConnection = async () => {
+  return openDatabase({ name: 'meeting-watchdog.db', location: 'default' });
+};
+
+const tableNames = {
+  MeetingItems: 'meetings',
+  MailClientConfiguration: 'MailClientConfiguration',
+  settings: 'settings'
+};
+
+const settings: any[] = new Array(
+  { name: 'default_participants', value: 5 },
+  { name: 'default_hourly', value: 100 },
+  { name: 'termsOfService', value: 0 },
+  { name: 'font_size_accessibility', value: 1 },
+);
+
+export const createTable = async (db: SQLiteDatabase) => {
+  // create tables if not exists
+  const Queries = [
+    // `DROP TABLE ${tableNames.MeetingItems};`,
+    // `DROP TABLE ${tableNames.MailClientConfiguration};`,
+    // `DROP TABLE ${tableNames.settings};`,
+    `CREATE TABLE IF NOT EXISTS ${tableNames.MeetingItems}(
+            meeting_title TEXT NOT NULL,
+            number_of_participants INT NOT NULL,
+            average_hourly_cost REAL NOT NULL,
+            total_wait_time INT ,
+            total_meeting_time INT ,
+            total_wait_cost REAL ,
+            total_meeting_cost REAL ,
+            meeting_datetime REAL NOT NULL
+        );`,
+    `CREATE TABLE IF NOT EXISTS ${tableNames.MailClientConfiguration}(
+            value TEXT NOT NULL
+        );`,
+    `CREATE TABLE IF NOT EXISTS ${tableNames.settings}(
+            setting_name TEXT NOT NULL UNIQUE,
+            setting_value REAL NOT NULL
+        );`,
+  ];
+
+  Queries.forEach(async query => {
+    await db.executeSql(query);
+  });
+  initializeSettings(db);
+};
+
+const initializeSettings = async (db: SQLiteDatabase) => {
+  const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
+  settings.forEach(async setting => {
+    let contains: Boolean = false;
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        if (result.rows.item(index)['setting_name'] == setting.name) {
+          contains = true
+        }
+      }
+    });
+    if (!contains) {
+      try {
+        const query = `INSERT INTO ${tableNames.settings} (setting_name, setting_value) VALUES ('${setting.name}', ${setting.value}); `;
+        await db.executeSql(query);
+      } catch (error) {
+
+      }
+
+    }
+
+  });
+
+
+}
+
+export const retrieveSettings = async (db: SQLiteDatabase): Promise<object> => {
+  const results = await db.executeSql(`SELECT rowid as id,setting_name,setting_value FROM ${tableNames.settings}`);
+  let savedSettings: { [k: string]: any } = {};
+  settings.forEach(async setting => {
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        if (result.rows.item(index)['setting_name'] == setting.name) {
+          savedSettings[setting.name] = result.rows.item(index)['setting_value']
+        };
+      }
+    }
+    );
+  });
+  return savedSettings;
+}
+
+export const getMeetingItems = async (db: SQLiteDatabase): Promise<MeetingItem[]> => {
+  try {
+    const MeetingItems: MeetingItem[] = [];
+    const results = await db.executeSql(`
+      SELECT 
+        rowid as id,
+        meeting_title as meeting_title, 
+        date(meeting_datetime) as meeting_date, 
+        time(meeting_datetime) as meeting_time,
+        total_wait_time as total_wait_time,
+        total_meeting_time as total_meeting_time,
+        total_wait_cost as total_wait_cost,
+        total_meeting_cost as total_meeting_cost,
+        number_of_participants as number_of_participants,
+        average_hourly_cost as average_hourly_cost
+      FROM ${tableNames.MeetingItems}
+    `);
+
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        var temp = result.rows.item(index);
+        //console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
+        temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date'] + " " + result.rows.item(index)['meeting_time']);
+        MeetingItems.push(temp);
+
+      }
+    });
+    return MeetingItems;
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to get MeetingItems !!!');
+  }
+};
+
+export const getMeetingItem = async (db: SQLiteDatabase, id: number): Promise<MeetingItem> => {
+  try {
+    const MeetingItems: MeetingItem[] = [];
+    const results = await db.executeSql(`
+      SELECT 
+        rowid as id,
+        meeting_title as meeting_title, 
+        date(meeting_datetime) as meeting_date, 
+        time(meeting_datetime) as meeting_time,
+        total_wait_time as total_wait_time,
+        total_meeting_time as total_meeting_time,
+        total_wait_cost as total_wait_cost,
+        total_meeting_cost as total_meeting_cost,
+        number_of_participants as number_of_participants,
+        average_hourly_cost as average_hourly_cost
+      FROM ${tableNames.MeetingItems}
+      WHERE rowid = ${id}
+    `);
+
+    results.forEach(result => {
+      for (let index = 0; index < result.rows.length; index++) {
+        var temp = result.rows.item(index);
+        //console.log(result.rows.item(index)['id']+" "+result.rows.item(index)['meeting_title']+" "+result.rows.item(index)['meeting_date']+" "+result.rows.item(index)['meeting_time']);
+        temp['meeting_datetime'] = new Date(result.rows.item(index)['meeting_date'] + " " + result.rows.item(index)['meeting_time']);
+        MeetingItems.push(temp);
+      }
+    });
+    return MeetingItems[0];
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to get MeetingItem !!!');
+  }
+};
+
+export const updateMeetingItem = async (db: SQLiteDatabase, meeting: MeetingItem) => {
+  try {
+    await db.executeSql(`UPDATE ${tableNames.MeetingItems} SET 
+      total_wait_time = ?,
+      total_meeting_time = ?,
+      total_wait_cost = ?,
+      total_meeting_cost = ?,
+      average_hourly_cost = ?,
+      number_of_participants = ?
+      WHERE rowid = ${meeting.id}`, [meeting.total_wait_time, meeting.total_meeting_time, meeting.total_wait_cost, meeting.total_meeting_cost, meeting.average_hourly_cost, meeting.number_of_participants]);
+
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to update MeetingItem ' + meeting.id);
+  }
+};
+
+export const saveMeetingItems = async (db: SQLiteDatabase, MeetingItems: MeetingItem[]) => {
+  /*
+  const insertQuery =
+    `INSERT OR REPLACE INTO ${tableNames.MeetingItems}(rowid, meeting_title, number_of_participants, average_hourly_cost, meeting_date, meeting_time) values` +
+    MeetingItems.map(i => `(${i.id}, '${i.meeting_title}', 2, 2, date(\'now\'),time(\'now\'))`).join(',');
+    console.log(insertQuery);
+  */
+  const insertQuery =
+    `INSERT INTO ${tableNames.MeetingItems}(meeting_title, number_of_participants, average_hourly_cost, meeting_datetime) values` +
+    MeetingItems.map(i => `('${i.meeting_title}', ${i.number_of_participants} , ${i.average_hourly_cost}, julianday('${moment(i.meeting_datetime).format('YYYY-MM-DD HH:mm:ss')}'))`).join(',');
+  return db.executeSql(insertQuery);
+};
+
+export const deleteMeetingItem = async (db: SQLiteDatabase, id: number) => {
+  const deleteQuery = `DELETE from ${tableNames.MeetingItems} where rowid = ${id}`;
+  await db.executeSql(deleteQuery);
+};
+
+export const deleteTable = async (db: SQLiteDatabase) => {
+  const query = `drop table ${tableNames.MeetingItems}`;
+  await db.executeSql(query);
+};
+
+export const saveNumberOfParticipants = async (db: SQLiteDatabase, participants: string): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_participants'`, [participants]);
+};
+export const saveAverageHourlyRate = async (db: SQLiteDatabase, hourlyRate: number): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'default_hourly'`, [hourlyRate]);
+}
+
+export const saveFontSizeAccessibility = async (db: SQLiteDatabase, fontSize: number): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = 'font_size_accessibility'`, [fontSize]);
+}
+
+export const termsAgreed = async (db: SQLiteDatabase): Promise<boolean> => {
+  await initializeSettings(db);
+  const results = await db.executeSql(`SELECT setting_name,setting_value FROM ${tableNames.settings} WHERE setting_name = "termsOfService"`);
+  return results[0].rows.item(0)['setting_value'] > 0;
+}
+
+export const updateTermsAgreement = async (db: SQLiteDatabase, newValue: number): Promise<void> => {
+  await db.executeSql(`UPDATE ${tableNames.settings} SET setting_value = ? WHERE setting_name = "termsOfService"`, [newValue]);
+}
